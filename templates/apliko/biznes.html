@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Apliko si Biznes | Dominusoft Education{% endblock %}
+{% block meta %}
+<meta name="keywords" content="problemet e biznesit, sherbime te specializuara, Dominusoft Education">
+<meta name="description"
+    content="Kapërceni dështimet apo problemet e biznesit tuaj, në Dominusoft Education ju ofrojmë ekspertizë dhe shërbime të specializuara.">
+{% endblock %}
+
+{% block content %}
+{% include '../navbar.html' %}
+
+<main class="mt-5 pt-5">
+    <section class="section section-lg pb-0" id="message_business">
+        <div class="container px-5">
+            <!-- Titulli -->
+            <div class="row justify-content-center">
+                <div class="col-lg-8 col-xl-8 text-center">
+                    <h1 class="display-4 fw-bold mb-2">Le të bashkëpunojmë</h1>
+                    <h2 class="mb-5">Shërbime të specializuara dhe ekspertizë për biznesin</h2>
+                    <!-- <h3>Jashtë funksioni, Forma e biznesit në përditësim.</h3> -->
+                </div>
+            </div>
+            <!-- fund titulli -->
+        </div>
+
+        <div class="container px-5 mt-4">
+            <form class="row g-3" method="POST" action="#message_business">
+                {% csrf_token %}
+                <div class="col-sm-12 col-md-6 try">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Emri i Kompanisë"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <input type="text" class="form-control" id="surname" name="delegate" placeholder="Përfaqësuesi"
+                        required>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <input type="number" class="form-control" id="phone" name="phone" placeholder="Nr. Telefonit"
+                        required>
+                </div>
+                <div class="col-12">
+                    <select class="form-select" id="sherbime" name="service" required>
+                        <option selected value="" name="sherbim">Zgjidh Shërbimin</option>
+                        {% for service in services %}
+                        <option value="{{service}}">{{service.services_name}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-12">
+                    <textarea class="form-control" placeholder="Mesazhi Juaj" name="message" id="message"
+                        required></textarea>
+                </div>
+                <div class="col-12 text-end mt-5 pe-0 pe-md-4 submit">
+                    <button type="submit" name="business_button" class="btn btn-md btn-sign me-lg-5">Dërgo</button>
+                </div>
+            </form>
+            {% for message in messages %}
+            {% if 'business' in message.tags %}
+            <div class="container mt-3">
+                <div class=" alert {{ message.tags }} alert-dismissible fade show fw-bold" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+        <!-- Harta -->
+
+        <div class="w-100 map_kont mt-4 pb-0">
+            <iframe class="rounded text-center w-100"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
+                loading="lazy"></iframe>
+        </div>
+        <!-- fund harta -->
+    </section>
+</main>
+{% endblock content %}

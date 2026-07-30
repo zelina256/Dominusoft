@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} Shërbimet të Specializuara për Bizneset | Dominusoft{% endblock %}
+{% block meta %}
+<meta name="keywords" content="sherbime per biznese, biznese te vogla, biznese te mesme">
+<meta name="description"
+    content="Ekspertiza dhe eksperienca jonë i vjen në ndihmë biznesit tuaj. Shërbime në Web Design, Web Development, Digital Marketing & Kurse Profesionale.">
+{% endblock %}
+
+{% block content %}
+{% include '../navbar.html' %}
+<main class="mt-5 pt-5">
+    <section class="section_kat mt-5">
+        <div class="container">
+            <!-- Titulli -->
+            <div class="row space justify-content-center">
+                <div class="col-lg-8 col-xl-8 text-center">
+                    <h2 class="display-4 fw-bold mb-4">Shërbimet tona
+                    </h2>
+                    <p>Në Dominusoft ofrojmë zgjidhje të integruara dhe të personalizuara për individë dhe biznese, duke përfshirë kurse profesionale të certifikuara, zhvillim software-i të dedikuar, shërbime të avancuara në marketingun digjital dhe implementim të zgjidhjeve me Inteligjencë Artificiale (AI). Përdorim teknologjitë më të fundit të AI për automatizim procesesh, analizë të të dhënave, optimizim të vendimmarrjes dhe përmirësim të eksperiencës së përdoruesit, duke ndihmuar bizneset të rrisin efikasitetin dhe konkurrueshmërinë.
+
+Me përvojë dhe ekspertizë të konsoliduar, synojmë të fuqizojmë institucionet dhe profesionistët me zgjidhje inovative që kombinojnë teknologjinë, inteligjencën artificiale dhe zhvillimin digjital, duke rritur performancën dhe vlerën në tregun modern.</p>
+                </div>
+            </div>
+            <!-- fund titulli -->
+        </div>
+    </section>
+    <!-- Sherbimet -->
+    {% for service in services %}
+    {% if forloop.counter|divisibleby:2 %}
+    <section class="section section-lg mb-3">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <img src="{{service.services_image.url}}" alt="{{service.services_alt}}"
+                        class="img-fluid w-100 sherbime">
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="offset-lg-1 mt-5">
+                            <h2 class="fw-bold mb-3">{{service.services_name}}</h2>
+                            <p> {{service.services_description|linebreaks}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {% else %}
+    <section class="section section-lg mb-3">
+        <div class="container">
+            <div class="row d-flex">
+                <div class="col-sm-12 col-md-6 col-lg-6 order-2 order-md-1">
+                    <div class="d-flex justify-content-center align-items-center">
+                        <div class="pe-5 mt-5">
+                            <h2 class="fw-bold mb-3">{{service.services_name}}</h2>
+                            <p class="">{{service.services_description|linebreaks}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6 col-lg-6 order-1 order-md-2">
+                    <img src="{{service.services_image.url}}" alt="{{service.services_alt}}"
+                        class="img-fluid w-100 h-100 sherbime">
+                </div>
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {% endfor %}
+    <!-- fund sherbimet -->
+</main>
+{% endblock content %}

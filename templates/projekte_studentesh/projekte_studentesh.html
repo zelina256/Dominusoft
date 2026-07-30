@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %}Projektet e Punuara nga Studentët | Dominusoft Education{% endblock %}
+{% block meta %}
+<meta name="keywords" content="projekte studentesh, studente">
+<meta name="description"
+    content="Projekte të punuara në mënyrë profesionale, në perfundim të çdo kursi nga studentët. Ejani në Dominusoft Education dhe zhvilloni edhe ju projektin tuaj.">
+{% endblock %}
+
+{% block content %}
+{% include '../navbar.html' %}
+
+<main class="mt-5 pt-5">
+    <section class="section section-lg">
+        <div class="container">
+            <h3 class="text-center display-4 mb-4 fw-bold">Projekte Kursantësh</h3>
+            <ul class="nav nav-pills nav-fill my-5 w-75 mx-auto" id="pills-tab1" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all"
+                        type="button" role="tab">Të Gjitha</button>
+                </li>
+                {% for category_student in category_students %}
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="pills-{{category_student.student_project_category_id}}-tab"
+                        data-bs-toggle="pill" data-bs-target="#pills-{{category_student.student_project_category_id}}"
+                        type="button" role="tab">{{category_student.student_project_category_name}}</button>
+                </li>
+                {% endfor %}
+            </ul>
+            <div class="my-5">
+                <!-- Titulli -->
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <p class="px-4 text-center">Të arrish të punësohesh aty ku do është e vështirë por jo e
+                            pamundur! Nëse je kërkues dhe i motivuar gjithçka çfarë të duhet është mbështetja dhe
+                            ekspertiza në Dominusoft.
+                            Eja zhvillo dhe ti projektin tënd dhe ndiq karrierën e duhur për tregun e punës.</p>
+                    </div>
+                </div>
+                <!-- fund titulli -->
+            </div>
+            <!-- kontenti -->
+            <div class="mt-5">
+                <div class="card-body p-0">
+                    <div class="tab-content" id="pills-tabContent1">
+                        <div class="tab-pane fade show active" id="pills-all" role="tabpanel">
+                            <div class="row">
+                                {% for students_project in students_projects %}
+                                <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                                    <div class="card kursant_card bg-primary border-light shadow-soft h-100">
+                                        <img src="{{students_project.student_project_image.url}}"
+                                            class="card-img-top img-fluid rounded-top kursant_img"
+                                            alt="{{students_project.student_project_text}}">
+                                        <img src="{{students_project.student_project_gif.url}}"
+                                            class="card-img-top img-fluid rounded-top kursant_gif"
+                                            alt="{{students_project.student_project_text}}">
+                                        <div class="card-body pt-2">
+                                            <h2 class="h2 card-title mt-4">{{students_project.student_project_training}}
+                                            </h2>
+                                            <h3 class="fw-bold h5">{{students_project.student_project_name}}
+                                                {{students_project.student_project_surname}}</h3>
+                                            <p class="card-text">{{students_project.student_project_text}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% for ca in category_students %}
+                        <div class="tab-pane fade" id="pills-{{ca.student_project_category_id}}" role="tabpanel">
+                            <div class="row">
+                                {% for projects in ca.get_studentproject %}
+                                <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                                    <div class="card kursant_card bg-primary border-light shadow-soft h-100">
+                                        <img src="{{projects.student_project_image.url}}"
+                                            class="card-img-top img-fluid rounded-top kursant_img"
+                                            alt="{{projects.student_project_image_alt}}">
+                                        <img src="{{projects.student_project_gif.url}}"
+                                            class="card-img-top img-fluid rounded-top kursant_gif"
+                                            alt="{{projects.student_project_gif_alt}}">
+                                        <div class="card-body pt-2">
+                                            <h2 class="h2 card-title mt-4">{{projects.student_project_training}}</h2>
+                                            <h3 class="fw-bold h5">{{projects.student_project_name}}
+                                                {{projects.student_project_surname}}</h3>
+                                            <p class="card-text">{{projects.student_project_text}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <!-- fund kontenti -->
+        </div>
+    </section>
+</main>
+{% endblock content %}

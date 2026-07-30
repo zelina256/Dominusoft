@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %} Kërkim | Dominusoft Education {% endblock %}
+{% block meta %}
+<meta name="description" content="">
+<meta name="keywords" content="">
+{% endblock %}
+
+{% block content %}
+{% include '../navbar.html' %}
+
+<main class="mt-5 pt-5">
+    <section class="section">
+        <div class="container">
+            {% if searched %}
+            <h1 class="text-center display-1 my-5"> Ju kërkuat për <b>{{ searched }}</b></h1>
+            <div class="row">
+                {% for venue in venues %}
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
+                    <div class="card trajnim_card bg-primary border-light shadow-soft h-100">
+                        <img src="{{venue.training_image.url}}" class="card-img-top rounded-top img-fluid h-100"
+                            alt="{{venue.training_image_alt}}">
+                        <div class="card-body pt-2">
+                            {% comment %}
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-calendar-alt pt-3">&nbsp;&nbsp;<span class="icon_des">
+                                        {{venue.training_data | date:"d"}} {{venue.training_month}}
+                                        {{venue.training_data | date:"Y"}}</span></i>
+                            </div>
+                            {% endcomment %}
+                            <h2 class="h4 card-title mt-3 fw-bold">{{venue.training_name}}</h2>
+                            <p class="card-text text_traj">
+                                {{venue.training_text}}
+                            </p>
+                            <div class="mb-3 info_session">
+                                <i class="fas fa-calendar-week pe-3">&nbsp;&nbsp;<span
+                                        class="icon_des">{{venue.training_sessions}}</span></i>
+                                <i class="fas fa-clock pe-3">&nbsp;&nbsp;<span class="icon_des">{{venue.training_hours}}
+                                        orë</span></i>
+                                <i class="fas fa-layer-group pe-3 ">&nbsp;&nbsp;<span
+                                        class="icon_des">{{venue.training_level}}</span></i>
+                            </div>
+                            <a href="../trajnime-profesionale/{{venue.training_category.cat_slug}}/{{venue.training_slug}}"
+                                class="btn btn-lg">Mëso më Shumë</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% if messages %}
+            {% for k in messages %}
+            <h5 class="text-center">{{k}}</h5>
+            <p class="text-center display-1">Kërkim pa rezultat</p>
+            <h4 class="text-center fw-bold mt-3 text_404">404</h4>
+            {% endfor %}
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock content %}

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+{% extends 'index.html' %} {% load static %} {% block title %}
+Intershipet-Projektet e realizuara | Dominusoft Education {% endblock %} {%
+{% block meta %}
+<meta name="keywords" content="projekte internshipe, domunisoft internships,
+internship ne marketing, front end developer praktika, seo internship" />
+<meta name="description"
+  content="Një projekt i mirë sot, një perspektivë më e mirë për të ardhmen. Përfshirja e studentëve në praktika të mirëfillta, duke përfituar eksperiencën e nevojshme." />
+{% endblock %}
+{% block content %}
+{% include '../navbar.html' %}
+
+<main class="mt-5 pt-5">
+  <!-- Pjesemaresit -->
+  <section class="section section-lg">
+    <div class="container">
+      <h3 class="text-center display-4 mb-4 fw-bold">Projektet më të mirë</h3>
+      <ul class="nav nav-pills nav-fill my-5 w-75 mx-auto" id="pills-tab1" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" id="pills-all-tab" data-bs-toggle="pill" data-bs-target="#pills-all"
+            type="button" role="tab">
+            Të Gjitha
+          </button>
+        </li>
+        {% for category in category_internship %}
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" id="pills-{{category.internship_category_id}}-tab" data-bs-toggle="pill"
+            data-bs-target="#pills-{{category.internship_category_id}}" type="button" role="tab">
+            {{category.internship_category_name}}
+          </button>
+        </li>
+        {% endfor %}
+      </ul>
+      <div class="my-5">
+        <!-- Titulli -->
+        <div class="row justify-content-center">
+          <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+            <h3 class="display-5 fw-bold my-4">Internship</h3>
+            <p class="px-4">
+              Me ndjekjen e një kursi në Dominusoft ju lind e drejta te angazhoheni menjëherë në programin e
+              internship-it.
+              Gjatë programit të internship-it çdo pjesëmarrës do të angazhohet në grup me zhvilllim
+              e një projekti real,
+              në mentorimin e stafit tonë.
+            </p>
+          </div>
+          <div class="col-sm-12 col-md-6 col-lg-6 text-center">
+            <h3 class="display-5 fw-bold my-4">Praktika mësimore</h3>
+            <p class="px-4">
+              Çdo student mund të zhvillojë praktikën mësimore duke ju bashkuar një nga kurseve tona.
+              Gjatë praktikës mësimore praktikantët do të angazhohen në një projekt real, në grup, njësoj si në
+              një ambjent të vërtetë pune.
+              Plotësimi i dokumenteve të kërkuara nga universiteti/departamenti përkatës, do të bëhet
+              në koherence me afatet e përcaktuara.
+            </p>
+          </div>
+        </div>
+        <!-- fund titulli -->
+      </div>
+      <!-- kontenti -->
+      <div class="mt-5">
+        <div class="card-body p-0">
+          <div class="tab-content" id="pills-tabContent1">
+            <div class="tab-pane fade show active" id="pills-all" role="tabpanel">
+              <div class="row">
+                {% for internship in internships %}
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                  <div class="card internship_card bg-primary border-light shadow-soft h-100">
+                    <img src="{{internship.internship_project_image.url}}"
+                      class="card-img-top img-fluid rounded-top internship_img"
+                      alt="{{internship.internship_project_title}}" />
+                    <img src="{{internship.internship_project_gif.url}}"
+                      class="card-img-top img-fluid rounded-top internship_gif"
+                      alt="{{internship.internship_project_title}}" />
+                    <div class="card-body pt-2">
+                      <h2 class="h4 card-title mt-3 fw-bold">
+                        {{internship.internship_project_title}}
+                      </h2>
+                      <p class="card-text">
+                        {{internship.internship_project_text}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% for ca in category_internship %}
+            <div class="tab-pane fade" id="pills-{{ca.internship_category_id}}" role="tabpanel">
+              <div class="row">
+                {% for intern in ca.get_internship %}
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-4">
+                  <div class="card internship_card bg-primary border-light shadow-soft h-100">
+                    <img src="{{intern.internship_project_image.url}}"
+                      class="card-img-top img-fluid rounded-top internship_img"
+                      alt="{{intern.internship_project_image.internship_project_image_alt}}" />
+                    <img src="{{intern.internship_project_gif.url}}"
+                      class="card-img-top img-fluid rounded-top internship_gif"
+                      alt="{{intern.internship_project_image.internship_project_gif_alt}}" />
+                    <div class="card-body pt-2">
+                      <h2 class="h4 card-title mt-3 fw-bold">
+                        {{intern.internship_project_title}}
+                      </h2>
+                      <p class="card-text">
+                        {{intern.internship_project_text}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+      <!-- fund kontenti -->
+    </div>
+  </section>
+</main>
+{% endblock %}

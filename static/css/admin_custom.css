@@ -1,0 +1,126 @@
+:root {
+  --ds-primary: #0a6a66;
+  --ds-primary-dark: #064b48;
+  --ds-bg: #f3f7f7;
+  --ds-card: #ffffff;
+  --ds-text: #173434;
+  --ds-muted: #6b8080;
+  --ds-border: #dbe8e7;
+}
+
+body {
+  background: radial-gradient(circle at top right, #d7ecea 0%, var(--ds-bg) 35%, #edf4f4 100%);
+  color: var(--ds-text);
+}
+
+#header {
+  background: linear-gradient(120deg, var(--ds-primary-dark), var(--ds-primary));
+  color: #ffffff;
+  border-bottom: 0;
+  box-shadow: 0 8px 20px rgba(6, 75, 72, 0.25);
+}
+
+#site-name a,
+#header a:link,
+#header a:visited {
+  color: #ffffff;
+}
+
+div.breadcrumbs {
+  background: rgba(10, 106, 102, 0.12);
+  color: var(--ds-text);
+  border-top: 0;
+  border-bottom: 1px solid var(--ds-border);
+}
+
+div.breadcrumbs a {
+  color: var(--ds-primary-dark);
+}
+
+#content {
+  padding-top: 24px;
+}
+
+#content-main .module,
+#content-related .module,
+.dashboard .module {
+  background: var(--ds-card);
+  border: 1px solid var(--ds-border);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(23, 52, 52, 0.08);
+  overflow: hidden;
+}
+
+.module h2,
+.module caption,
+.inline-group h2 {
+  background: linear-gradient(120deg, #e3f1f0, #f1f8f7);
+  color: var(--ds-primary-dark);
+  border-bottom: 1px solid var(--ds-border);
+  font-weight: 700;
+}
+
+.dashboard .module table th,
+.dashboard .module table td {
+  border-bottom: 1px solid #ebf2f1;
+}
+
+a:link,
+a:visited {
+  color: var(--ds-primary-dark);
+}
+
+a:hover,
+a:focus {
+  color: #042f2d;
+}
+
+.button,
+input[type="submit"],
+input[type="button"],
+.submit-row input,
+a.button {
+  background: linear-gradient(120deg, var(--ds-primary), #0b7b76);
+  border: 1px solid #0b7b76;
+  border-radius: 8px;
+  color: #fff;
+}
+
+.button:hover,
+input[type="submit"]:hover,
+input[type="button"]:hover,
+.submit-row input:hover,
+a.button:hover {
+  background: linear-gradient(120deg, #0b7b76, var(--ds-primary-dark));
+}
+
+input,
+textarea,
+select,
+.vTextField {
+  border-radius: 8px;
+  border: 1px solid #cfe0df;
+}
+
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: var(--ds-primary);
+  box-shadow: 0 0 0 3px rgba(10, 106, 102, 0.12);
+}
+
+#recent-actions-module h3 {
+  color: var(--ds-muted);
+}
+
+@media (max-width: 900px) {
+  #content {
+    padding-top: 12px;
+  }
+
+  .dashboard .module,
+  #content-main .module,
+  #content-related .module {
+    border-radius: 10px;
+  }
+}

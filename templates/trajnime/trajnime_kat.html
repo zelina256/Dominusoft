@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} {{cat_training.cat_title_tag}} {% endblock %}
+{% block meta %}
+<meta name="keywords" content="{{cat_training.cat_meta_keyword}}">
+<meta name="description" content="{{cat_training.cat_meta_description}}">
+{% endblock %}
+
+{% block content %}
+{% include '../navbar.html' %}
+<main class="mt-5 pt-5">
+    <!-- fund bread crumb -->
+    <section class="section section-lg">
+        <div class="container">
+            <!-- Titulli -->
+            <div class="row pro_space justify-content-center">
+                <div class="col-8">
+                    <h2 class="display-4 font-weight-light mb-4 text-center">{{cat_training.cat_training_name}}</h2>
+                    <p>{{cat_training.cat_training_text_description|safe}}</p>
+                </div>
+            </div>
+            <!-- fund titulli -->
+            <!-- Trajnimet per secilën program -->
+            <div class="row">
+                {% for train in training %}
+                <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
+                    <div class="card trajnim_card bg-primary border-light shadow-soft h-100">
+                        <img src="{{train.training_image.url}}" class="card-img-top rounded-top img-fluid h-100"
+                            alt="{{train.training_image_alt}}">
+                        <div class="card-body pt-2">
+                            <h2 class="h4 card-title mt-3 fw-bold">{{train.training_name}}</h2>
+                            <p class="card-text text_traj">
+                                {{train.training_text}}
+                            </p>
+                            <div class="mb-3 info_session">
+                                <i class="fas fa-calendar-week pe-3">&nbsp;&nbsp;<span
+                                        class="icon_des">{{train.training_sessions}}</span></i>
+                                <i class="fas fa-clock pe-3">&nbsp;&nbsp;<span class="icon_des">{{train.training_hours}}
+                                        orë</span></i>
+                            </div>
+                            <a href="{{train.training_category.cat_slug}}/{{train.training_slug}}"
+                                class="btn btn-lg">Mëso më Shumë</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- Trajnimet per secilën program -->
+</main>
+{% endblock content %}

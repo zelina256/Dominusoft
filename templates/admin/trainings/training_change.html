@@ -1,0 +1,234 @@
+{% extends "admin/base_site.html" %}
+{% load static %}
+
+{% block extrastyle %}{{ block.super }}<link rel="stylesheet" href="{% static 'admin/css/forms.css' %}">
+<style>
+  #training-form > .module { margin-bottom: 25px; }
+
+  /* ---- Curricula & lessons section ---- */
+  .cl-section { margin-top: 10px; }
+  .cl-section > .cl-help {
+    margin: 0 0 16px; padding: 10px 14px;
+    background: #f6f9fc; border: 1px solid #def; border-radius: 6px;
+    color: #445; font-size: 12px; line-height: 1.5;
+  }
+
+  .curricula-card {
+    background: #fff; border: 1px solid #e0e3e6; border-radius: 8px;
+    margin-bottom: 16px; box-shadow: 0 1px 2px rgba(0,0,0,.04); overflow: hidden;
+  }
+  .curricula-card.marked-delete { opacity: .5; }
+  .curricula-card.marked-delete .curricula-name input { text-decoration: line-through; }
+
+  .curricula-head {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; background: #f8f9fa; border-bottom: 1px solid #e0e3e6;
+  }
+  .curricula-index {
+    flex: 0 0 auto; width: 26px; height: 26px; border-radius: 50%;
+    background: #79aec8; color: #fff; font-weight: 600; font-size: 13px;
+    display: inline-flex; align-items: center; justify-content: center;
+  }
+  .curricula-index.new { background: #70bf2b; }
+  .curricula-name { flex: 1 1 auto; }
+  .curricula-name input { width: 100%; max-width: 100%; box-sizing: border-box; font-weight: 600; }
+  .curricula-name .errorlist { margin: 4px 0 0; }
+
+  .remove-toggle {
+    flex: 0 0 auto; display: inline-flex; align-items: center; gap: 5px;
+    font-size: 12px; color: #ba2121; cursor: pointer; white-space: nowrap;
+  }
+  .remove-toggle input { margin: 0; }
+
+  /* ---- Lessons nested under a curricula ---- */
+  .lessons { padding: 12px 16px 16px 54px; }
+  .lessons-title {
+    margin: 0 0 8px; font-size: 11px; font-weight: 700; letter-spacing: .06em;
+    text-transform: uppercase; color: #888;
+  }
+  ol.lesson-rows { margin: 0; padding: 0; list-style: none; counter-reset: lesson; }
+  li.lesson-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 5px 0; border-bottom: 1px dashed #eee;
+  }
+  li.lesson-row::before {
+    counter-increment: lesson; content: counter(lesson) ".";
+    flex: 0 0 auto; width: 22px; text-align: right; color: #999; font-size: 12px;
+  }
+  li.lesson-row.marked-delete { opacity: .5; }
+  li.lesson-row.marked-delete input[type=text] { text-decoration: line-through; }
+  li.lesson-row input[type=text] { flex: 1 1 auto; box-sizing: border-box; }
+  li.lesson-row .remove-toggle { font-size: 16px; line-height: 1; }
+
+  .lessons-empty { padding: 10px 16px 14px 54px; color: #888; font-style: italic; }
+
+  .cl-actions { margin: 4px 0 0 16px; }
+  a.cl-add {
+    display: inline-block; padding: 6px 12px; border-radius: 5px;
+    background: #79aec8; color: #fff; font-size: 12px; text-decoration: none;
+  }
+  a.cl-add:hover { background: #609ab6; }
+  a.cl-add.small { background: transparent; color: #447e9b; padding: 4px 0; }
+  a.cl-add.small:hover { color: #036; text-decoration: underline; }
+</style>
+{% endblock %}
+
+{% block extrahead %}{{ block.super }}{{ media }}{% endblock %}
+
+{% block bodyclass %}{{ block.super }} change-form{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data" novalidate id="training-form">
+  {% csrf_token %}
+
+  {# ---- Training fields (includes the CKEditor widgets & image) ---- #}
+  <fieldset class="module aligned">
+    <h2>Training details</h2>
+    {{ form.non_field_errors }}
+    {% for field in form %}
+      {% if field.is_hidden %}
+        {{ field }}
+      {% else %}
+        <div class="form-row{% if field.errors %} errors{% endif %}">
+          {{ field.errors }}
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}<div class="help">{{ field.help_text|safe }}</div>{% endif %}
+        </div>
+      {% endif %}
+    {% endfor %}
+  </fieldset>
+
+  {# ---- Curricula (main topics) + their Lessons (subtopics) ---- #}
+  <div class="cl-section">
+    <h2>Curricula &amp; lessons</h2>
+    <p class="cl-help">
+      Curricula are <strong>shared across trainings</strong>: editing a name or its
+      lessons changes them for every training that uses this curricula.
+      <strong>Remove</strong> only unlinks the curricula from <em>this</em> training &mdash;
+      it is not deleted. A newly added curricula gets its lessons after you save once.
+    </p>
+
+    {{ curricula_fs.management_form }}
+    {{ curricula_fs.non_form_errors }}
+
+    <div id="curricula-list">
+      {% for cform, lesson_fs in curricula_blocks %}
+        <div class="curricula-card">
+          {% for hidden in cform.hidden_fields %}{{ hidden }}{% endfor %}
+          <div class="curricula-head">
+            {% if cform.instance.pk %}
+              <span class="curricula-index">{{ forloop.counter }}</span>
+            {% else %}
+              <span class="curricula-index new" title="New curricula">+</span>
+            {% endif %}
+            <div class="curricula-name">
+              {{ cform.curricula_name.errors }}
+              {{ cform.curricula_name }}
+            </div>
+            {% if cform.instance.pk %}
+              <label class="remove-toggle">{{ cform.DELETE }} Remove</label>
+            {% endif %}
+          </div>
+
+          {% if lesson_fs %}
+            <div class="lessons">
+              <p class="lessons-title">Lessons</p>
+              {{ lesson_fs.management_form }}
+              {{ lesson_fs.non_form_errors }}
+              <ol class="lesson-rows" data-prefix="{{ lesson_fs.prefix }}">
+                {% for lform in lesson_fs %}
+                  <li class="lesson-row">
+                    {% for hidden in lform.hidden_fields %}{{ hidden }}{% endfor %}
+                    {{ lform.lesson_name.errors }}
+                    {{ lform.lesson_name }}
+                    {% if lform.instance.pk %}
+                      <label class="remove-toggle" title="Remove lesson">{{ lform.DELETE }} &times;</label>
+                    {% endif %}
+                  </li>
+                {% endfor %}
+              </ol>
+              <template class="empty-lesson" data-prefix="{{ lesson_fs.prefix }}">
+                <li class="lesson-row">
+                  {% for hidden in lesson_fs.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+                  {{ lesson_fs.empty_form.lesson_name }}
+                </li>
+              </template>
+              <div class="cl-actions">
+                <a href="#" class="cl-add small add-lesson" data-prefix="{{ lesson_fs.prefix }}">+ Add lesson</a>
+              </div>
+            </div>
+          {% else %}
+            <p class="lessons-empty">Save the training to start adding lessons to this curricula.</p>
+          {% endif %}
+        </div>
+      {% endfor %}
+    </div>
+
+    <template id="empty-curricula">
+      <div class="curricula-card">
+        <div class="curricula-head">
+          <span class="curricula-index new" title="New curricula">+</span>
+          <div class="curricula-name">
+            {% for hidden in curricula_fs.empty_form.hidden_fields %}{{ hidden }}{% endfor %}
+            {{ curricula_fs.empty_form.curricula_name }}
+          </div>
+        </div>
+        <p class="lessons-empty">Save the training to start adding lessons to this curricula.</p>
+      </div>
+    </template>
+
+    <div class="cl-actions">
+      <a href="#" class="cl-add" id="add-curricula">+ Add curricula</a>
+    </div>
+  </div>
+
+  <div class="submit-row">
+    <input type="submit" value="Save" class="default" name="_save">
+    <a href="../" class="closelink">Cancel</a>
+  </div>
+</form>
+
+<script>
+(function () {
+  function addRow(prefix, templateEl, container) {
+    var totalInput = document.getElementById("id_" + prefix + "-TOTAL_FORMS");
+    if (!totalInput || !templateEl) { return; }
+    var index = parseInt(totalInput.value, 10);
+    var html = templateEl.innerHTML.replace(/__prefix__/g, index);
+    var wrapper = document.createElement("div");
+    wrapper.innerHTML = html.trim();
+    while (wrapper.firstChild) { container.appendChild(wrapper.firstChild); }
+    totalInput.value = index + 1;
+  }
+
+  // Add lesson (per curricula formset).
+  document.querySelectorAll(".add-lesson").forEach(function (link) {
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      var prefix = link.getAttribute("data-prefix");
+      addRow(prefix,
+             document.querySelector('.empty-lesson[data-prefix="' + prefix + '"]'),
+             document.querySelector('.lesson-rows[data-prefix="' + prefix + '"]'));
+    });
+  });
+
+  // Add curricula.
+  var addCur = document.getElementById("add-curricula");
+  if (addCur) {
+    addCur.addEventListener("click", function (e) {
+      e.preventDefault();
+      addRow("curricula", document.getElementById("empty-curricula"),
+             document.getElementById("curricula-list"));
+    });
+  }
+
+  // Visual feedback when a "Remove" checkbox is ticked.
+  document.getElementById("curricula-list").addEventListener("change", function (e) {
+    var cb = e.target;
+    if (cb.type !== "checkbox" || !/-DELETE$/.test(cb.name)) { return; }
+    var row = cb.closest(".lesson-row") || cb.closest(".curricula-card");
+    if (row) { row.classList.toggle("marked-delete", cb.checked); }
+  });
+})();
+</script>
+{% endblock %}

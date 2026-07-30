@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% load static %}
+{% block title %} Kurse Profesionale të Certifikuara | Dominusoft Education {% endblock %}
+{% block meta %}
+<meta name="keywords" content="punësim i sigurt, formim profesional, kurse profesionale të certifikuara">
+<meta name="description"
+    content="Kurset më të kërkuara dhe angazhime në praktika reale. Bibliotekë e madhe virtuale, suport nga staf akademik. Orientim drejt punësimit falë partneriteteve.">
+{% endblock %}
+
+{% block content %}
+{% include '../navbar.html' %}
+
+<main class="mt-5 pt-5">
+    {% for cat_training in cat_trainings %}
+    {% if forloop.counter|divisibleby:2 %}
+    <!-- Kategoria e trajnimit cift  -->
+    <section class="section_kat mt-1 mb-5 mt-5">
+        <div class="container">
+            <div class="card kat_card bg-primary shadow-inset border-light mt-2 mb-4">
+                <div class="card-body">
+                    <div class="row d-flex">
+                        <div
+                            class="col-sm-12 col-md-4 order-2 order-md-1 dd-flex justify-content-center align-items-center">
+                            <div class="trajnime_list my-3 me-5">
+                                {% for train in cat_training.get_training %}
+                                <p><a
+                                        href="{{train.training_category.cat_slug}}/{{train.training_slug}}">{{train.training_name}}</a>
+                                </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div
+                            class="col-sm-12 col-md-8 order-1 order-md-2 border_start d-flex justify-content-center align-items-center">
+                            <div>
+                                <h2 class="ps-0 ps-md-5 fw-bold mb-3">{{cat_training.cat_training_name}}</h2>
+                                <p class="ps-0 ps-md-5 pt-3">{{cat_training.cat_training_text_description|safe}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- fund kat -->
+    {% else %}
+    <!-- Kategoria e trajnimit tek  -->
+    <section class="section_kat mt-1 mb-5">
+        <div class="container">
+            <div class="card kat_card bg-primary shadow-inset border-light mt-2 mb-4">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12 col-md-8 border_end d-flex justify-content-center align-items-center">
+                            <div>
+                                <h2 class="fw-bold mb-3">{{cat_training.cat_training_name}}</h2>
+                                <p class="pe-0 pe-md-5 pt-3">{{cat_training.cat_training_text_description|safe}}</p>
+                            </div>
+                        </div>
+                        <div class="col-sm-12 col-md-4 d-flex justify-content-center align-items-center">
+                            <div class="trajnime_list my-3">
+                                {% for train in cat_training.get_training %}
+                                <p><a
+                                        href="{{train.training_category.cat_slug}}/{{train.training_slug}}">{{train.training_name}}</a>
+                                </p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- fund kat -->
+    {% endif %}
+    {% endfor %}
+    <!-- fund kat -->
+</main>
+{% endblock content %}

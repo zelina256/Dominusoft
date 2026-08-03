@@ -33,3 +33,9 @@ def services(request):
     context = {"cat_trainings": cat_trainings, "services": services}
     return render(request, "sherbime/sherbime.html", context)
 
+
+def service_detail(request, services_slug):
+    cat_trainings = Category_training.objects.all()
+    service = get_object_or_404(Services, services_slug=services_slug)
+    context = {"cat_trainings": cat_trainings, "service": service}
+    return render(request, "sherbime/sherbimi_detail.html", context)

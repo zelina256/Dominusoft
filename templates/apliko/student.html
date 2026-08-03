@@ -6,145 +6,7 @@
 <meta name="description"
     content="Investo për të ardhmen tënde me një kurs profesional, sepse nuk është vonë për t'u pajisur me aftësi të reja që do të pasurojnë CV tuaj.">
 {% endblock %}
-{% block scripts %}
-<style>
-    .student-page .contact-hero {
-        padding-top: 5rem;
-        padding-bottom: 2.5rem;
-    }
 
-    .student-page .contact-form .form-select,
-    .student-page .contact-form .form-check-input {
-        border: 1px solid #d1d9e6;
-        background-color: rgba(255, 255, 255, 0.92);
-        box-shadow: inset 2px 2px 6px rgba(184, 185, 190, 0.75), inset -2px -2px 6px rgba(255, 255, 255, 0.85);
-    }
-
-    .student-page .contact-form .form-select {
-        border-radius: 1rem;
-        padding: 0.9rem 1rem;
-        color: #31344b;
-    }
-
-    .student-page .contact-form .form-check-input {
-        width: 1.2rem;
-        height: 1.2rem;
-        border-radius: 0.35rem;
-        margin-top: 0.15rem;
-    }
-
-    .student-page .contact-form .form-check-input:checked {
-        background-color: #31344b;
-        border-color: #31344b;
-    }
-
-    .student-page .contact-form .form-check-label {
-        color: #44476a;
-        font-size: 0.95rem;
-    }
-
-    .student-page .faq-accordion .accordion-item {
-        border: 1px solid rgba(209, 217, 230, 0.9);
-        border-radius: 1rem;
-        background: rgba(255, 255, 255, 0.6);
-        margin-bottom: 1rem;
-        overflow: hidden;
-    }
-
-    .student-page .faq-accordion .accordion-button {
-        font-weight: 700;
-        color: #31344b;
-        background: rgba(255, 255, 255, 0.45);
-        box-shadow: none;
-        gap: 0.75rem;
-    }
-
-    .student-page .faq-accordion .accordion-button i {
-        color: #44476a;
-        width: 1.2rem;
-        text-align: center;
-    }
-
-    .student-page .faq-accordion .accordion-button:not(.collapsed) {
-        background: rgba(230, 231, 238, 0.85);
-        color: #23263b;
-    }
-
-    .student-page .faq-accordion .accordion-button:focus {
-        border-color: transparent;
-        box-shadow: 0 0 0 0.2rem rgba(68, 71, 106, 0.12);
-    }
-
-    .student-page .faq-accordion .accordion-body {
-        color: #44476a;
-        font-weight: 500;
-        line-height: 1.6;
-        padding-top: 0.25rem;
-    }
-
-    .student-page .terms-open-btn {
-        border-radius: 999px;
-        padding: 0.55rem 1rem;
-        font-weight: 700;
-        border: 1px solid #31344b;
-        color: #31344b;
-        background: rgba(255, 255, 255, 0.85);
-    }
-
-    .student-page .terms-open-btn:hover {
-        background: #31344b;
-        color: #f8f9ff;
-    }
-
-    .student-page .terms-modal .modal-content {
-        border: 1px solid #d1d9e6;
-        border-radius: 1rem;
-        background: #eef0f6;
-        box-shadow: 10px 10px 20px #c6c8d3, -10px -10px 20px #ffffff;
-    }
-
-    .student-page .terms-modal .modal-header,
-    .student-page .terms-modal .modal-footer {
-        border-color: #d1d9e6;
-    }
-
-    .student-page .terms-modal .modal-title {
-        color: #31344b;
-        font-weight: 700;
-    }
-
-    .student-page .terms-modal .modal-body {
-        color: #44476a;
-        line-height: 1.7;
-    }
-
-    .student-page .terms-modal .terms-accept-btn {
-        min-width: auto;
-        padding: 0.6rem 1.2rem;
-    }
-</style>
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const termsCheckbox = document.getElementById('terms');
-        const acceptTermsBtn = document.getElementById('acceptTermsBtn');
-        const termsModal = document.getElementById('termsModal');
-
-        if (!termsCheckbox || !acceptTermsBtn || !termsModal) {
-            return;
-        }
-
-        acceptTermsBtn.addEventListener('click', function () {
-            termsCheckbox.disabled = false;
-            termsCheckbox.checked = true;
-
-            if (window.bootstrap) {
-                const modalInstance = window.bootstrap.Modal.getOrCreateInstance(termsModal);
-                modalInstance.hide();
-            }
-        });
-    });
-</script>
-{% endblock %}
 {% block content %}
 {% include '../navbar.html' %}
 
@@ -164,7 +26,211 @@
     <section class="py-5">
         <div class="container">
             <div class="row g-4 align-items-stretch">
-                <div class="col-lg-5">
+
+                <div class="col-lg-8">
+                    <div class="contact-card contact-card-form">
+                        <div class="contact-card-header mb-4">
+                            <h3>Formulari i Aplikimit</h3>
+                            <p class="text-muted">Fushat me simbolin <span class="text-danger">*</span> janë të
+                                detyrueshme.</p>
+                        </div>
+
+                        <form class="contact-form row g-4" method="POST" action="#message_student"
+                            id="studentApplicationForm" novalidate>
+                            {% csrf_token %}
+
+
+                            <div class="col-12 mb-1">
+                                <div class="d-flex align-items-center justify-content-between gap-2"
+                                    id="applicationSteps">
+                                    <span class="badge rounded-pill bg-dark px-3 py-2" id="badgeStep1">Hapi 1: Të
+                                        dhënat</span>
+                                    <span class="badge rounded-pill bg-secondary px-3 py-2" id="badgeStep2">Hapi 2:
+                                        Pagesa me kartë</span>
+                                </div>
+                            </div>
+
+                            <div id="stepOneFields" class="row g-4">
+                                <div class="col-md-4">
+                                    <label for="name" class="form-label">Emri <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="name" name="name" placeholder="Emri"
+                                        required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="father_name" class="form-label">Emri i Babait <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="father_name" name="father_name"
+                                        placeholder="Emri i babait" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="surname" class="form-label">Mbiemri <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="surname" name="surname"
+                                        placeholder="Mbiemri" required>
+                                </div>
+
+
+
+                                <div class="col-md-6">
+                                    <label for="birthday" class="form-label">Ditëlindja <span
+                                            class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="birthday" name="birthday" required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="email" class="form-label">Email <span
+                                            class="text-danger">*</span></label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Email"
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="phone" class="form-label">Nr. Telefonit <span
+                                            class="text-danger">*</span></label>
+                                    <input type="tel" class="form-control" id="phone" name="phone" placeholder="+355..."
+                                        required>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="card_id_number" class="form-label">Numri i Kartës së Identitetit <span
+                                            class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="card_id_number" name="card_id_number"
+                                        placeholder="P.sh. A12345678B" required>
+                                </div>
+
+                                <div class="col-md-12">
+                                    <label for="university_degree" class="form-label">Diploma Universitare <span
+                                            class="text-danger">*</span></label>
+                                    <p class="text-muted">Shënim: Duhet te perzgjidhni nivelin arsimor qe keni
+                                        përfunduar</p>
+                                    <select class="form-select" id="university_degree" name="university_degree"
+                                        required>
+                                        <option value="" selected>Zgjidh nivelin</option>
+                                        <option value="bachelor">Bachelor</option>
+                                        <option value="master">Master</option>
+                                        <option value="doctorate">Doktoraturë</option>
+                                        <option value="other">Tjetër</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="Trajnimi" class="form-label">Zgjidh Kursin <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" id="Trajnimi" name="training" required>
+                                        <option selected value="">Zgjidh Kursin</option>
+                                        {% for training in trainings %}
+                                        <option value="{{ training.training_id }}">{{ training.training_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="timetable" class="form-label">Orari i Preferuar <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select" id="timetable" name="timetable" required>
+                                        <option value="" selected>Zgjidh orarin</option>
+                                        <option value="morning">11:00 - 13:00</option>
+                                        <option value="afternoon">17:00 - 19:00</option>
+                                        <option value="evening">19:00 - 21:00</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="message" class="form-label">Mesazhi Juaj <span
+                                            class="text-danger">*</span></label>
+                                    <textarea class="form-control" placeholder="Shkruani mesazhin tuaj" name="message"
+                                        id="message" rows="5" required></textarea>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="form-check mt-1">
+                                        <div class="form-text mt-2"> <span class="text-danger">*</span> Duhet të lexoni
+                                            dhe pranoni termat përpara dërgimit të aplikimit:
+                                            <span id="openTermsModal"
+                                                class="terms-open-btn mb-3 text-decoration-underline"
+                                                data-bs-toggle="modal" data-bs-target="#termsModal">
+                                                Lexo termat dhe kushtet
+                                            </span>
+                                        </div>
+
+                                        <input class="form-check-input" type="checkbox" value="accepted" id="terms"
+                                            name="terms_conditions" required disabled>
+                                        <label class="form-check-label" for="terms">
+                                            Pranoj termat dhe kushtet e aplikimit dhe përpunimin e të dhënave personale.
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 pt-2">
+                                    <button type="button" class="btn btn-md btn-sign me-lg-5" id="goToPaymentBtn">Vazhdo
+                                        te Pagesa</button>
+                                </div>
+                            </div>
+
+                            <div id="stepTwoFields" class="row g-4 d-none">
+                                <div class="col-12">
+                                    <div class="alert alert-info mb-0" role="alert">
+                                        Hapi i fundit: Plotësoni të dhënat e kartës për të përfunduar aplikimin.
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="cardholder_name" class="form-label">Emri në Kartë <span
+                                            class="text-danger">*</span> </label>
+                                    <input type="text" class="form-control" id="cardholder_name" name="cardholder_name"
+                                        placeholder="Emri Mbiemri">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="card_number" class="form-label">Numri i Kartës <span
+                                            class="text-danger">*</span> </label>
+                                    <input type="text" class="form-control" id="card_number" name="card_number"
+                                        inputmode="numeric" maxlength="19" placeholder="1234 5678 9012 3456">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="card_expiry" class="form-label">Skadenca (MM/YY) <span
+                                            class="text-danger">*</span> </label>
+                                    <input type="text" class="form-control" id="card_expiry" name="card_expiry"
+                                        maxlength="5" placeholder="MM/YY">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="card_cvv" class="form-label">CVV <span class="text-danger">*</span>
+                                    </label>
+                                    <input type="password" class="form-control" id="card_cvv" name="card_cvv"
+                                        inputmode="numeric" maxlength="4" placeholder="123">
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label for="payment_amount" class="form-label">Shuma</label>
+                                    <input type="text" class="form-control" id="payment_amount" name="payment_amount"
+                                        value="Sipas kursit të zgjedhur" readonly>
+                                </div>
+
+                                <div class="col-12 pt-2 d-flex gap-2 flex-wrap">
+                                    <button type="button" class="btn btn-outline-secondary" id="backToInfoBtn">Kthehu te
+                                        Hapi 1</button>
+                                    <button type="submit" name="student_button" class="btn btn-md btn-sign">Paguaj dhe
+                                        Dërgo Aplikimin</button>
+                                </div>
+                            </div>
+                        </form>
+
+                        {% for message in messages %}
+                        {% if 'student' in message.tags %}
+                        <div class="mt-4">
+                            <div class="alert {{ message.tags }} alert-dismissible fade show fw-bold" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                        </div>
+                        {% endif %}
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="col-lg-4">
                     <div class="contact-card">
                         <div class="contact-card-header mb-4">
                             <h3>Pyetje të Shpeshta (FAQ)</h3>
@@ -174,70 +240,90 @@
                         <div class="accordion faq-accordion" id="studentFaqAccordion">
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingOne">
-                                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseOne" aria-expanded="true" aria-controls="faqCollapseOne">
+                                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqCollapseOne" aria-expanded="true"
+                                        aria-controls="faqCollapseOne">
                                         <i class="far fa-question-circle"></i>
                                         Kush mund të aplikojë?
                                     </button>
                                 </h2>
-                                <div id="faqCollapseOne" class="accordion-collapse collapse show" aria-labelledby="faqHeadingOne" data-bs-parent="#studentFaqAccordion">
+                                <div id="faqCollapseOne" class="accordion-collapse collapse show"
+                                    aria-labelledby="faqHeadingOne" data-bs-parent="#studentFaqAccordion">
                                     <div class="accordion-body">
-                                        Çdo student ose profesionist që dëshiron të zhvillojë aftësi praktike mund të aplikojë.
+                                        Çdo student ose profesionist që dëshiron të zhvillojë aftësi praktike mund të
+                                        aplikojë.
                                     </div>
                                 </div>
                             </div>
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingTwo">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseTwo" aria-expanded="false" aria-controls="faqCollapseTwo">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqCollapseTwo" aria-expanded="false"
+                                        aria-controls="faqCollapseTwo">
                                         <i class="far fa-clock"></i>
                                         Cilat orare mund të zgjedh?
                                     </button>
                                 </h2>
-                                <div id="faqCollapseTwo" class="accordion-collapse collapse" aria-labelledby="faqHeadingTwo" data-bs-parent="#studentFaqAccordion">
+                                <div id="faqCollapseTwo" class="accordion-collapse collapse"
+                                    aria-labelledby="faqHeadingTwo" data-bs-parent="#studentFaqAccordion">
                                     <div class="accordion-body">
-                                        Mund të zgjidhni paradite, pasdite, mbrëmje ose fundjavë sipas disponibilitetit tuaj.
+                                        Mund të zgjidhni paradite, pasdite, mbrëmje ose fundjavë sipas disponibilitetit
+                                        tuaj.
                                     </div>
                                 </div>
                             </div>
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingThree">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseThree" aria-expanded="false" aria-controls="faqCollapseThree">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqCollapseThree" aria-expanded="false"
+                                        aria-controls="faqCollapseThree">
                                         <i class="fas fa-id-card"></i>
                                         Pse kërkohet numri i kartës së identitetit?
                                     </button>
                                 </h2>
-                                <div id="faqCollapseThree" class="accordion-collapse collapse" aria-labelledby="faqHeadingThree" data-bs-parent="#studentFaqAccordion">
+                                <div id="faqCollapseThree" class="accordion-collapse collapse"
+                                    aria-labelledby="faqHeadingThree" data-bs-parent="#studentFaqAccordion">
                                     <div class="accordion-body">
-                                        Ky informacion përdoret vetëm për verifikim dhe përpunim korrekt të aplikimit tuaj.
+                                        Ky informacion përdoret vetëm për verifikim dhe përpunim korrekt të aplikimit
+                                        tuaj.
                                     </div>
                                 </div>
                             </div>
 
                             <div class="accordion-item">
                                 <h2 class="accordion-header" id="faqHeadingFour">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFour" aria-expanded="false" aria-controls="faqCollapseFour">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqCollapseFour" aria-expanded="false"
+                                        aria-controls="faqCollapseFour">
                                         <i class="fas fa-user-check"></i>
                                         Kur marr konfirmimin?
                                     </button>
                                 </h2>
-                                <div id="faqCollapseFour" class="accordion-collapse collapse" aria-labelledby="faqHeadingFour" data-bs-parent="#studentFaqAccordion">
+                                <div id="faqCollapseFour" class="accordion-collapse collapse"
+                                    aria-labelledby="faqHeadingFour" data-bs-parent="#studentFaqAccordion">
                                     <div class="accordion-body">
-                                        Pasi dërgoni formularin, ekipi ynë ju kontakton me email ose telefon për hapat e mëtejshëm.
+                                        Pasi dërgoni formularin, ekipi ynë ju kontakton me email ose telefon për hapat e
+                                        mëtejshëm.
                                     </div>
                                 </div>
                             </div>
 
                             <div class="accordion-item mb-0">
                                 <h2 class="accordion-header" id="faqHeadingFive">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapseFive" aria-expanded="false" aria-controls="faqCollapseFive">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                        data-bs-target="#faqCollapseFive" aria-expanded="false"
+                                        aria-controls="faqCollapseFive">
                                         <i class="fas fa-shield-alt"></i>
                                         A ruhen të sigurta të dhënat e mia?
                                     </button>
                                 </h2>
-                                <div id="faqCollapseFive" class="accordion-collapse collapse" aria-labelledby="faqHeadingFive" data-bs-parent="#studentFaqAccordion">
+                                <div id="faqCollapseFive" class="accordion-collapse collapse"
+                                    aria-labelledby="faqHeadingFive" data-bs-parent="#studentFaqAccordion">
                                     <div class="accordion-body">
-                                        Po, të dhënat trajtohen me konfidencialitet dhe përdoren vetëm për procesin e regjistrimit.
+                                        Po, të dhënat trajtohen me konfidencialitet dhe përdoren vetëm për procesin e
+                                        regjistrimit.
                                     </div>
                                 </div>
                             </div>
@@ -245,119 +331,6 @@
                     </div>
                 </div>
 
-                <div class="col-lg-7">
-                    <div class="contact-card contact-card-form">
-                        <div class="contact-card-header mb-4">
-                            <h3>Formulari i Aplikimit</h3>
-                            <p class="text-muted">Fushat me simbolin * janë të detyrueshme.</p>
-                        </div>
-
-                        <form class="contact-form row g-4" method="POST" action="#message_student">
-                            {% csrf_token %}
-
-                            <div class="col-md-6">
-                                <label for="name" class="form-label">Emri *</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Emri" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="surname" class="form-label">Mbiemri *</label>
-                                <input type="text" class="form-control" id="surname" name="surname" placeholder="Mbiemri" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="father_name" class="form-label">Emri i Babait *</label>
-                                <input type="text" class="form-control" id="father_name" name="father_name" placeholder="Emri i babait" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="birthday" class="form-label">Ditëlindja *</label>
-                                <input type="date" class="form-control" id="birthday" name="birthday" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="email" class="form-label">Email *</label>
-                                <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="phone" class="form-label">Nr. Telefonit *</label>
-                                <input type="tel" class="form-control" id="phone" name="phone" placeholder="+355..." required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="card_id_number" class="form-label">Numri i Kartës së Identitetit *</label>
-                                <input type="text" class="form-control" id="card_id_number" name="card_id_number" placeholder="P.sh. A12345678B" required>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="university_degree" class="form-label">Diploma Universitare *</label>
-                                <select class="form-select" id="university_degree" name="university_degree" required>
-                                    <option value="" selected>Zgjidh nivelin</option>
-                                    <option value="bachelor">Bachelor</option>
-                                    <option value="master">Master</option>
-                                    <option value="doctorate">Doktoraturë</option>
-                                    <option value="other">Tjetër</option>
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="Trajnimi" class="form-label">Zgjidh Kursin *</label>
-                                <select class="form-select" id="Trajnimi" name="training" required>
-                                    <option selected value="">Zgjidh Kursin</option>
-                                    {% for training in trainings %}
-                                    <option value="{{ training }}">{{ training.training_name }}</option>
-                                    {% endfor %}
-                                </select>
-                            </div>
-
-                            <div class="col-md-6">
-                                <label for="timetable" class="form-label">Orari i Preferuar *</label>
-                                <select class="form-select" id="timetable" name="timetable" required>
-                                    <option value="" selected>Zgjidh orarin</option>
-                                    <option value="morning">Paradite (09:00 - 12:00)</option>
-                                    <option value="afternoon">Pasdite (14:00 - 17:00)</option>
-                                    <option value="evening">Mbrëmje (18:00 - 20:00)</option>
-                                    <option value="weekend">Fundjavë</option>
-                                </select>
-                            </div>
-
-                            <div class="col-12">
-                                <label for="message" class="form-label">Mesazhi Juaj *</label>
-                                <textarea class="form-control" placeholder="Shkruani mesazhin tuaj" name="message" id="message" rows="5" required></textarea>
-                            </div>
-
-                            <div class="col-12">
-                                <div class="form-check mt-1">
-                                    <button type="button" id="openTermsModal" class="btn terms-open-btn mb-3"
-                                        data-bs-toggle="modal" data-bs-target="#termsModal">
-                                        Lexo termat dhe kushtet
-                                    </button>
-                                    <input class="form-check-input" type="checkbox" value="accepted" id="terms" name="terms_conditions" required disabled>
-                                    <label class="form-check-label" for="terms">
-                                        Pranoj termat dhe kushtet e aplikimit dhe përpunimin e të dhënave personale.
-                                    </label>
-                                    <div class="form-text mt-2">Duhet të lexoni dhe pranoni termat përpara dërgimit të aplikimit.</div>
-                                </div>
-                            </div>
-
-                            <div class="col-12 pt-2">
-                                <button type="submit" name="student_button" class="btn contact-submit px-5 py-3">Dërgo Aplikimin</button>
-                            </div>
-                        </form>
-
-                        {% for message in messages %}
-                        {% if 'student' in message.tags %}
-                        <div class="mt-4">
-                            <div class="alert {{ message.tags }} alert-dismissible fade show fw-bold" role="alert">
-                                {{ message }}
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        </div>
-                        {% endif %}
-                        {% endfor %}
-                    </div>
-                </div>
             </div>
         </div>
     </section>
@@ -368,14 +341,14 @@
                 <div class="w-100 map_kont mt-2">
                     <iframe class="text-center w-100"
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
-                        title="Vendndodhja e Dominusoft në hartë"
-                        loading="lazy"></iframe>
+                        title="Vendndodhja e Dominusoft në hartë" loading="lazy"></iframe>
                 </div>
             </div>
         </div>
     </section>
 
-    <div class="modal fade terms-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+    <div class="modal fade terms-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
@@ -386,21 +359,329 @@
                     <p>Duke aplikuar në këtë formular, ju pranoni këto kushte:</p>
                     <ol>
                         <li>Të gjitha të dhënat e dërguara duhet të jenë të sakta dhe të përditësuara.</li>
-                        <li>Të dhënat personale përdoren vetëm për procesin e regjistrimit, komunikimit dhe administrimit të trajnimit.</li>
-                        <li>Dominusoft ruan konfidencialitetin e të dhënave dhe nuk i ndan me palë të treta pa arsye ligjore ose pëlqim.</li>
-                        <li>Pas dërgimit të aplikimit, stafi mund t'ju kontaktojë për verifikim ose dokumente shtesë.</li>
-                        <li>Orari përfundimtar i trajnimit konfirmohet në bazë të grupeve aktive dhe disponueshmërisë.</li>
-                        <li>Pranimi i aplikimit nuk garanton regjistrim automatik pa konfirmimin final nga ekipi ynë.</li>
+                        <li>Të dhënat personale përdoren vetëm për procesin e regjistrimit, komunikimit dhe
+                            administrimit të trajnimit.</li>
+                        <li>Dominusoft ruan konfidencialitetin e të dhënave dhe nuk i ndan me palë të treta pa arsye
+                            ligjore ose pëlqim.</li>
+                        <li>Pas dërgimit të aplikimit, stafi mund t'ju kontaktojë për verifikim ose dokumente shtesë.
+                        </li>
+                        <li>Orari përfundimtar i trajnimit konfirmohet në bazë të grupeve aktive dhe disponueshmërisë.
+                        </li>
+                        <li>Pranimi i aplikimit nuk garanton regjistrim automatik pa konfirmimin final nga ekipi ynë.
+                        </li>
                         <li>Ju mund të kërkoni korrigjim ose përditësim të të dhënave duke kontaktuar stafin tonë.</li>
                         <li>Duke klikuar "Pranoj Termat", ju deklaroni se i keni lexuar dhe i pranoni këto kushte.</li>
                     </ol>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mbyll</button>
-                    <button type="button" class="btn contact-submit terms-accept-btn" id="acceptTermsBtn">Pranoj Termat</button>
+                    <button type="button" class="btn btn-md" id="acceptTermsBtn">Pranoj Termat</button>
                 </div>
             </div>
         </div>
     </div>
 </main>
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.getElementById('studentApplicationForm');
+        const termsCheckbox = document.getElementById('terms');
+        const acceptTermsBtn = document.getElementById('acceptTermsBtn');
+        const termsModal = document.getElementById('termsModal');
+        const stepOneFields = document.getElementById('stepOneFields');
+        const stepTwoFields = document.getElementById('stepTwoFields');
+        const goToPaymentBtn = document.getElementById('goToPaymentBtn');
+        const backToInfoBtn = document.getElementById('backToInfoBtn');
+        const badgeStep1 = document.getElementById('badgeStep1');
+        const badgeStep2 = document.getElementById('badgeStep2');
+        const cardholderName = document.getElementById('cardholder_name');
+        const cardNumber = document.getElementById('card_number');
+        const cardExpiry = document.getElementById('card_expiry');
+        const cardCvv = document.getElementById('card_cvv');
+
+        if (!form || !termsCheckbox || !acceptTermsBtn || !termsModal || !stepOneFields || !stepTwoFields) {
+            return;
+        }
+
+        function updateCardRequiredState(isStepTwoVisible) {
+            const cardInputs = [cardholderName, cardNumber, cardExpiry, cardCvv];
+            cardInputs.forEach(function (input) {
+                if (!input) {
+                    return;
+                }
+                input.required = isStepTwoVisible;
+            });
+        }
+
+        function getFieldLabel(field) {
+            if (!field || !field.id) {
+                return 'Kjo fushë';
+            }
+            const label = form.querySelector('label[for="' + field.id + '"]');
+            if (!label) {
+                return 'Kjo fushë';
+            }
+            return label.textContent.replace('*', '').trim();
+        }
+
+        function clearFieldErrorState(field) {
+            if (!field) {
+                return;
+            }
+            field.classList.remove('is-invalid');
+            field.setCustomValidity('');
+            field.removeAttribute('aria-invalid');
+
+            const existingFeedback = form.querySelector('[data-feedback-for="' + field.id + '"]');
+            if (existingFeedback) {
+                existingFeedback.remove();
+            }
+        }
+
+        function showFieldErrorMessage(field, message) {
+            if (!field || !field.id) {
+                return;
+            }
+
+            const existingFeedback = form.querySelector('[data-feedback-for="' + field.id + '"]');
+            if (existingFeedback) {
+                existingFeedback.textContent = message;
+                return;
+            }
+
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback d-block';
+            feedback.textContent = message;
+            feedback.setAttribute('data-feedback-for', field.id);
+
+            if (field.type === 'checkbox') {
+                const formCheck = field.closest('.form-check');
+                if (formCheck) {
+                    formCheck.appendChild(feedback);
+                    return;
+                }
+            }
+
+            field.insertAdjacentElement('afterend', feedback);
+        }
+
+        function setFieldError(field, message, errors) {
+            if (!field) {
+                return;
+            }
+            field.classList.add('is-invalid');
+            field.setCustomValidity(message);
+            field.setAttribute('aria-invalid', 'true');
+            showFieldErrorMessage(field, message);
+            if (errors.indexOf(message) === -1) {
+                errors.push(message);
+            }
+        }
+
+        function validateRequiredField(field, errors) {
+            const value = (field.value || '').trim();
+            const fieldLabel = getFieldLabel(field);
+
+            if (!value) {
+                setFieldError(field, fieldLabel + ' është i detyrueshëm.', errors);
+                return;
+            }
+
+            if (field.type === 'email' && !field.checkValidity()) {
+                setFieldError(field, 'Email nuk është i vlefshëm.', errors);
+                return;
+            }
+
+            clearFieldErrorState(field);
+        }
+
+        function showStep(stepNumber) {
+            const isStepTwo = stepNumber === 2;
+            stepOneFields.classList.toggle('d-none', isStepTwo);
+            stepTwoFields.classList.toggle('d-none', !isStepTwo);
+
+            if (badgeStep1 && badgeStep2) {
+                badgeStep1.classList.toggle('bg-dark', !isStepTwo);
+                badgeStep1.classList.toggle('bg-secondary', isStepTwo);
+                badgeStep2.classList.toggle('bg-dark', isStepTwo);
+                badgeStep2.classList.toggle('bg-secondary', !isStepTwo);
+            }
+
+            updateCardRequiredState(isStepTwo);
+        }
+
+        function validateStepOne() {
+            const stepOneRequiredFields = stepOneFields.querySelectorAll('input[required], select[required], textarea[required]');
+            const errors = [];
+            let firstInvalidField = null;
+
+            for (let i = 0; i < stepOneRequiredFields.length; i += 1) {
+                const field = stepOneRequiredFields[i];
+                validateRequiredField(field, errors);
+                if (!firstInvalidField && field.classList.contains('is-invalid')) {
+                    firstInvalidField = field;
+                }
+            }
+
+            if (!termsCheckbox.checked) {
+                setFieldError(termsCheckbox, 'Duhet të pranoni termat dhe kushtet.', errors);
+                if (!firstInvalidField) {
+                    firstInvalidField = termsCheckbox;
+                }
+            } else {
+                clearFieldErrorState(termsCheckbox);
+            }
+
+            if (errors.length) {
+                if (firstInvalidField && typeof firstInvalidField.focus === 'function') {
+                    firstInvalidField.focus();
+                }
+                return false;
+            }
+
+            return true;
+        }
+
+        function validateStepTwo() {
+            const errors = [];
+            let firstInvalidField = null;
+
+            validateRequiredField(cardholderName, errors);
+            if (!firstInvalidField && cardholderName.classList.contains('is-invalid')) {
+                firstInvalidField = cardholderName;
+            }
+
+            clearFieldErrorState(cardNumber);
+            const cardNumberDigits = (cardNumber.value || '').replace(/\D/g, '');
+            if (!cardNumberDigits) {
+                setFieldError(cardNumber, 'Numri i kartës është i detyrueshëm.', errors);
+            } else if (cardNumberDigits.length < 13 || cardNumberDigits.length > 19) {
+                setFieldError(cardNumber, 'Numri i kartës duhet të ketë nga 13 deri në 19 shifra.', errors);
+            }
+            if (!firstInvalidField && cardNumber.classList.contains('is-invalid')) {
+                firstInvalidField = cardNumber;
+            }
+
+            clearFieldErrorState(cardExpiry);
+            const expiryValue = (cardExpiry.value || '').trim();
+            const expiryMatch = expiryValue.match(/^(0[1-9]|1[0-2])\/(\d{2})$/);
+            if (!expiryValue) {
+                setFieldError(cardExpiry, 'Skadenca e kartës është e detyrueshme.', errors);
+            } else if (!expiryMatch) {
+                setFieldError(cardExpiry, 'Përdorni formatin MM/YY.', errors);
+            } else {
+                const expiryMonth = parseInt(expiryMatch[1], 10);
+                const expiryYear = 2000 + parseInt(expiryMatch[2], 10);
+                const now = new Date();
+                const currentMonth = now.getMonth() + 1;
+                const currentYear = now.getFullYear();
+
+                if (expiryYear < currentYear || (expiryYear === currentYear && expiryMonth < currentMonth)) {
+                    setFieldError(cardExpiry, 'Karta ka skaduar.', errors);
+                }
+            }
+            if (!firstInvalidField && cardExpiry.classList.contains('is-invalid')) {
+                firstInvalidField = cardExpiry;
+            }
+
+            clearFieldErrorState(cardCvv);
+            const ccvDigits = (cardCvv.value || '').replace(/\D/g, '');
+            if (!ccvDigits) {
+                setFieldError(cardCvv, 'CVV është i detyrueshëm.', errors);
+            } else if (ccvDigits.length < 3 || ccvDigits.length > 4) {
+                setFieldError(cardCvv, 'CVV duhet të ketë 3 ose 4 shifra.', errors);
+            }
+            if (!firstInvalidField && cardCvv.classList.contains('is-invalid')) {
+                firstInvalidField = cardCvv;
+            }
+
+            if (errors.length) {
+                if (firstInvalidField && typeof firstInvalidField.focus === 'function') {
+                    firstInvalidField.focus();
+                }
+                return false;
+            }
+
+            return true;
+        }
+
+        function formatCardNumber(value) {
+            const digitsOnly = value.replace(/\D/g, '').substring(0, 19);
+            return digitsOnly.replace(/(.{4})/g, '$1 ').trim();
+        }
+
+        function formatCardExpiry(value) {
+            const digitsOnly = value.replace(/\D/g, '').substring(0, 4);
+            if (digitsOnly.length <= 2) {
+                return digitsOnly;
+            }
+            return digitsOnly.substring(0, 2) + '/' + digitsOnly.substring(2);
+        }
+
+        acceptTermsBtn.addEventListener('click', function () {
+            termsCheckbox.disabled = false;
+            termsCheckbox.checked = true;
+
+            if (window.bootstrap) {
+                const modalInstance = window.bootstrap.Modal.getOrCreateInstance(termsModal);
+                modalInstance.hide();
+            }
+        });
+
+        if (goToPaymentBtn) {
+            goToPaymentBtn.addEventListener('click', function () {
+                if (!validateStepOne()) {
+                    return;
+                }
+                showStep(2);
+                window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
+            });
+        }
+
+        if (backToInfoBtn) {
+            backToInfoBtn.addEventListener('click', function () {
+                showStep(1);
+                window.scrollTo({ top: form.offsetTop - 120, behavior: 'smooth' });
+            });
+        }
+
+        if (cardNumber) {
+            cardNumber.addEventListener('input', function (event) {
+                event.target.value = formatCardNumber(event.target.value);
+                clearFieldErrorState(cardNumber);
+            });
+        }
+
+        if (cardExpiry) {
+            cardExpiry.addEventListener('input', function (event) {
+                event.target.value = formatCardExpiry(event.target.value);
+                clearFieldErrorState(cardExpiry);
+            });
+        }
+
+        if (cardCvv) {
+            cardCvv.addEventListener('input', function (event) {
+                event.target.value = event.target.value.replace(/\D/g, '').substring(0, 4);
+                clearFieldErrorState(cardCvv);
+            });
+        }
+
+        const allFormFields = form.querySelectorAll('input, select, textarea');
+        allFormFields.forEach(function (field) {
+            const eventName = field.tagName.toLowerCase() === 'select' || field.type === 'checkbox' ? 'change' : 'input';
+            field.addEventListener(eventName, function () {
+                clearFieldErrorState(field);
+            });
+        });
+
+        form.addEventListener('submit', function (event) {
+            if (!stepTwoFields.classList.contains('d-none') && !validateStepTwo()) {
+                event.preventDefault();
+            }
+        });
+
+        showStep(1);
+    });
+</script>
+{% endblock %}
 {% endblock content %}

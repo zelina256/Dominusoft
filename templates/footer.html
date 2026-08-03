@@ -1,20 +1,81 @@
-<!DOCTYPE html>
 {% load static %}
 <!-- footer -->
 <footer class="border-top border-light" id="subscribe">
     <div class="container my-5">
         <div class="row py-lg-5 py-sm-3">
-            <div class="col-sm-12 col-md-6 col-lg-5">
+            <div class="col-sm-12 col-md-6 col-lg-3">
                 <img src="{% static 'images/logoBardhe.png' %}" alt="Dominusoft" class="logoFooter mt-5">
                 <h6>Kurse Profesionale dhe Shërbime të Specializuara për Biznese
                 </h6>
                 <p class="info_dom pe-4">Dominusoft është një kompani e specializuar në edukimin profesional dhe
-                    zgjidhjet digjitale për biznese.  
+                    zgjidhjet digjitale për biznese.
                 </p>
                 <p>Empowering Professional Education për një të ardhme të suksesshme në
                     teknologji dhe inovacion.</p>
+                <ul class="d-flex list-unstyled me-4 justify-content-start align-content-center w-50 ms-0">
+                    <li>
+                        <a href="https://www.instagram.com/dominusoft_education/" target="_blank" rel="noopener"
+                            aria-label="Faqja Instagram" class="follow me-2">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://m.facebook.com/DominusoftEducation/" target="_blank" class="follow me-2"
+                            rel="noopener" aria-label="Faqja Facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://al.linkedin.com/company/dominusoft-company?trk=public_profile_experience-item_profile-section-card_subtitle-click"
+                            target="_blank" rel="noopener" aria-label="Faqja Linkedin" class="follow me-2">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="https://www.tiktok.com/@dominusoft_education" target="_blank" class="follow me-2"
+                            rel="noopener" aria-label="Faqja TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <div class="col-sm-12 col-md-6 col-lg-3 mt-3">
+            <div class="col-sm-12 col-md-6 col-lg-2 mt-3">
+                <h4 class="text-light my-4">Shërbime</h4>
+                <ul class="list-unstyled me-4">
+                    {% for service in services %}
+                    <li>
+                        <a href="{% url 'service_detail' service.services_slug %}" class="me-2">
+                            {{ service.services_name}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-2">
+                <h4 class="text-light my-4 ms-0 ms-md-4">Kurse</h4>
+                <ul class="list-unstyled me-4">
+                    {% for category in categories %}
+                    <li>
+                        <a href="{% url 'category_detail' category.category_slug %}" class="me-2">
+                            {{ category.category_name}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="col-sm-12 col-md-6 col-lg-2">
+                <h4 class="text-light my-4 ms-0 ms-md-4">Kompania</h4>
+                <ul class="list-unstyled me-4">
+                    {% for category in categories %}
+                    <li>
+                        <a href="{% url 'category_detail' category.category_slug %}" class="me-2">
+                            {{ category.category_name}}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <!-- <div class="col-sm-12 col-md-6 col-lg-3 mt-3">
                 <h4 class="text-light my-4 ms-0 ms-md-4">Kontakto</h4>
                 <ul class="footer-links list-unstyled lh-lg ms-0 ms-md-4">
                     <li><a class="p-2" href="tel:0673005050"><i class="fas fa-phone"></i>&nbsp;&nbsp;<span
@@ -25,38 +86,13 @@
                             “Reshit Çollaku”,
                             Tiranë</span></li>
                 </ul>
-                <ul class="d-flex list-unstyled me-4 justify-content-between align-content-center w-50  ms-0 ms-md-4">
-                    <li>
-                        <a href="https://www.instagram.com/dominusoft_education/" target="_blank" rel="noopener"
-                            aria-label="Faqja Instagram" class="follow">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="https://m.facebook.com/DominusoftEducation/" target="_blank" class="follow"
-                            rel="noopener" aria-label="Faqja Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="https://al.linkedin.com/company/dominusoft-company?trk=public_profile_experience-item_profile-section-card_subtitle-click"
-                            target="_blank" rel="noopener" aria-label="Faqja Linkedin" class="follow">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="https://www.tiktok.com/@dominusoft_education" target="_blank" class="follow"
-                            rel="noopener" aria-label="Faqja TikTok">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-4 mt-3">
+
+            </div> -->
+            <div class="col-sm-12 col-md-6 col-lg-2 mt-3">
                 <h4 class="text-light my-4">Subscribe</h4>
                 <p class="mb-2">Për informacione më të detajuara mbi kurset më të reja, programet e certifikuara dhe
-                    datat e nisjes, ju lutemi vendosni email-in tuaj dhe klikoni butonin “Dërgo”. 
-                    
+                    datat e nisjes, ju lutemi vendosni email-in tuaj dhe klikoni butonin “Dërgo”.
+
                 </p>
                 <form action="#subscribe" method="POST" class="subcribe_form">
                     {% csrf_token %}

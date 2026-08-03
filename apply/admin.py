@@ -23,3 +23,23 @@ class NewStaffAdmin(admin.ModelAdmin):
 class Subscribe(admin.ModelAdmin):
     list_display = ("subscribe_email", "submit_at")
     search_fields = ("subscribe_email", "submit_at")
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = (
+        "contact_name",
+        "contact_surname",
+        "contact_email",
+        "contact_phone",
+        "contact_subject",
+        "submit_at",
+    )
+    search_fields = (
+        "contact_name",
+        "contact_surname",
+        "contact_email",
+        "contact_phone",
+        "contact_subject",
+        "contact_message",
+    )

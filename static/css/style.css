@@ -809,16 +809,14 @@ h4.text-light{
 }
 
 /* Format */
-.form-control,
+/* .form-control,
 .form-select {
     background: transparent;
     padding: 10px 0;
     color: #44476A;
     border: 0;
-    /* width: 75%; */
     border-bottom: 0.5px solid #44476A;
     border-radius: 0;
-    /* margin: 0 auto; */
 }
 
 .form-select {
@@ -834,9 +832,9 @@ h4.text-light{
 
 .form-select:hover>option:hover {
     background-color: #44476A;
-}
+} */
 
-.form-control:focus,
+/* .form-control:focus,
 .form-select:focus {
     background: transparent;
     border: 0;
@@ -845,18 +843,17 @@ h4.text-light{
     color: #44476A;
     box-shadow: none;
     padding-left: 0;
-}
+} */
 
-::-webkit-input-placeholderP,
+/* ::-webkit-input-placeholderP,
 ::-moz-input-placeholderP,
 ::-ms-input-placeholderP {
     color: #44476A;
-}
+} */
 
-textarea.form-control {
+/* textarea.form-control {
     height: 100px;
-    /* width: 88%; */
-}
+} */
 
 .sec_footer {
     background: #3b3f61;
@@ -1197,22 +1194,12 @@ input[type=number] {
         position: relative;
         z-index: 1;
     }
-
-    /*.contact-hero,*/
-    /* .contact-card, */
     .contact-card-form,
     .contact-map-wrap,
     .contact-cta {
         border: 1px solid #d1d9e6;
         box-shadow: 10px 10px 20px #c6c8d3, -10px -10px 20px #ffffff;
     }
-
-    /*.contact-hero {
-        padding: 4rem;
-        border-radius: 2rem;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(236, 239, 245, 0.92) 55%, rgba(222, 226, 238, 0.95) 100%);
-    } */
-
     .contact-badge {
         display: inline-flex;
         align-items: center;
@@ -1266,7 +1253,6 @@ input[type=number] {
         height: 100%;
         border-radius: 0.25rem;
         padding: 2rem;
-       /* background: linear-gradient(145deg, #eef0f6 0%, #e2e4ee 100%);*/
     }
 
     .contact-card h3,
@@ -1409,4 +1395,104 @@ input[type=number] {
         .contact-cta .btn {
             width: 100%;
         }
+    }
+
+      .student-page .contact-hero {
+        padding-top: 5rem;
+        padding-bottom: 2.5rem;
+    }
+
+    .student-page .contact-form .form-select,
+    .student-page .contact-form .form-check-input {
+        border: 1px solid #d1d9e6;
+        background-color: rgba(255, 255, 255, 0.92);
+        box-shadow: inset 2px 2px 6px rgba(184, 185, 190, 0.75), inset -2px -2px 6px rgba(255, 255, 255, 0.85);
+    }
+
+    .student-page .contact-form .form-select {
+        border-radius: 1rem;
+        padding: 0.9rem 1rem;
+        color: #31344b;
+    }
+
+    .student-page .contact-form .form-check-input {
+        width: 1.2rem;
+        height: 1.2rem;
+        border-radius: 0.35rem;
+        margin-top: 0.15rem;
+    }
+
+    .student-page .contact-form .form-check-input:checked {
+        background-color: #31344b;
+        border-color: #31344b;
+    }
+
+    .student-page .contact-form .form-check-label {
+        color: #44476a;
+        font-size: 0.95rem;
+    }
+
+    .student-page .faq-accordion .accordion-item {
+        border: 1px solid rgba(209, 217, 230, 0.9);
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.6);
+        margin-bottom: 1rem;
+        overflow: hidden;
+    }
+
+    .student-page .faq-accordion .accordion-button {
+        font-weight: 700;
+        color: #31344b;
+        background: rgba(255, 255, 255, 0.45);
+        box-shadow: none;
+        gap: 0.75rem;
+    }
+
+    .student-page .faq-accordion .accordion-button i {
+        color: #44476a;
+        width: 1.2rem;
+        text-align: center;
+    }
+
+    .student-page .faq-accordion .accordion-button:not(.collapsed) {
+        background: rgba(230, 231, 238, 0.85);
+        color: #23263b;
+    }
+
+    .student-page .faq-accordion .accordion-button:focus {
+        border-color: transparent;
+        box-shadow: 0 0 0 0.2rem rgba(68, 71, 106, 0.12);
+    }
+
+    .student-page .faq-accordion .accordion-body {
+        color: #44476a;
+        font-weight: 500;
+        line-height: 1.6;
+        padding-top: 0.25rem;
+    }
+
+    .student-page .terms-modal .modal-content {
+        border: 1px solid #d1d9e6;
+        border-radius: 1rem;
+        background: #eef0f6;
+    }
+
+    .student-page .terms-modal .modal-header,
+    .student-page .terms-modal .modal-footer {
+        border-color: #d1d9e6;
+    }
+
+    .student-page .terms-modal .modal-title {
+        color: #31344b;
+        font-weight: 700;
+    }
+
+    .student-page .terms-modal .modal-body {
+        color: #44476a;
+        line-height: 1.7;
+    }
+
+    .student-page .terms-modal .terms-accept-btn {
+        min-width: auto;
+        padding: 0.6rem 1.2rem;
     }

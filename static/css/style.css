@@ -7,6 +7,11 @@
 :root {
     --color-diamond: #e6e7ee;
     --color-charcoal-blue: #31344b;
+         --hero-bg-1: #eef2ff;
+        --hero-bg-2: #e5f7ff;
+        --hero-text: #1f2a44;
+        --hero-accent: #1e7bbf;
+        --hero-accent-dark: #135f95;
 }
 
 /* Stilizimi baze */
@@ -29,8 +34,16 @@ body {
     line-height: 1.5;
     color: #44476A;
     text-align: left;
-    background-color: var(--color-diamond);
-    margin: 0;
+    /* background-color: var(--color-diamond);
+    margin: 0; */
+         --hero-bg-1: #eef2ff;
+        --hero-bg-2: #e5f7ff;
+        --hero-text: #1f2a44;
+        --hero-accent: #1e7bbf;
+        --hero-accent-dark: #135f95;
+        /* position: relative;
+        overflow: hidden; */
+        background: linear-gradient(130deg, var(--hero-bg-1), var(--hero-bg-2));
 }
 
 h1,
@@ -55,7 +68,9 @@ p {
 img {
     object-fit: cover;
 }
-
+.card-sherbim{
+      background: linear-gradient(130deg, var(--hero-bg-1), var(--hero-bg-2));
+}
 .event_page .row img {
     height: 500px;
     border-radius: 0.25rem;

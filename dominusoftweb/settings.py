@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-h&o^8^w@127t@gy*(wq(vrn48uw!yz3b7ljlk#3fm@uxpk&9lg
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [ 
+                 "regain-groovy-trapper.ngrok-free.dev", 
+                 "*",
+                #  "http://localhost:80"
+                 ]
 
 
 # Application definition

@@ -133,3 +133,7 @@ def error_404(request, exception):
     cat_trainings = Category_training.objects.all()
     context = {"cat_trainings": cat_trainings}
     return render(request, "404_page.html", context, status=404)
+
+
+def about(request):
+    return render(request, "kryefaqja/rrethnesh.html")

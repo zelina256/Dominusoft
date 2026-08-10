@@ -1,169 +1,343 @@
 {% load static %}
-<!-- footer -->
-<footer class="border-top border-light" id="subscribe">
-    <div class="container my-5">
-        <div class="row py-lg-5 py-sm-3">
-            <div class="col-sm-12 col-md-6 col-lg-3">
-                <img src="{% static 'images/logoBardhe.png' %}" alt="Dominusoft" class="logoFooter mt-5">
+
+<footer class="footer-main pt-5">
+
+    <div class="container">
+
+        <!-- MAIN FOOTER -->
+        <div class="row g-5 pb-5">
+
+            <!-- KOLONA 1 - LOGO / COMPANY -->
+            <div class="col-12 col-md-6 col-lg-4">
+
+                <a href="{% url 'home' %}" class="d-inline-block mb-3">
+                 <img src="{% static 'images/logoBardhe.png' %}" alt="Dominusoft" class="logoFooter mt-5">
+                </a>
+
                 <h6>Kurse Profesionale dhe Shërbime të Specializuara për Biznese
                 </h6>
                 <p class="info_dom pe-4">Dominusoft është një kompani e specializuar në edukimin profesional dhe
-                    zgjidhjet digjitale për biznese.
+                    zgjidhjet digjitale për biznese.  
                 </p>
                 <p>Empowering Professional Education për një të ardhme të suksesshme në
                     teknologji dhe inovacion.</p>
-                <ul class="d-flex list-unstyled me-4 justify-content-start align-content-center w-50 ms-0">
-                    <li>
-                        <a href="https://www.instagram.com/dominusoft_education/" target="_blank" rel="noopener"
-                            aria-label="Faqja Instagram" class="follow me-2">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="https://m.facebook.com/DominusoftEducation/" target="_blank" class="follow me-2"
-                            rel="noopener" aria-label="Faqja Facebook">
-                            <i class="fab fa-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="https://al.linkedin.com/company/dominusoft-company?trk=public_profile_experience-item_profile-section-card_subtitle-click"
-                            target="_blank" rel="noopener" aria-label="Faqja Linkedin" class="follow me-2">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                    </li>
-                    <li class="">
-                        <a href="https://www.tiktok.com/@dominusoft_education" target="_blank" class="follow me-2"
-                            rel="noopener" aria-label="Faqja TikTok">
-                            <i class="fab fa-tiktok"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-2 mt-3">
-                <h4 class="text-light my-4">Shërbime</h4>
-                <ul class="list-unstyled me-4">
-                    {% for service in services %}
-                    <li>
-                        <a href="{% url 'service_detail' service.services_slug %}" class="me-2">
-                            {{ service.services_name}}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-2">
-                <h4 class="text-light my-4 ms-0 ms-md-4">Kurse</h4>
-                <ul class="list-unstyled me-4">
-                    {% for category in categories %}
-                    <li>
-                        <a href="{% url 'category_detail' category.category_slug %}" class="me-2">
-                            {{ category.category_name}}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="col-sm-12 col-md-6 col-lg-2">
-                <h4 class="text-light my-4 ms-0 ms-md-4">Kompania</h4>
-                <ul class="list-unstyled me-4">
-                    {% for category in categories %}
-                    <li>
-                        <a href="{% url 'category_detail' category.category_slug %}" class="me-2">
-                            {{ category.category_name}}
-                        </a>
-                    </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <!-- <div class="col-sm-12 col-md-6 col-lg-3 mt-3">
-                <h4 class="text-light my-4 ms-0 ms-md-4">Kontakto</h4>
-                <ul class="footer-links list-unstyled lh-lg ms-0 ms-md-4">
-                    <li><a class="p-2" href="tel:0673005050"><i class="fas fa-phone"></i>&nbsp;&nbsp;<span
-                                class="text-light">+355 67 300 5050</span></a></li>
-                    <li><a class="p-2" href="mailto:info@dominusoft.al"><i class="far fa-envelope"></i>&nbsp;&nbsp;<span
-                                class="text-light">info@dominusoft.al</span></a></li>
-                    <li class="p-2"><i class="fas fa-map-marker"></i>&nbsp;&nbsp;<span class="text-light">Rr:
-                            “Reshit Çollaku”,
-                            Tiranë</span></li>
-                </ul>
+                <!-- SOCIAL MEDIA -->
+                <div class="footer-social d-flex gap-2 mt-4">
 
-            </div> -->
-            <div class="col-sm-12 col-md-6 col-lg-2 mt-3">
-                <h4 class="text-light my-4">Subscribe</h4>
-                <p class="mb-2">Për informacione më të detajuara mbi kurset më të reja, programet e certifikuara dhe
-                    datat e nisjes, ju lutemi vendosni email-in tuaj dhe klikoni butonin “Dërgo”.
+                    <a href="https://www.instagram.com/dominusoft_education/" target="_blank" rel="noopener"
+                        aria-label="Instagram Dominusoft">
+                        <i class="fab fa-instagram"></i>
+                    </a>
 
-                </p>
-                <form action="#subscribe" method="POST" class="subcribe_form">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <input type="email" class="form-control sub_form" id="subcribe"
-                            placeholder="Vendosni email tuaj" name="subscribe_email" required>
-                        <button type="submit" name="subscribe_button"
-                            class="btn subcribe btn-lg bt-sub mt-4 px-3 w-100"> Dërgo
-                        </button>
-                    </div>
-                </form>
-                {% for message in messages %}
-                {% if "subscribe" in message.tags %}
-                <div class="mt-5">
-                    <div class="alert {{ message.tags }} alert-dismissible fade show" id="a" role="alert">
-                        {{ message }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
+                    <a href="https://m.facebook.com/DominusoftEducation/" target="_blank" rel="noopener"
+                        aria-label="Facebook Dominusoft">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+
+                    <a href="https://al.linkedin.com/company/dominusoft-company" target="_blank" rel="noopener"
+                        aria-label="LinkedIn Dominusoft">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+
+                    <a href="https://www.tiktok.com/@dominusoft_education" target="_blank" rel="noopener"
+                        aria-label="TikTok Dominusoft">
+                        <i class="fab fa-tiktok"></i>
+                    </a>
+
                 </div>
-                {% endif %}
-                {% endfor %}
+
+            </div>
+
+
+            <!-- KOLONA 2 - SHERBIME -->
+            <div class="col-6 col-md-3 col-lg-2">
+
+                <h5 class="footer-title text-light my-4 ms-0">
+                    Shërbime
+                </h5>
+
+                <ul class="footer-links list-unstyled">
+
+                    <li>
+                        <a href="#">
+                            Software Solutions
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Business Consultation
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            SEO
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Digital Marketing
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Design
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            B2B Professional Training
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- KOLONA 3 - KURSE -->
+            <div class="col-6 col-md-3 col-lg-2">
+
+                <h5 class="footer-title text-light my-4 ms-0">
+                    Kurse
+                </h5>
+
+                <ul class="footer-links list-unstyled">
+
+                    <li>
+                        <a href="#">
+                            Programim
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Dizajn Grafik
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Digital Marketing & SEO
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Inxhinieri & Arkitekturë
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Siguri Kibernetike
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Kurse IT
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- KOLONA 4 - KOMPANIA -->
+            <div class="col-6 col-md-3 col-lg-2">
+
+                <h5 class="footer-title text-light my-4 ms-0">
+                    Kompania
+                </h5>
+
+                <ul class="footer-links list-unstyled">
+
+                    <li>
+                        <a href="#">
+                            Rreth Nesh
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Blog
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Careers
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Kontakt
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+            <!-- KOLONA 5 - LIGJORE -->
+            <div class="col-6 col-md-3 col-lg-2">
+
+                <h5 class="footer-title text-light my-4 ms-0">
+                    Ligjore
+                </h5>
+
+                <ul class="footer-links list-unstyled">
+
+                    <li>
+                        <a href="{% url 'policy' %}">
+                            Politikat e Privatësisë
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{% url 'terms' %}">
+                            Termat dhe Kushtet
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            Politikat e Cookies
+                        </a>
+                    </li>
+
+                </ul>
+
             </div>
 
         </div>
-    </div>
-    <div class="container-fluid sec_footer">
-        <div class="container pt-3">
-            <div class="row">
-                <div class="col-12 col-md-6 text-center text-md-start">
-                    <p class="mt-3">&copy; <span id="year"></span> Dominusoft. All rights reserved.</p>
+
+
+        <!-- NEWSLETTER -->
+        <div class="footer-newsletter py-4">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-lg-6">
+
+                    <h4 class="footer-newsletter-title mb-2">
+                        Qëndro i Përditësuar
+                    </h4>
+
+                    <p class="mb-0">
+                        Merr njoftime për kurse, shërbime, teknologji,
+                        Inteligjencë Artificiale dhe mundësi të reja profesionale.
+                    </p>
+
                 </div>
-                {% comment %}
-                <div class="col-12 col-md-4">
-                    <ul class="d-flex list-unstyled me-4 justify-content-center align-content-center">
-                        <li>
-                            <a href="https://www.instagram.com/dominusoft_education/" target="_blank" rel="noopener"
-                                aria-label="Faqja Instagram" class="btn follow">
-                                <i class="fab fa-instagram"></i>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="https://m.facebook.com/DominusoftEducation/" target="_blank" class="btn follow"
-                                rel="noopener" aria-label="Faqja Facebook">
-                                <i class="fab fa-facebook-f"></i>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="https://al.linkedin.com/company/dominusoft-company?trk=public_profile_experience-item_profile-section-card_subtitle-click"
-                                target="_blank" rel="noopener" aria-label="Faqja Linkedin" class="btn follow">
-                                <i class="fab fa-linkedin-in"></i>
-                            </a>
-                        </li>
-                        <li class="">
-                            <a href="https://www.tiktok.com/@dominusoft_education" target="_blank" class="btn follow"
-                                rel="noopener" aria-label="Faqja TikTok">
-                                <i class="fab fa-tiktok"></i>
-                            </a>
-                        </li>
-                    </ul>
+
+
+                <div class="col-lg-6">
+
+                    <form action="#subscribe" method="POST" class="subcribe_form">
+
+                        {% csrf_token %}
+
+                        <div class="newsletter-form d-flex flex-column flex-sm-row gap-2">
+
+                            <label for="subcribe" class="visually-hidden">
+                                Email
+                            </label>
+
+                            <input type="email" class="form-control sub_form" id="subcribe"
+                                placeholder="Vendosni email-in tuaj" name="subscribe_email" required>
+
+                            <button type="submit" name="subscribe_button" class="btn newsletter-btn">
+                                Regjistrohu
+                            </button>
+
+                        </div>
+
+                    </form>
+
+
+                    <!-- DJANGO MESSAGES -->
+                    {% for message in messages %}
+
+                    {% if "subscribe" in message.tags %}
+
+                    <div class="mt-3">
+
+                        <div class="alert {{ message.tags }} alert-dismissible fade show mb-0" role="alert">
+
+                            {{ message }}
+
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close">
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                    {% endfor %}
+
                 </div>
-                {% endcomment %}
-                <div class="col-sm-12 col-md-6 terms">
-                    <ul class="list-inline text-center text-md-end mt-0 mt-lg-3">
-                        <li class="list-inline-item"><a href="{% url 'terms' %}" class="text-decoration-none">Termat dhe
-                                Kushtet</a></li>
-                        <li class="list-inline-item"><a href="{% url 'policy' %}" class="text-decoration-none">Politikat
-                                e Privatësisë</a></li>
-                    </ul>
-                </div>
+
             </div>
+
         </div>
+
     </div>
+
+
+    <!-- BOTTOM FOOTER -->
+    <div class="footer-bottom">
+
+        <div class="container">
+
+            <div class="row align-items-center py-3 g-2">
+
+                <div class="col-12 col-lg-6 text-center text-lg-start">
+
+                    <p class="mb-0">
+                        &copy;
+                        <span id="year"></span>
+                        Dominusoft. Të gjitha të drejtat e rezervuara.
+                    </p>
+
+                </div>
+
+
+                <div class="col-12 col-lg-6 text-center text-lg-end">
+
+                    <p class="mb-0 footer-license">
+
+                        <i class="fas fa-certificate me-1"></i>
+
+                        Licencuar nga Ministria e Ekonomisë dhe Inovacionit
+
+                        <strong>
+                            LN-3743-02-2022
+                        </strong>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
 </footer>
-<!-- fund footer -->
+
+
+<script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+</script>

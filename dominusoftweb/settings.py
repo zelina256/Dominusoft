@@ -28,7 +28,6 @@ DEBUG = True
 ALLOWED_HOSTS = [ 
                  "regain-groovy-trapper.ngrok-free.dev", 
                  "*",
-                #  "http://localhost:80"
                  ]
 
 

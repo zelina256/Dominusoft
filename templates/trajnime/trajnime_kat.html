@@ -225,14 +225,9 @@
     /* COURSE CARDS */
     .course-card {
         height: 100%;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-        border-radius: 1.45rem;
-        border: 1px solid var(--program-border);
         background: #fff;
-        box-shadow: 0 12px 34px rgba(31, 42, 68, .05);
         transition: .25s ease;
+            padding: clamp(1rem, 4vw, 0.25rem);
     }
 
     .course-card:hover {
@@ -530,7 +525,7 @@
             <div class="row g-4">
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Frontend</span>
                             <h3>Web Design (Frontend)</h3>
@@ -551,8 +546,8 @@
                     </article>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                <div class="col-md-6 col-lg-4 ">
+                    <article class="course-card card" >
                         <div class="course-card-top">
                             <span class="course-tag">Full Stack</span>
                             <h3>Web Development Python</h3>
@@ -574,7 +569,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Full Stack JS</span>
                             <h3>Web Development MERN</h3>
@@ -596,7 +591,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Microsoft</span>
                             <h3>ASP.NET / C#</h3>
@@ -618,7 +613,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Programming Fundamentals</span>
                             <h3>C / C++</h3>
@@ -640,7 +635,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Enterprise</span>
                             <h3>Java</h3>
@@ -662,7 +657,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Cloud & Automation</span>
                             <h3>DevOps</h3>
@@ -684,7 +679,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Data</span>
                             <h3>Data Analysis</h3>
@@ -706,7 +701,7 @@
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <article class="course-card">
+                    <article class="course-card card">
                         <div class="course-card-top">
                             <span class="course-tag">Quality Assurance</span>
                             <h3>Software Testing</h3>
@@ -863,23 +858,24 @@
 
 
     <!-- FINAL CTA -->
-    <section class="program-section">
+         <!-- <section class="program-section final-cta "></section> -->
+    <section class="final-cta ">
         <div class="container">
-            <div class="program-cta text-center">
+            <div class="">
                 <h2>Gati të Fillosh Karrierën në Programim?</h2>
-
-                <p>
+<!-- 
+                <p class="home-eyebrow my-3">
                     Zgjidh programin që përputhet me objektivat e tua ose kontakto
                     Dominusoft për të kuptuar cili drejtim është më i përshtatshëm
                     për nivelin dhe karrierën që synon.
-                </p>
+                </p> -->
 
-                <div class="program-hero-actions">
-                    <a href="#kurset" class="btn-program-primary">
+                <div class="mt-4 d-flex flex-wrap gap-3 justify-content-start">
+                    <a href="#kurset" class="home-button home-button--primary">
                         Shiko Kurset
                     </a>
 
-                    <a href="/kontakt" class="btn-program-outline">
+                    <a href="/kontakt" class="home-button  home-button--outline-dark">
                         Na Kontakto
                     </a>
                 </div>

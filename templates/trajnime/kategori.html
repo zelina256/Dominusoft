@@ -1,78 +1,79 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
-{% block title %} Kurse Profesionale të Certifikuara | Dominusoft Education {% endblock %}
+
+{% block title %}Kurse profesionale të certifikuara | Dominusoft{% endblock %}
 {% block meta %}
-<meta name="keywords" content="punësim i sigurt, formim profesional, kurse profesionale të certifikuara">
-<meta name="description"
-    content="Kurset më të kërkuara dhe angazhime në praktika reale. Bibliotekë e madhe virtuale, suport nga staf akademik. Orientim drejt punësimit falë partneriteteve.">
+<meta name="keywords" content="kurse profesionale Tiranë, trajnime të certifikuara, formim profesional">
+<meta name="description" content="Zgjidhni një program profesional me mësim praktik, mbështetje nga pedagogët dhe orientim drejt tregut të punës.">
 {% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/trajnime-profesionale/">{% endblock %}
+{% block social_meta %}
+<meta property="og:locale" content="sq_AL"><meta property="og:type" content="website">
+<meta property="og:title" content="Kurse profesionale të certifikuara | Dominusoft">
+<meta property="og:description" content="Programe praktike për aftësi që kërkohen në tregun e punës.">
+<meta property="og:url" content="https://dominusoft.al/trajnime-profesionale/">
+<meta property="og:image" content="https://dominusoft.al{% static 'images/og-dominusoft-home.png' %}">
+<meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+    <section class="inner-hero">
+        <div class="inner-container inner-hero__layout">
+            <div class="inner-hero__content">
+                <p class="inner-eyebrow">Dominusoft Education</p>
+                <h1>Aftësi praktike për hapin tënd të ardhshëm.</h1>
+                <p class="inner-hero__lead">Eksploro programet profesionale, krahaso fushat dhe zgjidh trajnimin që përputhet me objektivat e tua.</p>
+                <div class="inner-hero__actions">
+                    <a class="inner-button inner-button--primary" href="#programet">Shiko programet</a>
+                    <a class="inner-button inner-button--ghost" href="{% url 'student' %}">Apliko për kurs</a>
+                </div>
+            </div>
+            <aside class="inner-hero__panel" aria-label="Përfitimet e trajnimeve">
+                <h2>Mëso duke praktikuar</h2>
+                <ul class="fact-list">
+                    <li><i class="fas fa-certificate" aria-hidden="true"></i><span>Programe profesionale të licencuara</span></li>
+                    <li><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Ushtrime dhe projekte praktike</span></li>
+                    <li><i class="fas fa-users" aria-hidden="true"></i><span>Mbështetje gjatë procesit të të mësuarit</span></li>
+                </ul>
+            </aside>
+        </div>
+    </section>
 
-<main class="mt-5 pt-5">
-    {% for cat_training in cat_trainings %}
-    {% if forloop.counter|divisibleby:2 %}
-    <!-- Kategoria e trajnimit cift  -->
-    <section class="section_kat mt-1 mb-5 mt-5">
-        <div class="container">
-            <div class="card kat_card bg-primary shadow-inset border-light mt-2 mb-4">
-                <div class="card-body">
-                    <div class="row d-flex">
-                        <div
-                            class="col-sm-12 col-md-4 order-2 order-md-1 dd-flex justify-content-center align-items-center">
-                            <div class="trajnime_list my-3 me-5">
-                                {% for train in cat_training.get_training %}
-                                <p><a
-                                        href="{{train.training_category.cat_slug}}/{{train.training_slug}}">{{train.training_name}}</a>
-                                </p>
-                                {% endfor %}
-                            </div>
-                        </div>
-                        <div
-                            class="col-sm-12 col-md-8 order-1 order-md-2 border_start d-flex justify-content-center align-items-center">
-                            <div>
-                                <h2 class="ps-0 ps-md-5 fw-bold mb-3">{{cat_training.cat_training_name}}</h2>
-                                <p class="ps-0 ps-md-5 pt-3">{{cat_training.cat_training_text_description|safe}}</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section id="programet" class="inner-section inner-section--white" aria-labelledby="categories-heading">
+        <div class="inner-container">
+            <div class="inner-heading">
+                <p class="inner-eyebrow">Fushat e studimit</p>
+                <h2 id="categories-heading">Gjej programin e duhur</h2>
+                <p>Çdo kategori bashkon kurse të fokusuara në kompetenca konkrete dhe përdorim praktik.</p>
             </div>
+            {% if cat_trainings %}
+            <div class="inner-grid inner-grid--3">
+                {% for cat_training in cat_trainings %}
+                <article class="inner-card category-card">
+                    <div class="category-card__media">
+                        {% if cat_training.cat_training_img %}
+                        <img src="{{ cat_training.cat_training_img.url }}" alt="{{ cat_training.cat_training_img_alt|default:cat_training.cat_training_name }}" width="480" height="320" loading="lazy">
+                        {% endif %}
+                    </div>
+                    <div class="category-card__body">
+                        <span class="category-card__count">{{ cat_training.get_training|length }} kurse</span>
+                        <h2>{{ cat_training.cat_training_name }}</h2>
+                        <p>{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags|truncatewords:24 }}</p>
+                        <a class="category-card__link" href="{% url 'trainings' cat_training.cat_slug %}">Shiko programet <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+            {% else %}
+            <div class="inner-empty"><h2>Programet po përditësohen</h2><p>Kontaktoni ekipin tonë për informacion mbi regjistrimet e ardhshme.</p><a class="inner-button inner-button--primary" href="{% url 'student' %}">Na kontaktoni</a></div>
+            {% endif %}
         </div>
     </section>
-    <!-- fund kat -->
-    {% else %}
-    <!-- Kategoria e trajnimit tek  -->
-    <section class="section_kat mt-1 mb-5">
-        <div class="container">
-            <div class="card kat_card bg-primary shadow-inset border-light mt-2 mb-4">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12 col-md-8 border_end d-flex justify-content-center align-items-center">
-                            <div>
-                                <h2 class="fw-bold mb-3">{{cat_training.cat_training_name}}</h2>
-                                <p class="pe-0 pe-md-5 pt-3">{{cat_training.cat_training_text_description|safe}}</p>
-                            </div>
-                        </div>
-                        <div class="col-sm-12 col-md-4 d-flex justify-content-center align-items-center">
-                            <div class="trajnime_list my-3">
-                                {% for train in cat_training.get_training %}
-                                <p><a
-                                        href="{{train.training_category.cat_slug}}/{{train.training_slug}}">{{train.training_name}}</a>
-                                </p>
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-    <!-- fund kat -->
-    {% endif %}
-    {% endfor %}
-    <!-- fund kat -->
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}

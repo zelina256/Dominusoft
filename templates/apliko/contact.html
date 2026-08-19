@@ -24,247 +24,160 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
 {% block scripts %}
 
 {% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
+<link rel="stylesheet" href="{% static 'css/home-modern.css' %}">
+{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
 {% include '../navbar.html' %}
 
-<main class="contact-page mt-5 pt-5 pb-5">
+<main id="main-content" class="inner-main">
 
-  <!-- Hero Section -->
-  <section class="section section-lg pb-0" aria-labelledby="contact-page-title">
-    <div class="container">
-      <div class="contact-hero text-center pt-5">
-        <h1 id="contact-page-title">
-          Kontaktoni Dominusoft
-        </h1>
-
-        <p class="text-muted mt-3">
+  <section class="inner-hero" aria-labelledby="contact-page-title">
+    <div class="inner-container inner-hero__layout">
+      <div class="inner-hero__content">
+        <p class="inner-eyebrow">Kontakt</p>
+        <h1 id="contact-page-title">Kontaktoni Dominusoft</h1>
+        <p class="inner-hero__lead">
           Keni pyetje rreth kurseve profesionale, internship-eve,
           zhvillimit të një website-i apo një bashkëpunimi me biznesin tuaj?
           Kontaktoni ekipin e Dominusoft dhe merrni informacionin që ju
           nevojitet për të hedhur hapin e radhës.
         </p>
       </div>
+
+      <aside class="inner-hero__panel" aria-label="Pikat kryesore për kontaktim">
+        <h2>Le të flasim</h2>
+        <ul class="fact-list">
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Konsultim fillestar pa angazhim</span></li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Ndihmë për trajnime, projekte dhe biznes</span></li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Shpërblyese, të qarta dhe profesionale</span></li>
+        </ul>
+      </aside>
     </div>
   </section>
 
-  <!-- Contact Information and Form -->
-  <section class="py-5" aria-labelledby="contact-information-title">
-    <div class="container">
+  <section id="informacioni" class="inner-section inner-section--white" aria-labelledby="contact-information-title">
+    <div class="inner-container">
       <div class="row g-4 align-items-stretch">
-
-        <!-- Company Information -->
         <div class="col-lg-5">
-          <div class="contact-card h-100">
+          <div class="contact-card contact-card__body h-100" style="padding: clamp(1.5rem, 3vw, 2.5rem);">
             <div class="contact-card-header mb-4">
-              <h2 id="contact-information-title" class="h3">
-                Informacioni i kontaktit
-              </h2>
-
-              <p class="text-muted">
+              <p class="inner-eyebrow">Informacioni i kontaktit</p>
+              <h2 id="contact-information-title">Informacioni i kontaktit</h2>
+              <p style="color: var(--inner-muted); line-height: 1.75; margin: 0;">
                 Na vizitoni në zyrat tona në Tiranë, na telefononi ose na
                 shkruani për çdo pyetje rreth trajnimeve dhe shërbimeve tona.
               </p>
             </div>
 
-            <div class="contact-detail">
-              <div class="contact-icon" aria-hidden="true">
-                <i class="fas fa-map-marker-alt"></i>
-              </div>
-
-              <div>
-                <span>Adresa</span>
-                <address class="mb-0">
-                  <strong>
-                    Rruga “Reshit Çollaku”, Tiranë, Shqipëri
-                  </strong>
-                </address>
-              </div>
-            </div>
-
-            <div class="contact-detail">
-              <div class="contact-icon" aria-hidden="true">
-                <i class="fas fa-phone-alt"></i>
-              </div>
-
-              <div>
-                <span>Telefoni</span>
-                <strong>
-                  <a href="tel:+355673005050">
-                    +355 67 300 5050
-                  </a>
-                </strong>
-              </div>
-            </div>
-
-            <div class="contact-detail">
-              <div class="contact-icon" aria-hidden="true">
-                <i class="far fa-envelope"></i>
-              </div>
-
-              <div>
-                <span>Email</span>
-                <strong>
-                  <a href="mailto:info@dominusoft.com">
-                    info@dominusoft.com
-                  </a>
-                </strong>
-              </div>
-            </div>
-
-            <div class="mt-4 pt-2">
-              <h3 class="h4 mb-3">
-                Orari i zyrës
-              </h3>
-
-              <div class="contact-hour">
-                <div class="contact-icon" aria-hidden="true">
-                  <i class="far fa-clock"></i>
-                </div>
-
-                <div>
-                  <span>E hënë – E premte</span>
-                  <strong>10:00 – 19:00</strong>
-                </div>
-              </div>
-            </div>
+            <ul class="contact-card__list" style="margin-top: 1.5rem;">
+              <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span><strong>Adresa</strong><br>Rruga “Reshit Çollaku”, Tiranë, Shqipëri</span></li>
+              <li><i class="fas fa-phone-alt" aria-hidden="true"></i><span><strong>Telefoni</strong><br><a href="tel:+355673005050">+355 67 300 5050</a></span></li>
+              <li><i class="far fa-envelope" aria-hidden="true"></i><span><strong>Email</strong><br><a href="mailto:info@dominusoft.com">info@dominusoft.com</a></span></li>
+              <li><i class="far fa-clock" aria-hidden="true"></i><span><strong>Orari i zyrës</strong><br>E hënë – E premte<br>10:00 – 19:00</span></li>
+            </ul>
           </div>
         </div>
 
-        <!-- Contact Form -->
         <div class="col-lg-7">
-          <div class="contact-card-form contact-card h-100" id="message_student">
+          <div class="contact-card h-100" id="message_student" style="padding: clamp(1.5rem, 3vw, 2.5rem);">
             <div class="contact-card-header mb-4">
-              <h2 class="h3">
-                Dërgoni një kërkesë
-              </h2>
-
-              <p class="text-muted">
+              <p class="inner-eyebrow">Dërgoni një kërkesë</p>
+              <h2>Dërgoni një kërkesë</h2>
+              <p style="color: var(--inner-muted); line-height: 1.75; margin: 0;">
                 Plotësoni formularin me të dhënat tuaja dhe përshkruani
                 shkurtimisht kursin, projektin ose shërbimin për të cilin
                 dëshironi më shumë informacion.
               </p>
             </div>
 
-            <form method="POST" class="contact-form row g-4">
+            <form method="POST" class="inner-form" style="margin-top: 1.5rem;">
               {% csrf_token %}
 
-              <div class="col-md-6">
-                <label for="name" class="form-label">
-                  Emri <span class="text-danger">*</span>
-                </label>
+              <div class="inner-form__row">
+                <div class="inner-field">
+                  <label for="name">Emri <span class="text-danger">*</span></label>
+                  <input type="text" id="name" name="name" placeholder="Shkruani emrin tuaj" autocomplete="given-name">
+                </div>
 
-                <input type="text" class="form-control" id="name" name="name" placeholder="Shkruani emrin tuaj"
-                  autocomplete="given-name" />
+                <div class="inner-field">
+                  <label for="surname">Mbiemri <span class="text-danger">*</span></label>
+                  <input type="text" id="surname" name="surname" placeholder="Shkruani mbiemrin tuaj" autocomplete="family-name">
+                </div>
               </div>
 
-              <div class="col-md-6">
-                <label for="surname" class="form-label">
-                  Mbiemri <span class="text-danger">*</span>
-                </label>
+              <div class="inner-form__row">
+                <div class="inner-field">
+                  <label for="email">Adresa e email-it <span class="text-danger">*</span></label>
+                  <input type="email" id="email" name="email" placeholder="shembull@email.com" autocomplete="email">
+                </div>
 
-                <input type="text" class="form-control" id="surname" name="surname" placeholder="Shkruani mbiemrin tuaj"
-                  autocomplete="family-name" />
+                <div class="inner-field">
+                  <label for="phone">Numri i telefonit <span class="text-danger">*</span></label>
+                  <input type="tel" id="phone" name="phone" placeholder="+355..." autocomplete="tel">
+                </div>
               </div>
 
-              <div class="col-md-6">
-                <label for="email" class="form-label">
-                  Adresa e email-it <span class="text-danger">*</span>
-                </label>
-
-                <input type="email" class="form-control" id="email" name="email" placeholder="shembull@email.com"
-                  autocomplete="email" />
+              <div class="inner-field">
+                <label for="subject">Për çfarë jeni të interesuar? <span class="text-danger">*</span></label>
+                <input type="text" id="subject" name="subject" placeholder="P.sh. kurs profesional, internship, website ose bashkëpunim">
               </div>
 
-              <div class="col-md-6">
-                <label for="phone" class="form-label">
-                  Numri i telefonit <span class="text-danger">*</span>
-                </label>
-
-                <input type="tel" class="form-control" id="phone" name="phone" placeholder="+355..."
-                  autocomplete="tel" />
+              <div class="inner-field">
+                <label for="message">Mesazhi <span class="text-danger">*</span></label>
+                <textarea id="message" rows="6" name="message" placeholder="Na tregoni më shumë rreth kërkesës suaj..."></textarea>
               </div>
 
-              <div class="col-md-12">
-                <label for="subject" class="form-label">
-                  Për çfarë jeni të interesuar? <span class="text-danger">*</span>
-                </label>
+              <p class="small" style="margin:0; color: var(--inner-muted);">
+                Të dhënat tuaja do të përdoren vetëm për t'ju kontaktuar në lidhje me kërkesën e dërguar.
+              </p>
 
-                <input type="text" class="form-control" id="subject" name="subject"
-                  placeholder="P.sh. kurs profesional, internship, website ose bashkëpunim" />
-              </div>
-
-              <div class="col-12">
-                <label for="message" class="form-label">
-                  Mesazhi <span class="text-danger">*</span>
-                </label>
-
-                <textarea class="form-control" id="message" rows="6" name="message"
-                  placeholder="Na tregoni më shumë rreth kërkesës suaj..."></textarea>
-              </div>
-
-              <div class="col-12">
-                <p class="small text-muted mb-0">
-                  Të dhënat tuaja do të përdoren vetëm për t'ju kontaktuar
-                  në lidhje me kërkesën e dërguar.
-                </p>
-              </div>
-
-              <div class="col-12 pt-2">
-                <button type="submit" class="btn btn-md btn-sign me-lg-5">
-                  Dërgo kërkesën
+              <div>
+                <button type="submit" class="inner-button inner-button--primary">
+                  Dërgo
                 </button>
               </div>
             </form>
           </div>
         </div>
-
       </div>
     </div>
   </section>
 
-  <!-- Location -->
-  <section class="py-5" aria-labelledby="location-title">
-    <div class="container">
-      <div class="text-center mb-4">
-        <h2 id="location-title">
-          Na gjeni në Tiranë
-        </h2>
-
-        <p class="text-muted mb-0">
+  <section class="inner-section inner-section--compact" aria-labelledby="location-title">
+    <div class="inner-container">
+      <div class="inner-heading text-center">
+        <p class="inner-eyebrow">Na gjeni</p>
+        <h2 id="location-title">Na gjeni në Tiranë</h2>
+        <p style="color: var(--inner-muted); margin: 0; line-height: 1.75;">
           Vizitoni zyrat e Dominusoft në Rrugën “Reshit Çollaku” ose
           përdorni hartën për të planifikuar rrugën tuaj.
         </p>
       </div>
 
-      <div class="contact-map-wrap overflow-hidden">
-        <div class="w-100 map_kont">
-          <iframe class="text-center w-100"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
-            title="Vendndodhja e zyrave të Dominusoft në Tiranë" loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"></iframe>
-        </div>
+      <div class="contact-card" style="overflow: hidden;">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
+          title="Vendndodhja e zyrave të Dominusoft në Tiranë" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" style="display: block; width: 100%; min-height: 340px; border: 0;"></iframe>
       </div>
     </div>
   </section>
 
-  <!-- Call to Action -->
-  <section class="py-4" aria-labelledby="consultation-title">
-    <div class="container">
-      <div class="contact-cta">
-        <h2 id="consultation-title" class="fw-bold">
-          Nuk jeni të sigurt se cili kurs ose shërbim ju përshtatet?
-        </h2>
-
-        <p class="mt-3 mb-4">
+  <section class="inner-section inner-section--white" aria-labelledby="consultation-title">
+    <div class="inner-container">
+      <div class="text-center" style="max-width: 760px; margin: 0 auto; padding: clamp(2rem, 4vw, 3rem); border-radius: var(--inner-radius-lg); background: linear-gradient(135deg, var(--inner-navy-deep), var(--inner-navy)); color: #fff; box-shadow: var(--inner-shadow);">
+        <h2 id="consultation-title" style="color: #fff; margin-bottom: 0.9rem;">Nuk jeni të sigurt se cili kurs ose shërbim ju përshtatet?</h2>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; line-height: 1.8;">
           Rezervoni një konsultim fillestar me ekipin tonë. Do të
           diskutojmë objektivat, nevojat dhe mundësitë më të përshtatshme
           për zhvillimin tuaj profesional ose për projektin e biznesit tuaj.
         </p>
-
-        <a href="#message_student" class="btn btn-lg px-5 py-3">
-          Kërko një konsultim
-        </a>
+        <a href="#message_student" class="inner-button inner-button--primary">Kërko një konsultim</a>
       </div>
     </div>
   </section>

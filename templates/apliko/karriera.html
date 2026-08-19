@@ -1,79 +1,57 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
-{% block title %} Karriera | Bëhu pjesë e stafit tonë | Dominusoft Education {% endblock %}
-{% block meta %}
-<meta name="keywords" content="karriera Dominusoft, punesim Dominusoft">
-<meta name="description"
-    content="Në qoftë se keni dëshirë dhe jeni të gatshëm të sillni ekspertizën tuaj në një mjedis bashkëkohor, aplikoni për t'u bërë pjesë e stafit. Ne ju mirëpresim!">
-{% endblock %}
+
+{% block title %}Karriera | Bëhu pjesë e Dominusoft{% endblock %}
+{% block meta %}<meta name="description" content="Dërgo aplikimin dhe CV-në për t’u bërë pjesë e ekipit Dominusoft në një mjedis modern të edukimit dhe teknologjisë.">{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/apliko/karriera">{% endblock %}
+{% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+    <section class="inner-hero inner-section--compact">
+        <div class="inner-container inner-hero__content">
+            <p class="inner-eyebrow">Karriera në Dominusoft</p>
+            <h1>Sill ekspertizën tënde në ekip.</h1>
+            <p class="inner-hero__lead">Nëse të frymëzon edukimi, teknologjia dhe puna me ndikim praktik, duam të të njohim.</p>
+        </div>
+    </section>
 
-<main class="mt-5 pt-5">
-    <section class="section section-lg pb-0" id="message_career">
-        <div class="container px-5">
-            <!-- Titulli -->
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-xl-8 text-center">
-                    <h1 class="display-4 fw-bold mb-2">Karriera</h1>
-                    <h2 class="mb-5">Apliko për t'u bërë pjesë e stafit të Dominusoft</h2>
-                    <!-- <h3>Jashtë funksioni, Forma e karrierës në përditësim.</h3> -->
-                </div>
+    <section class="inner-section inner-section--white" id="message_career">
+        <div class="inner-container form-layout">
+            <div class="form-card">
+                <h2>Dërgo aplikimin</h2>
+                <p class="form-card__intro">Ngarko CV-në dhe na trego shkurtimisht rolin ku dëshiron të kontribuosh.</p>
+                {% for message in messages %}{% if 'staf' in message.tags %}<div class="inner-message" role="status">{{ message }}</div>{% endif %}{% endfor %}
+                <form class="inner-form" method="post" action="#message_career" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="inner-form__row">
+                        <div class="inner-field"><label for="career-name">Emri</label><input id="career-name" name="name" type="text" autocomplete="given-name" required></div>
+                        <div class="inner-field"><label for="career-surname">Mbiemri</label><input id="career-surname" name="surname" type="text" autocomplete="family-name" required></div>
+                    </div>
+                    <div class="inner-form__row">
+                        <div class="inner-field"><label for="career-email">Email</label><input id="career-email" name="email" type="email" autocomplete="email" required></div>
+                        <div class="inner-field"><label for="career-phone">Numri i telefonit</label><input id="career-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+                    </div>
+                    <div class="inner-form__row">
+                        <div class="inner-field"><label for="career-job">Pozicioni i interesit</label><input id="career-job" name="job" type="text" required></div>
+                        <div class="inner-field"><label for="career-cv">CV-ja</label><input id="career-cv" name="cv" type="file" accept=".pdf,.doc,.docx" required><small>Formate të pranuara: PDF, DOC, DOCX.</small></div>
+                    </div>
+                    <div class="inner-field"><label for="career-message">Mesazhi</label><textarea id="career-message" name="message" placeholder="Na tregoni për përvojën dhe motivimin tuaj…" required></textarea></div>
+                    <p class="inner-form__notice">Dokumentet dhe të dhënat përdoren vetëm për shqyrtimin e aplikimit tuaj.</p>
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                    <div><button type="submit" name="career_button" class="inner-button inner-button--primary">Dërgo aplikimin <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
+                </form>
             </div>
-            <!-- fund titulli -->
+            <aside class="contact-card">
+                <div class="contact-card__body"><p class="inner-eyebrow">Mjedisi ynë</p><h2>Ekspertizë, bashkëpunim, ndikim.</h2><p style="color: var(--inner-muted); line-height: 1.75;">Punojmë në ndërthurjen e edukimit profesional dhe zgjidhjeve teknologjike për biznese.</p><ul class="contact-card__list"><li><a href="mailto:info@dominusoft.al"><i class="far fa-envelope" aria-hidden="true"></i>info@dominusoft.al</a></li><li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Rr. “Reshit Çollaku”, Tiranë</li></ul></div>
+            </aside>
         </div>
-
-        <div class="container px-5 mt-4">
-            <form class="row g-3" method="POST" action="#message_career" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="col-sm-12 col-md-6 try">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Emri" required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="text" class="form-control" id="surname" name="surname" placeholder="Mbiemri" required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="number" class="form-control" id="phone" name="phone" placeholder="Nr. Telefonit"
-                        required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="text" class="form-control" id="job" name="job" placeholder="Pozicioni i Punës"
-                        required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="file" class="form-control" id="cv" name="cv" placeholder="Ngarko CV" required>
-                </div>
-                <div class="col-12">
-                    <textarea class="form-control" placeholder="Mesazhi Juaj" name="message" id="message"
-                        required></textarea>
-                </div>
-                <div class="col-12 text-end mt-5 pe-0 pe-lg-4 submit">
-                    <button type="submit" name="career_button" class="btn btn-md btn-sign me-lg-5">Dërgo</button>
-                </div>
-            </form>
-            {% for message in messages %}
-            {% if 'staf' in message.tags %}
-            <div class="container mt-3">
-                <div class="alert {{ message.tags }} alert-dismissible fade show fw-bold" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        <!-- Harta -->
-        <div class="w-100 map_kont mt-4 pb-0">
-            <iframe class="rounded text-center w-100"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
-                loading="lazy"></iframe>
-        </div>
-        <!-- fund harta -->
     </section>
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}
+{% block page_scripts %}<script>if(window.grecaptcha){grecaptcha.ready(function(){grecaptcha.execute('{{ recaptcha_site_key|escapejs }}',{action:'career_application'}).then(function(token){document.getElementById('g-recaptcha-response').value=token;});});}</script>{% endblock %}

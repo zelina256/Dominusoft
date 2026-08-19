@@ -1,83 +1,58 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
-{% block title %}Apliko si Biznes | Dominusoft Education{% endblock %}
-{% block meta %}
-<meta name="keywords" content="problemet e biznesit, sherbime te specializuara, Dominusoft Education">
-<meta name="description"
-    content="Kapërceni dështimet apo problemet e biznesit tuaj, në Dominusoft Education ju ofrojmë ekspertizë dhe shërbime të specializuara.">
-{% endblock %}
+
+{% block title %}Kërko konsultë për biznesin | Dominusoft{% endblock %}
+{% block meta %}<meta name="description" content="Na tregoni sfidën e biznesit tuaj dhe diskutoni me Dominusoft një zgjidhje në software, AI, automatizim ose rritje digjitale.">{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/apliko/biznes">{% endblock %}
+{% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+    <section class="inner-hero inner-section--compact">
+        <div class="inner-container inner-hero__content">
+            <p class="inner-eyebrow">Bashkëpunim biznesi</p>
+            <h1>Le ta kthejmë sfidën në një zgjidhje.</h1>
+            <p class="inner-hero__lead">Na jepni kontekstin bazë. Ekipi ynë do ta shqyrtojë kërkesën dhe do t’ju kontaktojë për hapat e ardhshëm.</p>
+        </div>
+    </section>
 
-<main class="mt-5 pt-5">
-    <section class="section section-lg pb-0" id="message_business">
-        <div class="container px-5">
-            <!-- Titulli -->
-            <div class="row justify-content-center">
-                <div class="col-lg-8 col-xl-8 text-center">
-                    <h1 class="display-4 fw-bold mb-2">Le të bashkëpunojmë</h1>
-                    <h2 class="mb-5">Shërbime të specializuara dhe ekspertizë për biznesin</h2>
-                    <!-- <h3>Jashtë funksioni, Forma e biznesit në përditësim.</h3> -->
-                </div>
+    <section class="inner-section inner-section--white" id="message_business">
+        <div class="inner-container form-layout">
+            <div class="form-card">
+                <h2>Na tregoni për projektin</h2>
+                <p class="form-card__intro">Sa më i qartë konteksti, aq më mirë mund të përgatitemi për bisedën e parë.</p>
+                {% for message in messages %}{% if 'business' in message.tags %}<div class="inner-message" role="status">{{ message }}</div>{% endif %}{% endfor %}
+                <form class="inner-form" method="post" action="#message_business">
+                    {% csrf_token %}
+                    <div class="inner-form__row">
+                        <div class="inner-field"><label for="business-name">Emri i kompanisë</label><input id="business-name" name="name" type="text" autocomplete="organization" required></div>
+                        <div class="inner-field"><label for="business-delegate">Personi i kontaktit</label><input id="business-delegate" name="delegate" type="text" autocomplete="name" required></div>
+                    </div>
+                    <div class="inner-form__row">
+                        <div class="inner-field"><label for="business-email">Email i punës</label><input id="business-email" name="email" type="email" autocomplete="email" required></div>
+                        <div class="inner-field"><label for="business-phone">Numri i telefonit</label><input id="business-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+                    </div>
+                    <div class="inner-field">
+                        <label for="business-service">Shërbimi që ju intereson</label>
+                        <select id="business-service" name="service" required><option value="">Zgjidh shërbimin</option>{% for service in services %}<option value="{{ service.services_name }}"{% if request.GET.service == service.services_name %} selected{% endif %}>{{ service.services_name }}</option>{% endfor %}</select>
+                    </div>
+                    <div class="inner-field"><label for="business-message">Përshkrimi i kërkesës</label><textarea id="business-message" name="message" placeholder="Objektivi, sfida aktuale dhe rezultati që prisni…" required></textarea></div>
+                    <p class="inner-form__notice">Të dhënat përdoren vetëm për të trajtuar kërkesën dhe për t’ju kontaktuar.</p>
+                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+                    <div><button type="submit" name="business_button" class="inner-button inner-button--primary">Kërko konsultë <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
+                </form>
             </div>
-            <!-- fund titulli -->
+            <aside class="contact-card">
+                <div class="contact-card__body"><p class="inner-eyebrow">Kontakt i drejtpërdrejtë</p><h2>Preferoni të flasim?</h2><ul class="contact-card__list"><li><a href="tel:+355673005050"><i class="fas fa-phone-alt" aria-hidden="true"></i>+355 67 300 5050</a></li><li><a href="mailto:info@dominusoft.al"><i class="far fa-envelope" aria-hidden="true"></i>info@dominusoft.al</a></li><li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Rr. “Reshit Çollaku”, Tiranë</li></ul></div>
+                <iframe title="Vendndodhja e Dominusoft në Tiranë" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!1i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </aside>
         </div>
-
-        <div class="container px-5 mt-4">
-            <form class="row g-3" method="POST" action="#message_business">
-                {% csrf_token %}
-                <div class="col-sm-12 col-md-6 try">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Emri i Kompanisë"
-                        required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="text" class="form-control" id="surname" name="delegate" placeholder="Përfaqësuesi"
-                        required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-                </div>
-                <div class="col-sm-12 col-md-6">
-                    <input type="number" class="form-control" id="phone" name="phone" placeholder="Nr. Telefonit"
-                        required>
-                </div>
-                <div class="col-12">
-                    <select class="form-select" id="sherbime" name="service" required>
-                        <option selected value="" name="sherbim">Zgjidh Shërbimin</option>
-                        {% for service in services %}
-                        <option value="{{service}}">{{service.services_name}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-                <div class="col-12">
-                    <textarea class="form-control" placeholder="Mesazhi Juaj" name="message" id="message"
-                        required></textarea>
-                </div>
-                <div class="col-12 text-end mt-5 pe-0 pe-md-4 submit">
-                    <button type="submit" name="business_button" class="btn btn-md btn-sign me-lg-5">Dërgo</button>
-                </div>
-            </form>
-            {% for message in messages %}
-            {% if 'business' in message.tags %}
-            <div class="container mt-3">
-                <div class=" alert {{ message.tags }} alert-dismissible fade show fw-bold" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                </div>
-            </div>
-            {% endif %}
-            {% endfor %}
-        </div>
-        <!-- Harta -->
-
-        <div class="w-100 map_kont mt-4 pb-0">
-            <iframe class="rounded text-center w-100"
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
-                loading="lazy"></iframe>
-        </div>
-        <!-- fund harta -->
     </section>
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}
+{% block page_scripts %}<script>if(window.grecaptcha){grecaptcha.ready(function(){grecaptcha.execute('{{ recaptcha_site_key|escapejs }}',{action:'business_inquiry'}).then(function(token){document.getElementById('g-recaptcha-response').value=token;});});}</script>{% endblock %}

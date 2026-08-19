@@ -20,7 +20,7 @@
                 <ul class="site-footer__links">
                     <li><a href="{% url 'training_category' %}">Kurset profesionale</a></li>
                     <li><a href="{% url 'services' %}">Shërbimet për biznes</a></li>
-                    <li><a href="">Blog</a></li>
+                    <li><a href="{% url 'blog' %}">Blog</a></li>
                     <li><a href="{% url 'student' %}">Apliko si kursant</a></li>
                     <li><a href="{% url 'business' %}">Kërko bashkëpunim</a></li>
                 </ul>
@@ -38,7 +38,7 @@
             <div>
                 <h2 class="site-footer__title">Qëndro i informuar</h2>
                 <p class="site-footer__newsletter-copy">Merr njoftime për kurset, programet e certifikuara dhe datat e reja të nisjes.</p>
-                <form class="site-newsletter" action="" method="post">
+                <form class="site-newsletter" action="{% url 'subscribe' %}" method="post">
                     {% csrf_token %}
                     <input type="hidden" name="next" value="{{ request.get_full_path }}">
                     <label for="subscribe-email">Adresa e email-it</label>

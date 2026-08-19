@@ -1,0 +1,89 @@
+{% extends 'index.html' %}
+{% load static %}
+{% load html_tags %}
+
+{% block title %}Blog Dominusoft | Teknologji, AI dhe karrierë{% endblock %}
+{% block meta %}
+<meta name="description" content="Udhëzues praktikë mbi programimin, sigurinë kibernetike, dizajnin, marketingun digjital, inteligjencën artificiale dhe zhvillimin profesional.">
+<meta name="keywords" content="blog teknologji Shqipëri, AI, programim, marketing digjital, karrierë">
+{% endblock %}
+{% block robots %}{% if request.GET %}<meta name="robots" content="noindex,follow">{% else %}<meta name="robots" content="index,follow">{% endif %}{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/blog/">{% endblock %}
+{% block social_meta %}
+<meta property="og:locale" content="sq_AL"><meta property="og:type" content="website">
+<meta property="og:title" content="Blog Dominusoft | Teknologji, AI dhe karrierë">
+<meta property="og:description" content="Ide dhe udhëzues që kthehen në hapa praktikë për individë dhe biznese.">
+<meta property="og:url" content="https://dominusoft.al/blog/">
+<meta property="og:image" content="https://dominusoft.al{% static 'images/og-dominusoft-home.png' %}">
+<meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+    <section class="inner-hero">
+        <div class="inner-container inner-hero__layout">
+            <div class="inner-hero__content">
+                <p class="inner-eyebrow">Ide dhe udhëzues</p>
+                <h1>Teknologji, AI dhe aftësi profesionale.</h1>
+                <p class="inner-hero__lead">Artikuj praktikë nga fusha e programimit, sigurisë, dizajnit, marketingut dhe zhvillimit të karrierës.</p>
+            </div>
+            <aside class="inner-hero__panel">
+                <h2>Kërko në blog</h2>
+                <form method="get" action="{% url 'blog' %}" class="inner-search" role="search">
+                    <label class="sr-only" for="blog-search">Kërko artikuj</label>
+                    <input id="blog-search" type="search" name="q" value="{{ search_query }}" placeholder="Shkruaj një temë…">
+                    <button type="submit" aria-label="Kërko"><i class="fas fa-search" aria-hidden="true"></i></button>
+                </form>
+            </aside>
+        </div>
+    </section>
+
+    <section class="inner-section inner-section--white" aria-labelledby="articles-heading">
+        <div class="inner-container">
+            <div class="inner-heading"><p class="inner-eyebrow">Për t’u lexuar</p><h2 id="articles-heading">Artikujt e fundit</h2></div>
+            {% if categories %}
+            <nav class="blog-toolbar" aria-label="Filtro artikujt sipas kategorisë">
+                <div class="filter-list">
+                    <a class="filter-chip{% if not selected_category %} is-active{% endif %}" href="{% url 'blog' %}{% if search_query %}?q={{ search_query|urlencode }}{% endif %}">Të gjithë</a>
+                    {% for category in categories %}<a class="filter-chip{% if selected_category == category.category_slug %} is-active{% endif %}" href="{% url 'blog' %}?category={{ category.category_slug }}{% if search_query %}&amp;q={{ search_query|urlencode }}{% endif %}">{{ category.category_title|default:category.category_slug }}</a>{% endfor %}
+                </div>
+            </nav>
+            {% endif %}
+
+            {% if page_obj.object_list %}
+            <div class="inner-grid inner-grid--3">
+                {% for article in page_obj %}
+                <article class="inner-card article-card">
+                    <a class="article-card__media" href="{% url 'article' article.article_slug %}" tabindex="-1" aria-hidden="true">
+                        {% if article.article_image %}<img src="{{ article.article_image.url }}" alt="" width="480" height="320" loading="lazy">{% endif %}
+                    </a>
+                    <div class="article-card__body">
+                        <span class="article-card__category">{{ article|article_category_label }}</span>
+                        <h2>{{ article.article_title }}</h2>
+                        <ul class="inner-meta"><li><time datetime="{{ article.article_created_at|date:'Y-m-d' }}">{{ article.article_created_at|date:'d M Y' }}</time></li><li><i class="far fa-clock" aria-hidden="true"></i>{{ article.estimated_read_time }} min lexim</li></ul>
+                        {% if article.article_excerpt %}<p>{{ article.article_excerpt|truncatewords:24 }}</p>{% endif %}
+                        <a class="article-card__link" href="{% url 'article' article.article_slug %}">Lexo artikullin <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+
+            {% if page_obj.paginator.num_pages > 1 %}
+            <nav aria-label="Faqet e artikujve"><ul class="inner-pagination">
+                {% if page_obj.has_previous %}<li><a href="?page={{ page_obj.previous_page_number }}{% if selected_category %}&amp;category={{ selected_category }}{% endif %}{% if search_query %}&amp;q={{ search_query|urlencode }}{% endif %}" aria-label="Faqja e mëparshme"><i class="fas fa-chevron-left" aria-hidden="true"></i></a></li>{% endif %}
+                {% for num in page_obj.paginator.page_range %}<li>{% if page_obj.number == num %}<span class="is-current" aria-current="page">{{ num }}</span>{% else %}<a href="?page={{ num }}{% if selected_category %}&amp;category={{ selected_category }}{% endif %}{% if search_query %}&amp;q={{ search_query|urlencode }}{% endif %}">{{ num }}</a>{% endif %}</li>{% endfor %}
+                {% if page_obj.has_next %}<li><a href="?page={{ page_obj.next_page_number }}{% if selected_category %}&amp;category={{ selected_category }}{% endif %}{% if search_query %}&amp;q={{ search_query|urlencode }}{% endif %}" aria-label="Faqja tjetër"><i class="fas fa-chevron-right" aria-hidden="true"></i></a></li>{% endif %}
+            </ul></nav>
+            {% endif %}
+            {% else %}
+            <div class="inner-empty"><h2>Nuk u gjet asnjë artikull</h2><p>Provoni një fjalë tjetër ose hiqni filtrin e kategorisë.</p><a class="inner-button inner-button--secondary" href="{% url 'blog' %}">Shiko të gjithë artikujt</a></div>
+            {% endif %}
+        </div>
+    </section>
+</main>
+{% endblock content %}
+{% block legacy_scripts %}{% endblock %}

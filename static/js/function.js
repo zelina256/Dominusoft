@@ -357,4 +357,7 @@ $(document).ready(function () {
 $(document).ready(function () {
   $(".age").text(new Date().getFullYear() - 2014);
 });
-document.getElementById("year").innerHTML = new Date().getFullYear();
+var legacyYear = document.getElementById("year");
+if (legacyYear) {
+  legacyYear.innerHTML = new Date().getFullYear();
+}

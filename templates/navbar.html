@@ -1,191 +1,76 @@
-<!DOCTYPE html>
 {% load static %}
-<header class="position-fixed top-0 w-100 nav2">
-    <div class=" container-fluid infoNav">
-        <div class="row pt-2 px-3">
-            <div class="col-6 d-flex align-items-center pt-2">
-                <p class="pe-4">info@dominusoft.al</p>
-                <p> +355 67 300 5050</p>
+<header class="site-header{% if nav_variant == 'overlay' %} site-header--overlay{% endif %}" data-site-header>
+    <div class="site-utility" aria-label="Informacion kontakti">
+        <div class="site-container site-utility__inner">
+            <div class="site-utility__contact">
+                <a href="mailto:info@dominusoft.al"><i class="far fa-envelope" aria-hidden="true"></i> info@dominusoft.al</a>
+                <a href="tel:+355673005050"><i class="fas fa-phone-alt" aria-hidden="true"></i> +355 67 300 5050</a>
             </div>
-            <div class="col-6 text-end pe-2 d-flex pt-2 justify-content-end align-items-center">
-                <p class="pe-3">
-                    <a href="https://www.instagram.com/dominusoft_education/" target="_blank" rel="noopener"
-                        aria-label="Faqja Instagram">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                </p>
-                <p class="pe-3">
-                    <a href="https://m.facebook.com/DominusoftEducation/" target="_blank" aria-label="Faqja Facebook"
-                        rel="noopener">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                </p>
-                <p class="pe-3">
-                    <a href="https://al.linkedin.com/company/dominusoft-company?trk=public_profile_experience-item_profile-section-card_subtitle-click"
-                        target="_blank" rel="noopener" aria-label="Faqja Linkedin">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                </p>
-                <p class="pe-3">
-                    <a href="https://www.tiktok.com/@dominusoft_education" target="_blank" aria-label="Faqja TikTok"
-                        rel="noopener">
-                        <i class="fab fa-tiktok"></i>
-                    </a>
-                </p>
-            </div>
+            <p>Edukim profesional dhe zgjidhje digjitale në Tiranë</p>
         </div>
     </div>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg py-0 nav2">
-        <div class="container-fluid">
-            <a class="navbar-brand py-0" href="{% url 'home' %}" aria-label="Logo Dominusoft">
-                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="200" height="100"
-                    viewBox="0 50 562 10" xml:space="preserve">
-                    <style type="text/css">
-                        .st1 {
-                            fill: #31344B;
-                        }
-
-                        .st1 {
-                            fill: url(#SVGID_1_);
-                        }
-                    </style>
-                    <g>
-                        <g>
-                            <path class="st1" d="M135.65,17.31c-1.4-2.64-3.42-4.64-6.08-6.03c-2.66-1.38-5.85-2.07-9.6-2.07H98.7v81.59h21.21
-                                c3.74,0,6.94-0.68,9.59-2.07c2.66-1.38,4.69-3.4,6.12-6.05c1.42-2.66,2.13-5.84,2.13-9.54V26.88
-                                C137.75,23.14,137.06,19.95,135.65,17.31z M125.36,72.5c0,2.09-0.51,3.72-1.54,4.85c-1.03,1.15-2.5,1.71-4.4,1.71h-8.36V20.94
-                                h8.36c1.9,0,3.37,0.56,4.4,1.7c1.03,1.15,1.54,2.76,1.54,4.85V72.5z" />
-                            <path class="st1" d="M155.55,89.28c-3.07-1.57-5.41-3.83-7.04-6.79c-1.63-2.95-2.44-6.53-2.44-10.72V28.23
-                                c0-4.19,0.81-7.77,2.44-10.75c1.63-2.97,3.97-5.24,7.04-6.79c3.07-1.55,6.77-2.33,11.11-2.33c4.34,0,8.04,0.78,11.11,2.33
-                                c3.07,1.55,5.41,3.82,7.04,6.79c1.63,2.97,2.44,6.56,2.44,10.75v43.54c0,4.19-0.81,7.76-2.44,10.72
-                                c-1.63,2.96-3.97,5.22-7.04,6.79c-3.07,1.57-6.77,2.36-11.11,2.36C162.32,91.64,158.61,90.85,155.55,89.28z M171.09,78.51
-                                c1.23-0.67,2.17-1.64,2.81-2.89c0.64-1.25,0.95-2.76,0.95-4.52V28.85c0-1.76-0.32-3.26-0.95-4.52c-0.64-1.25-1.57-2.21-2.81-2.86
-                                c-1.23-0.65-2.71-0.98-4.43-0.98c-1.72,0-3.2,0.33-4.43,0.98c-1.23,0.66-2.17,1.61-2.81,2.86c-0.64,1.25-0.95,2.76-0.95,4.52V71.1
-                                c0,1.76,0.32,3.26,0.95,4.52c0.64,1.25,1.57,2.22,2.81,2.89c1.23,0.67,2.71,1.01,4.43,1.01
-                                C168.38,79.52,169.85,79.18,171.09,78.51z" />
-                            <polygon class="st1" points="249.87,9.2 249.87,90.79 238.76,90.79 238.76,37.93 226.75,76.93 219.79,76.93 208.12,40.03 
-                                208.12,90.79 196.68,90.79 196.68,9.2 208.29,9.2 223.28,57.02 238.65,9.2 		" />
-                            <path class="st1" d="M272.15,90.79H259.8V9.21h12.34V90.79z" />
-                            <polygon class="st1" points="322.81,9.2 322.81,90.74 312.55,90.74 293.58,39.23 293.58,90.74 282.08,90.74 282.08,9.2 
-                                292.23,9.2 311.37,63.16 311.37,9.2 		" />
-                            <path class="st1" d="M341.36,89.31c-2.86-1.55-5.03-3.82-6.51-6.79c-1.48-2.97-2.22-6.56-2.22-10.75V9.21h12.34v62.96
-                                c0,2.36,0.58,4.16,1.74,5.41c1.16,1.25,2.81,1.88,4.94,1.88c2.17,0,3.84-0.63,5.02-1.88c1.18-1.25,1.77-3.06,1.77-5.41V9.21h12.35
-                                v62.56c0,4.19-0.76,7.77-2.27,10.75c-1.51,2.97-3.69,5.24-6.54,6.79c-2.84,1.55-6.28,2.33-10.32,2.33
-                                C347.66,91.64,344.22,90.86,341.36,89.31z" />
-                            <path class="st1" d="M386.81,89.33c-3.01-1.53-5.31-3.76-6.9-6.68c-1.59-2.92-2.37-6.47-2.33-10.66v-4.21l12.23-0.11v4.04
-                                c0,2.51,0.68,4.45,2.05,5.84c1.37,1.38,3.32,2.08,5.86,2.08c2.43,0,4.31-0.68,5.64-2.05c1.33-1.36,1.99-3.3,1.99-5.81v-7.13
-                                c0-1.76-0.45-3.25-1.35-4.49c-0.9-1.23-2.05-2.27-3.45-3.11c-1.4-0.84-3.32-1.84-5.75-3c-0.11-0.04-0.22-0.08-0.34-0.14
-                                c-0.11-0.06-0.22-0.1-0.34-0.14l-0.73-0.34c-3.22-1.57-5.91-3.14-8.08-4.71c-2.17-1.57-3.99-3.7-5.47-6.4
-                                c-1.48-2.69-2.22-6.06-2.22-10.1v-4.43c0-4.11,0.78-7.63,2.33-10.55c1.55-2.92,3.82-5.12,6.82-6.62c2.99-1.5,6.6-2.24,10.83-2.24
-                                c4.15,0,7.69,0.76,10.61,2.27c2.92,1.51,5.13,3.74,6.65,6.68c1.52,2.94,2.29,6.48,2.33,10.63v4.43l-12.29,0.11v-4.21
-                                c0-2.58-0.64-4.55-1.91-5.92c-1.27-1.37-3.07-2.05-5.39-2.05c-2.51,0-4.41,0.65-5.72,1.94c-1.31,1.29-1.96,3.08-1.96,5.36v5.27
-                                c0,1.8,0.44,3.33,1.32,4.6c0.88,1.27,1.99,2.31,3.34,3.11c1.35,0.8,3.2,1.77,5.56,2.89c0.34,0.15,0.66,0.31,0.98,0.48
-                                c0.32,0.17,0.65,0.35,0.98,0.53c0.11,0.04,0.24,0.08,0.39,0.14c0.15,0.06,0.28,0.12,0.39,0.2c3.18,1.53,5.74,2.99,7.69,4.38
-                                c1.94,1.38,3.61,3.34,4.99,5.86c1.38,2.52,2.08,5.77,2.08,9.73v7.13c0,4.19-0.78,7.76-2.33,10.72c-1.55,2.96-3.82,5.19-6.79,6.71
-                                c-2.97,1.52-6.57,2.27-10.8,2.27C393.46,91.64,389.82,90.87,386.81,89.33z" />
-                            <path class="st1" d="M435.15,89.28c-3.07-1.57-5.41-3.83-7.04-6.79c-1.63-2.95-2.44-6.53-2.44-10.72V28.23
-                                c0-4.19,0.81-7.77,2.44-10.75c1.63-2.97,3.97-5.24,7.04-6.79c3.07-1.55,6.77-2.33,11.11-2.33c4.34,0,8.04,0.78,11.11,2.33
-                                c3.07,1.55,5.41,3.82,7.04,6.79c1.63,2.97,2.44,6.56,2.44,10.75v43.54c0,4.19-0.81,7.76-2.44,10.72
-                                c-1.63,2.96-3.97,5.22-7.04,6.79c-3.07,1.57-6.77,2.36-11.11,2.36C441.92,91.64,438.22,90.85,435.15,89.28z M450.7,78.51
-                                c1.23-0.67,2.17-1.64,2.81-2.89c0.64-1.25,0.95-2.76,0.95-4.52V28.85c0-1.76-0.32-3.26-0.95-4.52c-0.64-1.25-1.57-2.21-2.81-2.86
-                                c-1.23-0.65-2.71-0.98-4.43-0.98c-1.72,0-3.2,0.33-4.43,0.98c-1.23,0.66-2.17,1.61-2.81,2.86c-0.64,1.25-0.95,2.76-0.95,4.52V71.1
-                                c0,1.76,0.32,3.26,0.95,4.52c0.64,1.25,1.57,2.22,2.81,2.89c1.23,0.67,2.71,1.01,4.43,1.01C447.98,79.52,449.46,79.18,450.7,78.51
-                                z" />
-                            <polygon class="st1" points="488.63,20.94 488.63,45.17 509.22,45.17 509.22,56.85 488.63,56.85 488.63,90.79 476.28,90.79 
-                                476.28,9.2 512.03,9.2 512.03,20.94 		" />
-                            <polygon class="st1" points="559.5,9.2 559.5,20.94 545.47,20.94 545.47,90.79 533.24,90.79 533.24,20.94 519.21,20.94 
-                                519.21,9.2 		" />
-                        </g>
-                        <linearGradient id="SVGID_1_" gradientUnits="userSpaceOnUse" x1="84.9373" y1="49.9727" x2="2.5"
-                            y2="49.9727">
-                            <stop offset="0" style="stop-color:#31344B" />
-                            <stop offset="0.323" style="stop-color:#366B89" />
-                            <stop offset="0.6378" style="stop-color:#3A9BBF" />
-                            <stop offset="0.8722" style="stop-color:#3DB9E0" />
-                            <stop offset="1" style="stop-color:#3EC4ED" />
-                        </linearGradient>
-                        <path class="st1" d="M15.89,90.77H4.05c-0.86,0-1.55-0.7-1.55-1.55v-21.9c0-0.86,0.7-1.55,1.55-1.55h11.84
-                            c0.86,0,1.55,0.7,1.55,1.55v21.9C17.44,90.08,16.75,90.77,15.89,90.77z M84.94,36.91V10.73c0-0.86-0.7-1.55-1.55-1.55H71.55
-                            c-0.86,0-1.55,0.7-1.55,1.55l0,26.18c0,0.86,0.7,1.55,1.55,1.55h11.84C84.24,38.46,84.94,37.77,84.94,36.91z M84.94,67.2V44.79
-                            c0-0.86-0.7-1.55-1.55-1.55H71.55c-0.86,0-1.55,0.7-1.55,1.55V67.2c0,0.86,0.7,1.55,1.55,1.55h11.84
-                            C84.24,68.75,84.94,68.06,84.94,67.2z M40.11,68.97V50.05c0-0.86-0.7-1.55-1.55-1.55H26.72c-0.86,0-1.55,0.7-1.55,1.55v18.92
-                            c0,0.86,0.7,1.55,1.55,1.55h11.84C39.41,70.52,40.11,69.82,40.11,68.97z M61.94,89.22V70.3c0-0.86-0.7-1.55-1.55-1.55H48.55
-                            c-0.86,0-1.55,0.7-1.55,1.55v18.92c0,0.86,0.7,1.55,1.55,1.55h11.84C61.24,90.77,61.94,90.08,61.94,89.22z M40.11,89.22V76.7
-                            c0-0.86-0.7-1.55-1.55-1.55H26.72c-0.86,0-1.55,0.7-1.55,1.55v12.52c0,0.86,0.7,1.55,1.55,1.55h11.84
-                            C39.41,90.77,40.11,90.08,40.11,89.22z M84.94,89.22V76.7c0-0.86-0.7-1.55-1.55-1.55H71.55c-0.86,0-1.55,0.7-1.55,1.55v12.52
-                            c0,0.86,0.7,1.55,1.55,1.55h11.84C84.24,90.77,84.94,90.08,84.94,89.22z M61.94,40.84V27.51c0-0.86-0.7-1.55-1.55-1.55H48.55
-                            c-0.86,0-1.55,0.7-1.55,1.55v13.32c0,0.86,0.7,1.55,1.55,1.55h11.84C61.24,42.39,61.94,41.69,61.94,40.84z M61.94,62.57v-14
-                            c0-0.86-0.7-1.55-1.55-1.55H48.55c-0.86,0-1.55,0.7-1.55,1.55v14c0,0.86,0.7,1.55,1.55,1.55h11.84
-                            C61.24,64.12,61.94,63.43,61.94,62.57z" />
-                    </g>
-                </svg>
+    <nav class="navbar navbar-expand-lg site-nav" aria-label="Navigimi kryesor">
+        <div class="site-container site-nav__inner">
+            <a class="site-brand" href="{% url 'home' %}" aria-label="Dominusoft — Kryefaqja">
+                <img src="{% static 'images/logoBardhe.png' %}" width="180" height="27" alt="Dominusoft">
             </a>
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#navbardominusoft" aria-controls="navbarSupportedContent"
-                aria-label="Toggle navigation">
-                <span class="line"></span>
-                <span class="line"></span>
-                <span class="line"></span>
+
+            <button class="navbar-toggler site-menu-toggle" type="button" data-bs-toggle="collapse"
+                data-bs-target="#dominusoftNavigation" aria-controls="dominusoftNavigation" aria-expanded="false"
+                aria-label="Hap menunë">
+                <span></span><span></span><span></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbardominusoft">
-                <ul class="navbar-nav ms-auto mb-0">
-                    <li class="nav-item px-2 px-md-2 px-lg-2 px-xl-4">
-                        <a class="nav-link" aria-current="page" href="{% url 'home' %}">Kryefaqja</a>
+
+            <div class="collapse navbar-collapse site-nav__collapse" id="dominusoftNavigation">
+                <ul class="navbar-nav site-nav__links">
+                    <li class="nav-item">
+                        <a class="site-nav__link{% if request.resolver_match.url_name == 'home' %} is-active{% endif %}"
+                            {% if request.resolver_match.url_name == 'home' %}aria-current="page"{% endif %}
+                            href="{% url 'home' %}">Kryefaqja</a>
                     </li>
-                       <li class="nav-item px-2 px-md-2 px-lg-2 px-xl-4">
-                        <a class="nav-link" href="{% url 'about' %}">Rreth Nesh</a>
+                    <li class="nav-item">
+                        <a class="site-nav__link{% if request.resolver_match.url_name == 'rrethnesh' %} is-active{% endif %}"
+                            {% if request.resolver_match.url_name == 'rrethnesh' %}aria-current="page"{% endif %}
+                            href="{% url 'rrethnesh' %}">Rreth Nesh</a>
                     </li>
-                    <li class="nav-item px-2 px-md-2 px-lg-2 px-xl-4">
-                        <a class="nav-link" href="{% url 'services' %}">Shërbime</a>
+                    <li class="nav-item">
+                        <a class="site-nav__link{% if request.resolver_match.url_name == 'services' %} is-active{% endif %}"
+                            {% if request.resolver_match.url_name == 'services' %}aria-current="page"{% endif %}
+                            href="{% url 'services' %}">Shërbime</a>
                     </li>
-                    <li class="nav-item px-2 px-md-2 px-lg-2 px-xl-4 dropdown drop_traj">
-                        <a class="nav-link dropdown-toggle" href="{% url 'training_category' %}" id="trajnime"
-                            role="button" data-bs-placement="bottom" data-bs-toggle="dropdown">
-                            Kurse
-                        </a>
-                        <ul class="dropdown-menu drop_nav justify-content-md-center" aria-labelledby="trajnime">
-                            <li><a class="dropdown-item" href="{% url 'training_category' %}">Të Gjitha</a></li>
+                    <li class="nav-item dropdown">
+                        <button class="site-nav__link site-nav__dropdown-toggle dropdown-toggle{% if request.resolver_match.url_name == 'training_category' or request.resolver_match.url_name == 'trainings' or request.resolver_match.url_name == 'curricula' %} is-active{% endif %}"
+                            type="button" id="coursesMenu" data-bs-toggle="dropdown" aria-expanded="false"
+                            {% if request.resolver_match.url_name == 'training_category' or request.resolver_match.url_name == 'trainings' or request.resolver_match.url_name == 'curricula' %}aria-current="page"{% endif %}>Kurse</button>
+                        <ul class="dropdown-menu site-nav__dropdown" aria-labelledby="coursesMenu">
+                            <li><a class="dropdown-item" href="{% url 'training_category' %}">Të gjitha kurset</a></li>
                             {% for cat_train in cat_trainings %}
-                            <li><a class="dropdown-item"
-                                    href="../../trajnime-profesionale/{{cat_train.cat_slug}}">{{cat_train.cat_training_name}}</a>
-                            </li>
+                            <li><a class="dropdown-item" href="{% url 'trainings' cat_train.cat_slug %}">{{ cat_train.cat_training_name }}</a></li>
                             {% endfor %}
-                            <li>
-                                <a class="dropdown-item" href="https://portal.dominusoft.al/" target="_blank"
-                                    rel="noopener">Portali</a>
-                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li><a class="dropdown-item" href="https://portal.dominusoft.al/" target="_blank" rel="noopener">Portali i kursantëve <span aria-hidden="true">↗</span></a></li>
                         </ul>
                     </li>
-                          <li class="nav-item px-2 px-md-2 px-lg-2 px-xl-4">
-                        <a class="nav-link" href="{% url 'contact' %}">Kontakt</a>
+                    <li class="nav-item">
+                        <a class="site-nav__link{% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'article' %} is-active{% endif %}"
+                            {% if request.resolver_match.url_name == 'blog' or request.resolver_match.url_name == 'article' %}aria-current="page"{% endif %}
+                            href="{% url 'blog' %}">Blog</a>
                     </li>
-                    <li class="nav-item dropdown drop_apliko px-2 px-md-2 px-lg-3 px-xl-4">
-                        <a class="nav-link dropdown-toggle" id="apliko" role="button" data-bs-toggle="dropdown">
-                            Apliko
-                        </a>
-                        <ul class="dropdown-menu drop_nav justify-content-center" aria-labelledby="apliko">
-                            <li><a class="dropdown-item" href="{% url 'student' %}">Kursant</a></li>
-                            <li><a class="dropdown-item" href="{% url 'business' %}">Biznes</a></li>
-                            <li><a class="dropdown-item" href="{% url 'career' %}">Staf</a></li>
-                        </ul>
+                    <li class="nav-item">
+                        <a class="site-nav__link{% if request.resolver_match.url_name == 'contact' %} is-active{% endif %}"
+                            {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}
+                            href="{% url 'contact' %}">Kontakt</a>
                     </li>
                 </ul>
-                <div class="searchDiv">
-                    <a class="nav-link dropdown-toggle" id="search" role="button" data-bs-toggle="dropdown">
-                        <i class="fas fa-search"></i>
-                    </a>
-                    <div class="dropdown-menu search">
-                        <form class="search_form" method="POST" action="{% url 'searchvenues' %}">
-                            {% csrf_token %}
-                            <input class="form-control" type="search" name="search" placeholder="Kërko"
-                                aria-label="Search">
-                        </form>
-                    </div>
-                </div>
+
+                <form class="site-search" method="get" action="{% url 'searchvenues' %}" role="search">
+                    <label class="visually-hidden" for="site-search-input">Kërko kurse</label>
+                    <input id="site-search-input" name="q" type="search" value="{{ searched|default:'' }}" placeholder="Kërko kurs...">
+                    <button type="submit" aria-label="Kërko"><i class="fas fa-search" aria-hidden="true"></i></button>
+                </form>
+
+              
             </div>
         </div>
     </nav>
-    <!-- fund navbar -->
 </header>

@@ -1,63 +1,53 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %} Kërkim | Dominusoft Education {% endblock %}
-{% block meta %}
-<meta name="description" content="">
-<meta name="keywords" content="">
-{% endblock %}
+{% block title %}{% if searched %}Rezultate për “{{ searched }}”{% else %}Kërko kurse{% endif %} | Dominusoft{% endblock %}
+{% block robots %}<meta name="robots" content="noindex,follow">{% endblock %}
+{% block meta %}<meta name="description" content="Kërko në katalogun e kurseve profesionale Dominusoft.">{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/kerkimi/">{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+    <section class="inner-hero inner-section--compact">
+        <div class="inner-container inner-hero__content">
+            <p class="inner-eyebrow">Katalogu Dominusoft</p>
+            <h1>Kërko kursin e duhur.</h1>
+            <p class="inner-hero__lead">Kërko sipas emrit, fushës ose aftësisë që dëshiron të zhvillosh.</p>
+            <form method="get" action="{% url 'searchvenues' %}" role="search" class="inner-search" style="margin-top: 30px; max-width: 620px;">
+                <label class="sr-only" for="catalog-search">Kërko sipas emrit të kursit</label>
+                <input id="catalog-search" type="search" name="q" value="{{ searched }}" placeholder="P.sh. Python, dizajn, marketing…">
+                <button type="submit" aria-label="Kërko"><i class="fas fa-search" aria-hidden="true"></i></button>
+            </form>
+        </div>
+    </section>
 
-<main class="mt-5 pt-5">
-    <section class="section">
-        <div class="container">
+    <section class="inner-section inner-section--white">
+        <div class="inner-container">
             {% if searched %}
-            <h1 class="text-center display-1 my-5"> Ju kërkuat për <b>{{ searched }}</b></h1>
-            <div class="row">
-                {% for venue in venues %}
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
-                    <div class="card trajnim_card bg-primary border-light shadow-soft h-100">
-                        <img src="{{venue.training_image.url}}" class="card-img-top rounded-top img-fluid h-100"
-                            alt="{{venue.training_image_alt}}">
-                        <div class="card-body pt-2">
-                            {% comment %}
-                            <div class="d-flex align-items-center">
-                                <i class="fas fa-calendar-alt pt-3">&nbsp;&nbsp;<span class="icon_des">
-                                        {{venue.training_data | date:"d"}} {{venue.training_month}}
-                                        {{venue.training_data | date:"Y"}}</span></i>
-                            </div>
-                            {% endcomment %}
-                            <h2 class="h4 card-title mt-3 fw-bold">{{venue.training_name}}</h2>
-                            <p class="card-text text_traj">
-                                {{venue.training_text}}
-                            </p>
-                            <div class="mb-3 info_session">
-                                <i class="fas fa-calendar-week pe-3">&nbsp;&nbsp;<span
-                                        class="icon_des">{{venue.training_sessions}}</span></i>
-                                <i class="fas fa-clock pe-3">&nbsp;&nbsp;<span class="icon_des">{{venue.training_hours}}
-                                        orë</span></i>
-                                <i class="fas fa-layer-group pe-3 ">&nbsp;&nbsp;<span
-                                        class="icon_des">{{venue.training_level}}</span></i>
-                            </div>
-                            <a href="../trajnime-profesionale/{{venue.training_category.cat_slug}}/{{venue.training_slug}}"
-                                class="btn btn-lg">Mëso më Shumë</a>
-                        </div>
-                    </div>
+            <div class="inner-heading"><p class="inner-eyebrow">Rezultatet</p><h2>Rezultatet për “{{ searched }}”</h2></div>
+                {% if venues %}
+                <div class="search-results">
+                    {% for venue in venues %}
+                    <article class="search-result-card">
+                        <h2>{{ venue.training_name }}</h2>
+                        <p>{{ venue.training_text|truncatewords:32 }}</p>
+                        <ul class="inner-meta">{% if venue.training_category %}<li><i class="fas fa-folder-open" aria-hidden="true"></i>{{ venue.training_category.cat_training_name }}</li>{% endif %}{% if venue.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i>{{ venue.training_hours }} orë</li>{% endif %}</ul>
+                        {% if venue.training_category %}<a class="training-card__link" href="{% url 'curricula' venue.training_category.cat_slug venue.training_slug %}">Shiko programin <i class="fas fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+                    </article>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-            </div>
-            {% endif %}
-            {% if messages %}
-            {% for k in messages %}
-            <h5 class="text-center">{{k}}</h5>
-            <p class="text-center display-1">Kërkim pa rezultat</p>
-            <h4 class="text-center fw-bold mt-3 text_404">404</h4>
-            {% endfor %}
+                {% else %}
+                <div class="inner-empty"><h2>Nuk u gjet asnjë kurs</h2><p>Provoni një term tjetër ose shikoni të gjitha kategoritë.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Shiko të gjitha kurset</a></div>
+                {% endif %}
+            {% else %}
+            <div class="inner-empty"><h2>Çfarë dëshironi të mësoni?</h2><p>Vendosni emrin ose fushën e kursit në kutinë e kërkimit.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Eksploro kategoritë</a></div>
             {% endif %}
         </div>
     </section>
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}

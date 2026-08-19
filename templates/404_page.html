@@ -1,21 +1,24 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %} 404 | Dominusoft Education {% endblock %}
-{% block meta %}
-<meta name="description" content="">
-<meta name="keywords" content="">
-{% endblock %}
+{% block title %}Faqja nuk u gjet | Dominusoft{% endblock %}
+{% block robots %}<meta name="robots" content="noindex,follow">{% endblock %}
+{% block meta %}<meta name="description" content="Faqja që kërkuat nuk u gjet.">{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
 {% include 'navbar.html' %}
-<main class="mt-5 pt-5">
-    <section class="section mt-5">
-        <div class="container">
-            <p class="text-center display-1">Faqja nuk u gjet</p>
-            <h4 class="text-center fw-bold mt-3 text_404">404</h4>
+<main id="main-content" class="inner-main">
+    <section class="error-page">
+        <div class="inner-container">
+            <span class="error-page__code" aria-hidden="true">404</span>
+            <h1>Faqja nuk u gjet.</h1>
+            <p>Adresa mund të jetë ndryshuar ose faqja nuk ekziston më. Kthehuni në kryefaqe ose eksploroni kurset tona.</p>
+            <div class="inner-actions" style="justify-content: center;"><a class="inner-button inner-button--primary" href="{% url 'home' %}">Kthehu në kryefaqe</a><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Shiko kurset</a></div>
         </div>
     </section>
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}

@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
 
@@ -8,14 +7,19 @@
     content="Dominusoft Education, një institucion që vepron prej vitesh, i fokusuar në zhvillimin profesional të individit dhe ofrimin e shërbimeve të specializuara.">
 <meta name="keywords" content="qendër kursesh profesionale, shërbime për bizneset">
 {% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/termat_dhe_kushtet/">{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
+{% include 'navbar.html' %}
 
-<main class="mt-5 pt-5">
-    <section class="section">
-        <div class="container my-5">
-            <h1> Termat dhe Kushtet | Dominusoft </h1>
+<main id="main-content" class="inner-main">
+    <section class="inner-hero inner-section--compact"><div class="inner-container inner-hero__content"><p class="inner-eyebrow">Informacion ligjor</p><h1>Termat dhe kushtet</h1><p class="inner-hero__lead">Rregullat dhe kushtet që zbatohen gjatë përdorimit të faqes dhe shërbimeve Dominusoft.</p></div></section>
+    <section class="inner-section inner-section--white">
+        <div class="inner-container">
+        <article class="legal-content">
             <h2>Mirësevini në Dominusoft!</h2>
             <p>Këto terma dhe kushte përshkruajnë rregullat për përdorimin e Website-it të Dominusoft , të
                 cilin e gjeni
@@ -186,7 +190,9 @@
                 na mbroni nga të gjitha pretendimet që shfaqen në faqen tuaj të internetit. Asnjë lidhje nuk duhet të
                 shfaqet në asnjë Website që mund të interpretohet si shpifëse, e turpshme ose kriminale, ose që cënon,
                 shkel apo mbron shkelje të ndonjë të drejte të palës së tretë.</p>
+        </article>
         </div>
     </section>
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}

@@ -1,154 +1,128 @@
-<!DOCTYPE html>
 {% extends 'index.html' %}
 {% load static %}
 {% load html_tags %}
-{% block title %} {{training.training_title_tag}} {% endblock %}
+
+{% block title %}{{ training.training_title_tag|default:training.training_name }} | Dominusoft{% endblock %}
 {% block meta %}
-<meta name="keywords" content="{{training.training_meta_keywords}}">
-<meta name="description" content="{{training.training_meta_descriptions}}">
+<meta name="keywords" content="{{ training.training_meta_keywords }}">
+<meta name="description" content="{{ training.training_meta_descriptions|default:training.training_text|striptags|truncatechars:160 }}">
 {% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al{% url 'curricula' cat_training.cat_slug training.training_slug %}">{% endblock %}
+{% block social_meta %}
+<meta property="og:locale" content="sq_AL"><meta property="og:type" content="website">
+<meta property="og:title" content="{{ training.training_name }} | Dominusoft">
+<meta property="og:description" content="{{ training.training_meta_descriptions|default:training.training_text|striptags|truncatechars:180 }}">
+<meta property="og:url" content="https://dominusoft.al{% url 'curricula' cat_training.cat_slug training.training_slug %}">
+{% if training.training_image %}<meta property="og:image" content="https://dominusoft.al{{ training.training_image.url }}">{% endif %}
+<meta name="twitter:card" content="summary_large_image">
+{% endblock %}
+{% block legacy_styles %}{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
-<main class="mt-5 pt-5">
-    <div class="section_kat mt-1">
-        <div class="container">
-            {% if training.training_text != "Së shpejti" %}
-            <div class="row">
-                <!-- Informacione rreth programit -->
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-12 col-md-3">
-                            <!-- Tabs -->
-                            <ul class="nav nav-pills nav-fill my-3 flex-nowrap flex-row flex-md-warp flex-md-column "
-                                id="pills-tab1" role="tablist">
-                                <li class="nav-item mb-2" role="presentation">
-                                    <button class="nav-link active" id="pills-description-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-description" type="button" role="tab">Përshkrim</button>
-                                </li>
-                                <li class="nav-item mb-2" role="presentation">
-                                    <button class="nav-link" id="pills-curricula-tab" data-bs-toggle="pill"
-                                        data-bs-target="#pills-curricula" type="button" role="tab">Kurrikula</button>
-                                </li>
-                            </ul>
-                            <!-- fund tabs -->
-                        </div>
-                        <div class="col-12 col-md-9">
-                            <!-- kontenti -->
-                            <div class="row justify-content-center mt-3">
-                                <div class="col-12 text-start">
-                                    <h3 class="display-5 mb-3 fw-bold">Programi {{training.training_name}}</h3>
-                                </div>
-                            </div>
-                            <div class="card shadow-inset bg-primary border-light p-4 rounded">
-
-                                <div class="card-body p-0">
-                                    <div class="tab-content" id="pills-tabContent1">
-                                        <div class="tab-pane fade show active p-4" id="pills-description"
-                                            role="tabpanel">
-                                            <h4 class="fw-bold">Karakteristikat e programit</h4>
-                                            <p class="">{{training.training_text}}</p>
-                                            <div class="d-flex">
-                                                <p><i class="fas fa-calendar-week"></i>&nbsp;&nbsp;<span
-                                                        class="icon_des">Kohëzgjatja: {{training.training_weeks}} javë /
-                                                        {{training.training_hours}} orë</span></p>
-                                                <p class="ms-3"><i class="fas fa-users"></i>&nbsp;&nbsp;<span
-                                                        class="icon_des">Pjesëmarrja:
-                                                        {{training.training_sessions}}</span></p>
-                                            </div>
-
-                                            <h4 class="fw-bold">Kompetencat</h4>
-                                            <p>{{training.training_competence|html_tags}}</p>
-                                            <h4 class="fw-bold">Certifikimi</h4>
-                                            <p>Pas përfundimit me sukses të kursit, pajiseni me certifikatë të
-                                                licencuar nga Ministria e Ekonomisë dhe Inovacionit.
-                                            </p>
-                                            <h4 class="fw-bold">Internship</h4>
-                                            <p class="fw-bold">Për të gjithë pjesëmarrësit që kanë përfunduar me sukses
-                                                Kursin:
-                                            </p>
-                                            <p>Pas përfundimit të kursit, fitoni të drejtën për t'u përfshirë
-                                                menjëherë në programin tonë të internship-it. Gjatë
-                                                këtij programi, do të punoni në grup mbi një projekt real, duke u
-                                                mentoruar nga stafi ynë me përvojë, duke ndjekur një strukturë pune
-                                                bashkëpunuese dhe profesionale.</p>
-                                            <p class="fw-bold">Për studentët, në ndjekje të universitetit, garantohet
-                                                Praktika Mësimore dhe plotësimi
-                                                i të gjitha dokumenteve të
-                                                nevojshme nga institucioni juaj arsimor, duke respektuar
-                                                afatet zyrtare dhe kërkesat përkatëse</p>
-                                            <p>Nëse keni nevojë për të zhvilluar praktikën mësimore të kërkuar nga
-                                                universiteti apo departamenti juaj, ky internship
-                                                mund të shërbejë edhe për këtë qëllim.</p>
-                                            {% comment %}
-                                            <h4 class="fw-bold">Karriera</h4>
-                                            <p>{{training.training_employment|html_tags}}</p>
-                                            {% endcomment %}
-                                        </div>
-
-
-                                        <div class="tab-pane fade ps-5 py-4" id="pills-curricula" role="tabpanel">
-                                            {% for curricula in curriculas %}
-                                            <h6 class="fw-bold">{{curricula.curricula_name}}</h6>
-                                            <ul class="curricula">
-                                                {% for lesson in curricula.get_lesson %}
-                                                <li>{{lesson.lesson_name|safe}}</li>
-                                                {% endfor %}
-                                            </ul>
-                                            {% endfor %}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- fund kontenti -->
-                        </div>
-                    </div>
-
-
-                </div>
-                <!-- fund informacione -->
-            </div>
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+    <section class="inner-hero inner-section--compact">
+        <div class="inner-container">
+            <ol class="inner-breadcrumb" aria-label="Navigimi hierarkik">
+                <li><a href="{% url 'home' %}">Kryefaqja</a></li>
+                <li><a href="{% url 'training_category' %}">Kurset</a></li>
+                <li><a href="{% url 'trainings' cat_training.cat_slug %}">{{ cat_training.cat_training_name }}</a></li>
+                <li aria-current="page">{{ training.training_name }}</li>
+            </ol>
+            <p class="inner-eyebrow">Kurs profesional</p>
+            <h1>{{ training.training_name }}</h1>
+            {% if training.training_text != "Së shpejti" %}<p class="inner-hero__lead">{{ training.training_text }}</p>{% else %}<p class="inner-hero__lead">Ky program do të jetë i disponueshëm së shpejti.</p>{% endif %}
         </div>
-    </div>
-    {% else %}
-    <p class="text-center display-1">{{training.training_name}}</p>
-    <h6 class="text-center fw-bold mt-3 text_se_shpejti">Së Shpejti</h6>
-    {% endif %}
-    <!-- Trajnime te ngjashme -->
-    <!-- Trajnimet per secilën program -->
-    <section class="section_kat mt-4">
-        <div class="container">
-            <!-- Titulli -->
-            <div class="row">
-                <div class="col-lg-8 col-xl-8">
-                    <h3 class="display-5 my-3 fw-bold traj_ngjashme">Kurse të Ngjashme</h3>
-                </div>
-            </div>
-            <!-- fund titulli -->
-            <div class="row">
-                {% for train in same_training|slice:":3" %}
-                <div class="col-sm-12 col-md-6 col-lg-4 mb-5">
-                    <div class="card trajnim_card bg-primary border-light shadow-soft h-100">
-                        <img src="{{train.training_image.url}}" class="card-img-top rounded-top img-fluid h-100"
-                            alt="{{train.training_image_alt}}">
-                        <div class="card-body pt-2">
-                            <h2 class="h4 card-title mt-3 fw-bold">{{train.training_name}}</h2>
-                            <p class="card-text text_traj">
-                                {{train.training_text}}
-                            </p>
-                            <div class="mb-3 info_session">
-                                <i class="fas fa-calendar-week pe-3">&nbsp;&nbsp;<span
-                                        class="icon_des">{{train.training_sessions}}</span></i>
-                                <i class="fas fa-clock pe-3">&nbsp;&nbsp;<span class="icon_des">{{train.training_hours}}
-                                        orë</span></i>
-                            </div>
-                            <a href="{{train.training_slug}}" class="btn btn-lg">Mëso më Shumë</a>
+    </section>
+
+    <section class="inner-section inner-section--white">
+        <div class="inner-container">
+            {% if training.training_text != "Së shpejti" %}
+            <div class="course-detail">
+                <article class="course-detail__main">
+                    <p class="inner-eyebrow">Përmbledhje</p>
+                    <h2 class="course-detail__title">Programi {{ training.training_name }}</h2>
+                    <p class="course-detail__intro">{{ training.training_text }}</p>
+
+                    {% if training.training_competence %}
+                    <section class="course-detail__block rich-content" aria-labelledby="competencies-title">
+                        <h2 id="competencies-title">Kompetencat që zhvillon</h2>
+                        {{ training.training_competence|html_tags }}
+                    </section>
+                    {% endif %}
+
+                    <section class="course-detail__block" aria-labelledby="certification-title">
+                        <h2 id="certification-title">Certifikimi</h2>
+                        <p class="rich-content">Pas përfundimit me sukses të kursit, pajiseni me certifikatë të licencuar nga Ministria e Ekonomisë dhe Inovacionit.</p>
+                    </section>
+
+                    <section class="course-detail__block" aria-labelledby="internship-title">
+                        <h2 id="internship-title">Praktika dhe internship-i</h2>
+                        <div class="rich-content">
+                            <p>Pas përfundimit me sukses të kursit, fitoni të drejtën për t’u përfshirë në programin tonë të internship-it. Do të punoni në grup mbi një projekt real, nën mentorimin e stafit tonë.</p>
+                            <p>Për studentët në universitet, programi mund të shërbejë edhe si praktikë mësimore, me plotësimin e dokumentacionit të kërkuar nga institucioni arsimor.</p>
                         </div>
+                    </section>
+
+                    <section class="course-detail__block" aria-labelledby="curriculum-title">
+                        <h2 id="curriculum-title">Kurrikula e kursit</h2>
+                        {% if curriculas %}
+                        <div class="curriculum-stack">
+                            {% for curricula in curriculas %}
+                            <details class="curriculum-disclosure" {% if forloop.first %}open{% endif %}>
+                                <summary>{{ curricula.curricula_name }}</summary>
+                                <ol>
+                                    {% for lesson in curricula.get_lesson %}<li>{{ lesson.lesson_name|safe }}</li>{% empty %}<li>Temat do të publikohen së shpejti.</li>{% endfor %}
+                                </ol>
+                            </details>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                        <p class="rich-content">Kurrikula e detajuar do të publikohet së shpejti. Kontaktoni ekipin për informacion.</p>
+                        {% endif %}
+                    </section>
+                </article>
+
+                <aside class="course-detail__aside" aria-label="Detajet dhe aplikimi">
+                    {% if training.training_image %}<img src="{{ training.training_image.url }}" alt="{{ training.training_image_alt|default:training.training_name }}" width="520" height="390">{% endif %}
+                    <div class="course-detail__aside-content">
+                        <h2>Detajet e kursit</h2>
+                        <ul class="fact-list">
+                            {% if training.training_weeks %}<li><i class="fas fa-calendar-week" aria-hidden="true"></i><span>{{ training.training_weeks }} javë</span></li>{% endif %}
+                            {% if training.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i><span>{{ training.training_hours }} orë</span></li>{% endif %}
+                            {% if training.training_sessions %}<li><i class="fas fa-users" aria-hidden="true"></i><span>{{ training.training_sessions }}</span></li>{% endif %}
+                        </ul>
+                        <a class="inner-button inner-button--primary" href="{% url 'student' %}?course={{ training.training_name|urlencode }}">Apliko për këtë kurs</a>
                     </div>
-                </div>
+                </aside>
+            </div>
+            {% else %}
+            <div class="inner-empty">
+                <h2>Regjistrimet hapen së shpejti</h2>
+                <p>Lini të dhënat tuaja dhe do t’ju njoftojmë kur të hapet grupi i radhës.</p>
+                <a class="inner-button inner-button--primary" href="{% url 'student' %}?course={{ training.training_name|urlencode }}">Shpreh interesin</a>
+            </div>
+            {% endif %}
+        </div>
+    </section>
+
+    {% if same_training %}
+    <section class="inner-section" aria-labelledby="related-courses-title">
+        <div class="inner-container">
+            <div class="inner-heading"><p class="inner-eyebrow">Eksploro më tej</p><h2 id="related-courses-title">Kurse të ngjashme</h2></div>
+            <div class="inner-grid inner-grid--3">
+                {% for train in same_training %}
+                <article class="inner-card training-card">
+                    <div class="training-card__media">{% if train.training_image %}<img src="{{ train.training_image.url }}" alt="{{ train.training_image_alt|default:train.training_name }}" width="480" height="320" loading="lazy">{% endif %}</div>
+                    <div class="training-card__body"><h3>{{ train.training_name }}</h3><p>{{ train.training_text|truncatewords:24 }}</p><a class="training-card__link" href="{% url 'curricula' cat_training.cat_slug train.training_slug %}">Shiko kursin <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                </article>
                 {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 </main>
 {% endblock content %}
+{% block legacy_scripts %}{% endblock %}

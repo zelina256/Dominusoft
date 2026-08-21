@@ -29,19 +29,24 @@
         <div class="inner-container">
             {% if searched %}
             <div class="inner-heading"><p class="inner-eyebrow">Rezultatet</p><h2>Rezultatet për “{{ searched }}”</h2></div>
-                {% if venues %}
+                {% if search_results %}
                 <div class="search-results">
-                    {% for venue in venues %}
+                    {% for result in search_results %}
                     <article class="search-result-card">
-                        <h2>{{ venue.training_name }}</h2>
-                        <p>{{ venue.training_text|truncatewords:32 }}</p>
-                        <ul class="inner-meta">{% if venue.training_category %}<li><i class="fas fa-folder-open" aria-hidden="true"></i>{{ venue.training_category.cat_training_name }}</li>{% endif %}{% if venue.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i>{{ venue.training_hours }} orë</li>{% endif %}</ul>
-                        {% if venue.training_category %}<a class="training-card__link" href="{% url 'curricula' venue.training_category.cat_slug venue.training_slug %}">Shiko programin <i class="fas fa-arrow-right" aria-hidden="true"></i></a>{% endif %}
+                        <p class="inner-eyebrow">{{ result.kind }}</p>
+                        <h2>{{ result.title }}</h2>
+                        <p>{{ result.description|striptags|truncatewords:32 }}</p>
+                        {% if result.category %}
+                        <ul class="inner-meta">
+                            <li><i class="fas fa-folder-open" aria-hidden="true"></i>{{ result.category }}</li>
+                        </ul>
+                        {% endif %}
+                        <a class="training-card__link" href="{{ result.url }}">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </article>
                     {% endfor %}
                 </div>
                 {% else %}
-                <div class="inner-empty"><h2>Nuk u gjet asnjë kurs</h2><p>Provoni një term tjetër ose shikoni të gjitha kategoritë.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Shiko të gjitha kurset</a></div>
+                <div class="inner-empty"><h2>Nuk u gjet asnjë rezultat</h2><p>Provoni një term tjetër ose shikoni të gjitha kategoritë.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Shiko të gjitha kurset</a></div>
                 {% endif %}
             {% else %}
             <div class="inner-empty"><h2>Çfarë dëshironi të mësoni?</h2><p>Vendosni emrin ose fushën e kursit në kutinë e kërkimit.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Eksploro kategoritë</a></div>

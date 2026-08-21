@@ -19,11 +19,13 @@ def trainings(request, slug_training):
     training = Training.objects.filter(training_category=cat_training).order_by(
         "training_id"
     )
+    careers = Career.objects.filter(career_training__training_category=cat_training).distinct()
     context = {
         "cat_trainings": cat_trainings,
         "cat_training": cat_training,
         "trainings": trainings,
         "training": training,
+        "careers": careers,
     }
     return render(request, "trajnime/trajnime_kat.html", context)
 

@@ -12,6 +12,9 @@ from django.views.decorators.http import require_POST
 from .models import *
 from trainings.models import *
 from blog.models import Article
+from services.models import Services
+from internship.models import Internship
+from student_project.models import Student_work
 
 # from contact.models import *
 from apply.models import *
@@ -24,22 +27,105 @@ def searchvenues(request):
         legacy_query = (request.POST.get("search") or request.POST.get("q") or "").strip()
         search_url = reverse("searchvenues")
         if legacy_query:
-            search_url = f"{search_url}?{urlencode({'q': legacy_query})}"
+            query_string = urlencode({"q": legacy_query})
+            search_url = f"{search_url}?{query_string}"
         return redirect(search_url)
 
     searched = (request.GET.get("q") or "").strip()
     venues = Training.objects.none()
+    search_results = []
     if searched:
         venues = Training.objects.filter(
             Q(training_name__icontains=searched)
             | Q(training_text__icontains=searched)
             | Q(training_category__cat_training_name__icontains=searched)
-        ).select_related("training_category").distinct()
+        ).select_related("training_category").distinct()[:25]
+
+        article_results = Article.objects.filter(
+            Q(article_title__icontains=searched)
+            | Q(article_excerpt__icontains=searched)
+            | Q(article_infos__icontains=searched)
+        ).select_related("article_category").distinct()[:25]
+
+        service_results = Services.objects.filter(
+            Q(services_name__icontains=searched)
+            | Q(services_description__icontains=searched)
+            | Q(services_title__icontains=searched)
+        ).distinct()[:25]
+
+        internship_results = Internship.objects.filter(
+            Q(internship_project_title__icontains=searched)
+            | Q(internship_project_text__icontains=searched)
+        ).select_related("internship_project_category").distinct()[:25]
+
+        student_project_results = Student_work.objects.filter(
+            Q(student_project_name__icontains=searched)
+            | Q(student_project_surname__icontains=searched)
+            | Q(student_project_text__icontains=searched)
+            | Q(student_project_training__icontains=searched)
+            | Q(student_project_training_category__student_project_category_name__icontains=searched)
+        ).select_related("student_project_training_category").distinct()[:25]
+
+        search_results = [
+            {
+                "title": item.training_name,
+                "description": item.training_text or "",
+                "category": item.training_category.cat_training_name if item.training_category else None,
+                "url": reverse("curricula", args=[item.training_category.cat_slug, item.training_slug]) if item.training_category else reverse("training_category"),
+                "kind": "Kurs",
+            }
+            for item in venues
+        ] + [
+            {
+                "title": item.article_title,
+                "description": item.article_excerpt or item.article_infos or "",
+                "category": item.article_category.category_title if item.article_category else None,
+                "url": reverse("article", args=[item.article_slug]),
+                "kind": "Blog",
+            }
+            for item in article_results
+        ] + [
+            {
+                "title": item.services_name,
+                "description": item.services_description or "",
+                "category": None,
+                "url": reverse("services"),
+                "kind": "Shërbim",
+            }
+            for item in service_results
+        ] + [
+            {
+                "title": item.internship_project_title,
+                "description": item.internship_project_text or "",
+                "category": item.internship_project_category.internship_category_name if item.internship_project_category else None,
+                "url": reverse("services"),
+                "kind": "Internship",
+            }
+            for item in internship_results
+        ] + [
+            {
+                "title": f"{item.student_project_name} {item.student_project_surname}".strip(),
+                "description": item.student_project_text or "",
+                "category": item.student_project_training_category.student_project_category_name if item.student_project_training_category else None,
+                "url": reverse("services"),
+                "kind": "Projekt",
+            }
+            for item in student_project_results
+        ]
+
+        search_results = sorted(
+            search_results,
+            key=lambda item: (
+                item["title"].lower().find(searched.lower()) if searched.lower() in item["title"].lower() else 1,
+                item["title"].lower(),
+            ),
+        )
 
     context = {
         "cat_trainings": cat_trainings,
         "searched": searched,
         "venues": venues,
+        "search_results": search_results,
     }
     return render(request, "search/search.html", context)
 

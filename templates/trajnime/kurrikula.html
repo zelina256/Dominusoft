@@ -93,6 +93,10 @@
                             {% if training.training_weeks %}<li><i class="fas fa-calendar-week" aria-hidden="true"></i><span>{{ training.training_weeks }} javë</span></li>{% endif %}
                             {% if training.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i><span>{{ training.training_hours }} orë</span></li>{% endif %}
                             {% if training.training_sessions %}<li><i class="fas fa-users" aria-hidden="true"></i><span>{{ training.training_sessions }}</span></li>{% endif %}
+                            {% if training.training_price_lek %}
+                            <li><i class="fas fa-money-bill-wave" aria-hidden="true"></i><span>{{ training.training_price_lek }} ALL</span></li>
+                            <li><i class="fas fa-euro-sign" aria-hidden="true"></i><span>€ {{ training.training_price_eur }}</span></li>
+                            {% endif %}
                         </ul>
                         <a class="inner-button inner-button--primary" href="{% url 'student' %}?course={{ training.training_name|urlencode }}">Apliko për këtë kurs</a>
                     </div>

@@ -25,31 +25,41 @@
     <section class="inner-hero">
         <div class="inner-container inner-hero__layout">
             <div class="inner-hero__content">
-                <p class="inner-eyebrow">Dominusoft Education</p>
-                <h1>Aftësi praktike për hapin tënd të ardhshëm.</h1>
-                <p class="inner-hero__lead">Eksploro programet profesionale, krahaso fushat dhe zgjidh trajnimin që përputhet me objektivat e tua.</p>
+                <p class="inner-eyebrow">Akademi e Formimit Profesional</p>
+                <h1>Mëso aftësi që çojnë drejt karrierës.</h1>
+                <p class="inner-hero__lead">Dominusoft është një institucion i licencuar i fokusuar në trajnime profesionale me qasje praktike, mentorim real dhe rezultate të vërteta në tregun e punës.</p>
                 <div class="inner-hero__actions">
                     <a class="inner-button inner-button--primary" href="#programet">Shiko programet</a>
-                    <a class="inner-button inner-button--ghost" href="{% url 'student' %}">Apliko për kurs</a>
+                    <a class="inner-button inner-button--ghost" href="{% url 'student' %}">Regjistrohu në trajnime</a>
                 </div>
             </div>
             <aside class="inner-hero__panel" aria-label="Përfitimet e trajnimeve">
-                <h2>Mëso duke praktikuar</h2>
+                <h2>Formim me ndikim të drejtpërdrejtë</h2>
                 <ul class="fact-list">
-                    <li><i class="fas fa-certificate" aria-hidden="true"></i><span>Programe profesionale të licencuara</span></li>
-                    <li><i class="fas fa-laptop-code" aria-hidden="true"></i><span>Ushtrime dhe projekte praktike</span></li>
-                    <li><i class="fas fa-users" aria-hidden="true"></i><span>Mbështetje gjatë procesit të të mësuarit</span></li>
+                    <li><i class="fas fa-certificate" aria-hidden="true"></i><span>Institucion i licencuar</span></li>
+                    <li><i class="fas fa-user-tie" aria-hidden="true"></i><span>Mentorë dhe instruktorë praktikë</span></li>
+                    <li><i class="fas fa-briefcase" aria-hidden="true"></i><span>Orientim drejt karrierës</span></li>
                 </ul>
             </aside>
+        </div>
+    </section>
+
+    <section class="inner-section inner-section--white">
+        <div class="inner-container">
+            <div class="inner-heading">
+                <p class="inner-eyebrow">Përse të mësoni me ne</p>
+                <h2>Një qasje e qartë drejt suksesit profesional</h2>
+                 <p>Në Dominusoft, fokusimi është në aftësitë reale që kërkon marka, kompani dhe profesionistë modernë. Programet tona kombinojnë teori me praktikë, zhvillim të vazhdueshëm dhe mbështetje në rrugën e karrierës.</p>
+            </div>
+           
         </div>
     </section>
 
     <section id="programet" class="inner-section inner-section--white" aria-labelledby="categories-heading">
         <div class="inner-container">
             <div class="inner-heading">
-                <p class="inner-eyebrow">Fushat e studimit</p>
-                <h2 id="categories-heading">Gjej programin e duhur</h2>
-                <p>Çdo kategori bashkon kurse të fokusuara në kompetenca konkrete dhe përdorim praktik.</p>
+                <p class="inner-eyebrow">Zgjidhni fushën tuaj</p>
+                <h2 id="categories-heading">Kategoritë kryesore të trajnimeve</h2>
             </div>
             {% if cat_trainings %}
             <div class="inner-grid inner-grid--3">
@@ -57,21 +67,64 @@
                 <article class="inner-card category-card">
                     <div class="category-card__media">
                         {% if cat_training.cat_training_img %}
-                        <img src="{{ cat_training.cat_training_img.url }}" alt="{{ cat_training.cat_training_img_alt|default:cat_training.cat_training_name }}" width="480" height="320" loading="lazy">
+                        <img src="{{ cat_training.cat_training_img.url }}" alt="{{ cat_training.cat_training_img_alt|default:cat_training.cat_training_name }}" loading="lazy" width="480" height="320">
+                        {% else %}
+                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
                         {% endif %}
                     </div>
                     <div class="category-card__body">
                         <span class="category-card__count">{{ cat_training.get_training|length }} kurse</span>
-                        <h2>{{ cat_training.cat_training_name }}</h2>
-                        <p>{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags|truncatewords:24 }}</p>
+                        <h3>{{ cat_training.cat_training_name }}</h3>
+                        <p>{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags|truncatewords:26 }}</p>
                         <a class="category-card__link" href="{% url 'trainings' cat_training.cat_slug %}">Shiko programet <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </article>
                 {% endfor %}
             </div>
             {% else %}
-            <div class="inner-empty"><h2>Programet po përditësohen</h2><p>Kontaktoni ekipin tonë për informacion mbi regjistrimet e ardhshme.</p><a class="inner-button inner-button--primary" href="{% url 'student' %}">Na kontaktoni</a></div>
+            <div class="inner-empty">
+                <h2>Programet po përditësohen</h2>
+                <p>Kontaktoni ekipin tonë për informacion mbi regjistrimet e ardhshme.</p>
+                <a class="inner-button inner-button--primary" href="{% url 'student' %}">Na kontaktoni</a>
+            </div>
             {% endif %}
+        </div>
+    </section>
+
+    <section class="inner-section inner-section--muted">
+        <div class="inner-container">
+            <div class="inner-heading">
+                <p class="inner-eyebrow">Pse të zgjidhësh Dominusoft</p>
+                <h2>Trajnim i orientuar drejt rezultateve</h2>
+            </div>
+            <div class="inner-grid inner-grid--3">
+                <article class="inner-card feature-card p-5">
+                    <i class="fas fa-award" aria-hidden="true"></i>
+                    <h3>Certifikime</h3>
+                    <p>Programet tona janë të ndërtuara sipas standartit profesional dhe tështë të domosdoshëm për të vërtetuar aftësitë.</p>
+                </article>
+                <article class="inner-card feature-card p-5">
+                    <i class="fas fa-chalkboard-teacher" aria-hidden="true"></i>
+                    <h3>Instruktore</h3>
+                    <p>Ekspertë dhe mentorë me përvojë në fushat e tyre, të gatshëm të japin mbështetje reale gjatë të mësuarit.</p>
+                </article>
+                <article class="inner-card feature-card p-5">
+                    <i class="fas fa-chart-line" aria-hidden="true"></i>
+                    <h3>Rezultate karriere</h3>
+                    <p>Qasja jonë është e fokusuar në zhvillim praktik, orientim në tregun e punës dhe përgatitje për mundësi reale.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="inner-section inner-section--highlight">
+        <div class="inner-container inner-cta">
+            <div>
+                <p class="inner-eyebrow">Regjistrohu tani</p>
+                <h2>Gati për hapin tjetër në karrierë?</h2>
+            </div>
+            <a class="inner-button inner-button--primary" href="{% url 'student' %}">Regjistrohu në Trajnim</a>
         </div>
     </section>
 </main>

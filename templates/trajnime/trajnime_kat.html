@@ -68,6 +68,101 @@
             {% endif %}
         </div>
     </section>
+
+    <section class="inner-section inner-section--muted" aria-labelledby="summary-heading">
+        <div class="inner-container">
+            <div class="inner-heading inner-heading--left">
+                <p class="inner-eyebrow">Përmbledhje e kategorisë</p>
+                <h2 id="summary-heading">Pse ky program është i rëndësishëm për karrierën tuaj?</h2>
+            </div>
+            <div class="inner-grid inner-grid--3">
+                <article class="inner-card">
+                    <div class="inner-card__body">
+                    <h3>Fokus praktik</h3>
+                    <p>Secili kurs kombinon teorinë me detyrat e vërteta profesionale, duke ju ndihmuar të krijoni vlerë menjëherë pas përfundimit.</p>
+                </div>
+                </article>
+                <article class="inner-card">
+                      <div class="inner-card__body">
+                    <h3>Mentorë ekspertë</h3>
+                    <p>Çdo program udhëhiqet nga instruktorë me përvojë reale në sektorin e zgjedhur, me qasje të orientuar drejt rezultateve.</p>
+                </div>
+                </article>
+                <article class="inner-card">
+                      <div class="inner-card__body">
+                    <h3>Rruga drejt punësimit</h3>
+                    <p>Programet janë projektuar për të zhvilluar kompetenca të kërkuara nga tregu dhe për të ndihmuar në kalimin në pozicione profesionale.</p>
+                </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="inner-section inner-section--muted" aria-labelledby="certification-heading">
+        <div class="inner-container">
+            <div class="inner-heading inner-heading--left">
+                <p class="inner-eyebrow">Certifikim</p>
+                <h2 id="certification-heading">Çfarë merrni pas përfundimit të programit?</h2>
+            </div>
+            <div class="inner-grid inner-grid--2">
+                <div>
+                    <ul class="inner-check-list">
+                        <li>Certifikim zyrtar nga Dominusoft</li>
+                        <li>Portfolio ose projekte të realizuara gjatë trajnimit</li>
+                        <li>Udhëzime praktike të personalizuara nga mentorë</li>
+                        <li>Mbështetje për zhvillimin e kompetencave profesionale</li>
+                    </ul>
+                </div>
+                <div>
+                    <div class="inner-card">
+                           <div class="inner-card__body">
+                        <h3>Çfarë do të mësoni?</h3>
+                        <p>{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags }}</p>
+                        <p>Programet janë të strukturuara për të përmirësuar aftësitë, përgatitjen profesionale dhe gatishmërinë e studentëve për situata reale të punës.</p>
+                   </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="inner-section inner-section--white" aria-labelledby="faq-heading">
+        <div class="inner-container">
+            <div class="inner-heading inner-heading--left">
+                <p class="inner-eyebrow">Pyetje të shpeshta</p>
+                <h2 id="faq-heading">Pse studentët zgjedhin {{ cat_training.cat_training_name|lower }}?</h2>
+            </div>
+            <div class="faq-list">
+                <details open>
+                    <summary>A është programi i përshtatshëm për fillestarë?</summary>
+                    <p>Po. Programet janë të ndërtuara me qasje të hapur, ku fokusohet në rritjen gradual të aftësive dhe në ndërtimin e bazës profesionale.</p>
+                </details>
+                <details>
+                    <summary>Si zhvillohet trajnimi?</summary>
+                    <p>Trajnimet kombinojnë sesione teorike, ushtrime praktike, projekte dhe udhëzime të synuara drejt zbatimit real në punë.</p>
+                </details>
+                <details>
+                    <summary>Çfarë marr pas përfundimit?</summary>
+                    <p>Pas përfundimit merrni certifikatimin, mbështetje të vazhdueshme dhe një kuptim më të qartë të rrugës profesionale në fushën e zgjedhur.</p>
+                </details>
+                <details>
+                    <summary>A mund të regjistrohem në një program të ri?</summary>
+                    <p>Po. Studentët mund të zgjidhin programin e duhur sipas nivelit të tyre dhe të ndiqen nga grupet e reja që formohen vazhdimisht.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="inner-section inner-section--accent" aria-labelledby="final-cta-heading">
+        <div class="inner-container inner-cta-box">
+            <div>
+                <p class="inner-eyebrow">Regjistrohu tani</p>
+                <h2 id="final-cta-heading">Zgjidh programin e duhur dhe fillo rrugën tuaj profesionale.</h2>
+            </div>
+            <a class="inner-button inner-button--primary" href="{% url 'training_category' %}">Regjistrohu në Trajnim</a>
+        </div>
+    </section>
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

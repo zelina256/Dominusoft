@@ -10,6 +10,7 @@ from django.urls import reverse
 from apply.models import Subscribe
 from blog.models import Article
 from home.models import Partner
+from services.models import Services
 from trainings.models import Category_training, Training
 
 
@@ -99,12 +100,28 @@ class SearchTests(TemporaryMediaTestCase):
             training_category=category,
             training_slug="python-profesional",
         )
+        self.article = Article.objects.create(
+            article_slug="python-artikel",
+            article_title="Python në praktikë",
+            article_excerpt="Artikull për Python dhe automatizim.",
+            article_image=test_image("article.gif"),
+            article_image_alt="Python në praktikë",
+            article_infos="<p>Një artikull mbi Python dhe automatizim.</p>",
+        )
+        self.service = Services.objects.create(
+            services_name="Zgjidhje Python",
+            services_description="Krijim aplikacionesh me Python dhe automatizim.",
+            services_image=test_image("service.gif"),
+            services_alt="Python",
+        )
 
     def test_get_search_is_case_insensitive_and_noindex(self):
         response = self.client.get(reverse("searchvenues"), {"q": "python"})
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, self.training.training_name)
+        self.assertContains(response, self.article.article_title)
+        self.assertContains(response, self.service.services_name)
         self.assertContains(response, '<meta name="robots" content="noindex,follow">')
         self.assertEqual(response.context["searched"], "python")
 

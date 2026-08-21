@@ -1,3 +1,6 @@
+from decimal import Decimal, InvalidOperation
+
+import requests
 from django.db import models
 from django_ckeditor_5.fields import CKEditor5Field
 from django.utils.safestring import mark_safe
@@ -52,6 +55,40 @@ class Training(models.Model):
     training_meta_keywords = models.CharField(max_length=300, null=True)
     training_meta_descriptions = models.CharField(max_length=300, null=True)
     training_title_tag = models.CharField(max_length=200, null=True)
+    training_price_lek = models.DecimalField(
+        max_digits=12,
+        decimal_places=2,
+        default=0,
+        blank=True,
+        null=True,
+        help_text="Çmimi në lekë, i futur manualisht."
+    )
+
+    @staticmethod
+    def get_lek_to_eur_rate():
+        try:
+            response = requests.get(
+                "https://api.exchangerate.host/latest?base=ALL&symbols=EUR",
+                timeout=5,
+            )
+            response.raise_for_status()
+            data = response.json()
+            rate = data.get("rates", {}).get("EUR")
+            if rate:
+                return Decimal(str(rate))
+        except Exception:
+            pass
+
+        return Decimal("0.0082")
+
+    @property
+    def training_price_eur(self):
+        if self.training_price_lek is None:
+            return Decimal("0.00")
+
+        rate = self.get_lek_to_eur_rate()
+        amount = Decimal(str(self.training_price_lek)) * rate
+        return amount.quantize(Decimal("0.01"))
 
     def __str__(self):
         return f"{self.training_name}"

@@ -219,7 +219,8 @@ def home(request):
 # Rreth Nesh
 def rrethnesh(request):
     cat_trainings = Category_training.objects.all()
-    context = {"cat_trainings": cat_trainings}
+    partners = Partner.objects.all()
+    context = {"cat_trainings": cat_trainings, "partners": partners}
     return render(request, "kryefaqja/rrethnesh.html", context)
 
 

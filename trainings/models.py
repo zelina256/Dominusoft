@@ -1,3 +1,4 @@
+import re
 from decimal import Decimal, InvalidOperation
 
 import requests
@@ -66,20 +67,36 @@ class Training(models.Model):
 
     @staticmethod
     def get_lek_to_eur_rate():
-        try:
-            response = requests.get(
-                "https://api.exchangerate.host/latest?base=ALL&symbols=EUR",
-                timeout=5,
-            )
-            response.raise_for_status()
-            data = response.json()
-            rate = data.get("rates", {}).get("EUR")
-            if rate:
-                return Decimal(str(rate))
-        except Exception:
-            pass
+        source_urls = [
+            "https://iliria98.com/convert",
+        ]
 
-        return Decimal("0.0082")
+        for url in source_urls:
+            try:
+                response = requests.get(url, timeout=10)
+                response.raise_for_status()
+                text = response.text
+
+                if "iliria98.com/convert" in url:
+                    match = re.search(r"EUR\s*(\d{1,3}(?:[.,]\d{1,2})?)\s*(\d{1,3}(?:[.,]\d{1,2})?)", text)
+                    if match:
+                        first = Decimal(match.group(1).replace(",", "."))
+                        second = Decimal(match.group(2).replace(",", "."))
+                        return (first + second) / Decimal("2")
+
+                data = response.json()
+                if data.get("rates"):
+                    all_per_eur = data.get("rates", {}).get("ALL")
+                    if all_per_eur:
+                        return Decimal(str(all_per_eur))
+
+                    eur_per_all = data.get("rates", {}).get("EUR")
+                    if eur_per_all:
+                        return Decimal(str(1)) / Decimal(str(eur_per_all))
+            except Exception:
+                continue
+
+        return Decimal("92.17")
 
     @property
     def training_price_eur(self):
@@ -87,7 +104,7 @@ class Training(models.Model):
             return Decimal("0.00")
 
         rate = self.get_lek_to_eur_rate()
-        amount = Decimal(str(self.training_price_lek)) * rate
+        amount = Decimal(str(self.training_price_lek)) / rate
         return amount.quantize(Decimal("0.01"))
 
     def __str__(self):

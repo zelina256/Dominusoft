@@ -31,17 +31,20 @@
                 <h1>Teknologji, AI dhe aftësi profesionale.</h1>
                 <p class="inner-hero__lead">Artikuj praktikë nga fusha e programimit, sigurisë, dizajnit, marketingut dhe zhvillimit të karrierës.</p>
             </div>
-            <aside class="inner-hero__panel">
-                <h2>Kërko në blog</h2>
-                <form method="get" action="{% url 'blog' %}" class="inner-search" role="search">
-                    <label class="sr-only" for="blog-search">Kërko artikuj</label>
-                    <input id="blog-search" type="search" name="q" value="{{ search_query }}" placeholder="Shkruaj një temë…">
-                    <button type="submit" aria-label="Kërko"><i class="fas fa-search" aria-hidden="true"></i></button>
-                </form>
-            </aside>
         </div>
     </section>
-
+{% comment %}
+    <div class="inner-container inner-hero__panel-wrap">
+        <aside class="inner-hero__panel inner-hero__panel--below">
+            <h2>Kërko në blog</h2>
+            <form method="get" action="{% url 'blog' %}" class="inner-search" role="search">
+                <label class="inner-search__label" for="blog-search">Kërko artikuj</label>
+                <input id="blog-search" type="search" name="q" value="{{ search_query }}" placeholder="Shkruaj një temë…">
+                <button type="submit" aria-label="Kërko"><i class="fas fa-search" aria-hidden="true"></i></button>
+            </form>
+        </aside>
+    </div>
+{% endcomment %}
     <section class="inner-section inner-section--white" aria-labelledby="articles-heading">
         <div class="inner-container">
             <div class="inner-heading"><p class="inner-eyebrow">Për t’u lexuar</p><h2 id="articles-heading">Artikujt e fundit</h2></div>

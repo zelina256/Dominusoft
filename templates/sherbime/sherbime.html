@@ -63,59 +63,30 @@
             </div>
 
             <div class="inner-grid inner-grid--3">
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-laptop-code" aria-hidden="true"></i></div>
-                        <h3>Software Solutions</h3>
-                        <p>Zhvillim i aplikacioneve dhe platformave të personalizuara për të automatizuar proceset dhe përmirësuar menaxhimin e biznesit.</p>
-                        <a class="category-card__link" href="/sherbime/zhvillim-sistemeve/">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-briefcase" aria-hidden="true"></i></div>
-                        <h3>Business Consultation</h3>
-                        <p>Analizë strategjike e nevojave të biznesit dhe rekomandime të qarta për rritje, organizim dhe përmirësim operacional.</p>
-                        <a class="category-card__link" href="/sherbime/zhvillim-sistemeve/">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
-                        <h3>SEO</h3>
-                        <p>Optimizim i strukturës, përmbajtjes dhe performancës së faqes për të rritur trafikun e cilësisë dhe shikueshmërinë.</p>
-                        <a class="category-card__link" href="/sherbime/zhvillim-sistemeve/">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-bullhorn" aria-hidden="true"></i></div>
-                        <h3>Digital Marketing</h3>
-                        <p>Kampanja në mediat sociale, content dhe strategji të marketingut dixhital për lidhje më të mira me audiencën.</p>
-                        <a class="category-card__link" href="/sherbime/zhvillim-sistemeve/">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-palette" aria-hidden="true"></i></div>
-                        <h3>Design</h3>
-                        <p>Identitet vizual, dizajn UX/UI dhe krijim i përvojave të forta për përdoruesit dhe klientët e biznesit.</p>
-                        <a class="category-card__link" href="/sherbime/zhvillim-sistemeve/">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-user-graduate" aria-hidden="true"></i></div>
-                        <h3>B2B Professional Training</h3>
-                        <p>Trajtime profesionale për ekipet e biznesit, me fokus në teknologji, performancë dhe zhvillim të aftësive.</p>
-                        <a class="category-card__link" href="/sherbime/zhvillim-sistemeve/">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
+                {% for service in services %}
+                    {% with detail=service.detail %}
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon"><i class="fas fa-laptop-code" aria-hidden="true"></i></div>
+                                {% if detail and detail.title %}
+                                    <h3>{{ detail.services_name }}</h3>
+                                {% else %}
+                                    <h3>{{ service.services_name }}</h3>
+                                {% endif %}
+                                <p>
+                                    {% if detail and detail.lead %}
+                                        {{ detail.lead|truncatechars:180 }}
+                                    {% else %}
+                                        {{ service.services_description|truncatechars:180 }}
+                                    {% endif %}
+                                </p>
+                                <a class="category-card__link" href="{% url 'tech_services' service.slug %}">Mëso më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </article>
+                    {% endwith %}
+                {% empty %}
+                    <p>Nuk ka shërbime të publikuara për momentin.</p>
+                {% endfor %}
             </div>
         </div>
     </section>

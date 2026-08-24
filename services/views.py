@@ -1,15 +1,49 @@
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 
 from trainings.models import Category_training
 
 from .models import Services
 
+
 # Sherbimet
 def services(request):
     cat_trainings = Category_training.objects.all().order_by("cat_training_id")
-    services = Services.objects.all().order_by('-pk')
+    services = (
+        Services.objects
+        .select_related("detail")
+        .prefetch_related("highlights", "benefits", "packages__items", "faqs", "related_services__related")
+        .all()
+        .order_by("-pk")
+    )
     context = {"cat_trainings": cat_trainings, "services": services}
     return render(request, "sherbime/sherbime.html", context)
 
-def tech_services(request):
-    return render(request, "sherbime/detaje_sherbime.html")
+
+def tech_services(request, slug):
+    service = get_object_or_404(
+        Services.objects.prefetch_related(
+            "highlights",
+            "benefits",
+            "packages__items",
+            "faqs",
+            "related_services__related",
+        ),
+        slug=slug,
+    )
+
+    detail = None
+    try:
+        detail = service.detail
+    except Services.detail.RelatedObjectDoesNotExist:
+        detail = None
+
+    context = {
+        "service": service,
+        "detail": detail,
+        "highlights": service.highlights.all(),
+        "benefits": service.benefits.all(),
+        "packages": service.packages.all(),
+        "faqs": service.faqs.all(),
+        "related_services": service.related_services.select_related("related").all(),
+    }
+    return render(request, "sherbime/detaje_sherbime.html", context)

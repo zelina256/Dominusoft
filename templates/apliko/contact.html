@@ -64,38 +64,39 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
     <div class="inner-container">
       <div class="row g-4 align-items-stretch">
         <div class="col-lg-5">
-          <div class="contact-card contact-card__body h-100" style="padding: clamp(1.5rem, 3vw, 2.5rem);">
+          <div class="contact-card contact-card__body h-100">
             <div class="contact-card-header mb-4">
               <p class="inner-eyebrow">Informacioni i kontaktit</p>
               <h2 id="contact-information-title">Informacioni i kontaktit</h2>
-              <p style="color: var(--inner-muted); line-height: 1.75; margin: 0;">
+              <p>
                 Na vizitoni në zyrat tona në Tiranë, na telefononi ose na
                 shkruani për çdo pyetje rreth trajnimeve dhe shërbimeve tona.
               </p>
             </div>
 
-            <ul class="contact-card__list" style="margin-top: 1.5rem;">
-              <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span><strong>Adresa</strong><br>Rruga “Reshit Çollaku”, Tiranë, Shqipëri</span></li>
-              <li><i class="fas fa-phone-alt" aria-hidden="true"></i><span><strong>Telefoni</strong><br><a href="tel:+355673005050">+355 67 300 5050</a></span></li>
-              <li><i class="far fa-envelope" aria-hidden="true"></i><span><strong>Email</strong><br><a href="mailto:info@dominusoft.com">info@dominusoft.com</a></span></li>
-              <li><i class="far fa-clock" aria-hidden="true"></i><span><strong>Orari i zyrës</strong><br>E hënë – E premte<br>10:00 – 19:00</span></li>
+            <ul class="contact-card__list">
+              <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span><strong>Adresa</strong>Rruga “Reshit Çollaku”, Tiranë, Shqipëri</span></li>
+              <li><i class="fas fa-phone-alt" aria-hidden="true"></i><span><strong>Telefoni</strong><a href="tel:+355673005050">+355 67 300 5050</a></span></li>
+              <li><i class="fab fa-whatsapp" aria-hidden="true"></i><span><strong>WhatsApp</strong><a href="https://wa.me/355673005050" target="_blank" rel="noopener noreferrer">+355 67 300 5050</a></span></li>
+              <li><i class="far fa-envelope" aria-hidden="true"></i><span><strong>Email</strong><a href="mailto:info@dominusoft.com">info@dominusoft.com</a></span></li>
+              <li><i class="far fa-clock" aria-hidden="true"></i><span><strong>Orari i zyrës</strong>E hënë – E premte<br>10:00 – 19:00</span></li>
             </ul>
           </div>
         </div>
 
         <div class="col-lg-7">
-          <div class="contact-card h-100" id="message_student" style="padding: clamp(1.5rem, 3vw, 2.5rem);">
+          <div class="contact-card h-100" id="message_student">
             <div class="contact-card-header mb-4">
               <p class="inner-eyebrow">Dërgoni një kërkesë</p>
               <h2>Dërgoni një kërkesë</h2>
-              <p style="color: var(--inner-muted); line-height: 1.75; margin: 0;">
+              <p>
                 Plotësoni formularin me të dhënat tuaja dhe përshkruani
                 shkurtimisht kursin, projektin ose shërbimin për të cilin
                 dëshironi më shumë informacion.
               </p>
             </div>
 
-            <form method="POST" class="inner-form" style="margin-top: 1.5rem;">
+            <form method="POST" class="inner-form">
               {% csrf_token %}
 
               <div class="inner-form__row">
@@ -132,7 +133,7 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
                 <textarea id="message" rows="6" name="message" placeholder="Na tregoni më shumë rreth kërkesës suaj..."></textarea>
               </div>
 
-              <p class="small" style="margin:0; color: var(--inner-muted);">
+              <p class="small">
                 Të dhënat tuaja do të përdoren vetëm për t'ju kontaktuar në lidhje me kërkesën e dërguar.
               </p>
 
@@ -153,13 +154,13 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
       <div class="inner-heading text-center">
         <p class="inner-eyebrow">Na gjeni</p>
         <h2 id="location-title">Na gjeni në Tiranë</h2>
-        <p style="color: var(--inner-muted); margin: 0; line-height: 1.75;">
+        <p>
           Vizitoni zyrat e Dominusoft në Rrugën “Reshit Çollaku” ose
           përdorni hartën për të planifikuar rrugën tuaj.
         </p>
       </div>
 
-      <div class="contact-card" style="overflow: hidden;">
+      <div class="contact-card">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
           title="Vendndodhja e zyrave të Dominusoft në Tiranë" loading="lazy"
@@ -170,9 +171,9 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
 
   <section class="inner-section inner-section--white" aria-labelledby="consultation-title">
     <div class="inner-container">
-      <div class="text-center" style="max-width: 760px; margin: 0 auto; padding: clamp(2rem, 4vw, 3rem); border-radius: var(--inner-radius-lg); background: linear-gradient(135deg, var(--inner-navy-deep), var(--inner-navy)); color: #fff; box-shadow: var(--inner-shadow);">
-        <h2 id="consultation-title" style="color: #fff; margin-bottom: 0.9rem;">Nuk jeni të sigurt se cili kurs ose shërbim ju përshtatet?</h2>
-        <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem; line-height: 1.8;">
+      <div class="text-center" >
+        <h2 id="consultation-title">Nuk jeni të sigurt se cili kurs ose shërbim ju përshtatet?</h2>
+        <p>
           Rezervoni një konsultim fillestar me ekipin tonë. Do të
           diskutojmë objektivat, nevojat dhe mundësitë më të përshtatshme
           për zhvillimin tuaj profesional ose për projektin e biznesit tuaj.

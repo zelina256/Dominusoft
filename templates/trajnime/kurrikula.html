@@ -36,79 +36,117 @@
             {% if training.training_text != "Së shpejti" %}<p class="inner-hero__lead">{{ training.training_text }}</p>{% else %}<p class="inner-hero__lead">Ky program do të jetë i disponueshëm së shpejti.</p>{% endif %}
         </div>
     </section>
+    <div class="inner-container">
+        {% if training.training_text != "Së shpejti" %}
+        <div class="course-detail">
+            <aside class="course-detail__tabs" aria-label="Opsionet e kursit">
+                <div class="course-detail__sidebar">
+                    <ul class="nav nav-pills course-tabs" id="pills-tab1" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active" id="pills-description-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-description" type="button" role="tab" aria-selected="true">Përshkrim</button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link" id="pills-curricula-tab" data-bs-toggle="pill"
+                                data-bs-target="#pills-curricula" type="button" role="tab" aria-selected="false">Kurrikula</button>
+                        </li>
+                    </ul>
 
-    <section class="inner-section inner-section--white">
-        <div class="inner-container">
-            {% if training.training_text != "Së shpejti" %}
-            <div class="course-detail">
-                <article class="course-detail__main">
-                    <p class="inner-eyebrow">Përmbledhje</p>
-                    <h2 class="course-detail__title">Programi {{ training.training_name }}</h2>
-                    <p class="course-detail__intro">{{ training.training_text }}</p>
+                </div>
+            </aside>
 
-                    {% if training.training_competence %}
-                    <section class="course-detail__block rich-content" aria-labelledby="competencies-title">
-                        <h2 id="competencies-title">Kompetencat që zhvillon</h2>
-                        {{ training.training_competence|html_tags }}
-                    </section>
-                    {% endif %}
+            <div class="course-detail__main">
+                <header class="course-detail__header">
+                    <p class="inner-eyebrow">Programi</p>
+                    <h2>Programi {{ training.training_name }}</h2>
+                </header>
 
-                    <section class="course-detail__block" aria-labelledby="certification-title">
-                        <h2 id="certification-title">Certifikimi</h2>
-                        <p class="rich-content">Pas përfundimit me sukses të kursit, pajiseni me certifikatë të licencuar nga Ministria e Ekonomisë dhe Inovacionit.</p>
-                    </section>
+                <div class="tab-content" id="pills-tabContent1">
+                    <div class="tab-pane fade show active course-detail__panel" id="pills-description" role="tabpanel">
+                        <h3>Karakteristikat e programit</h3>
+                        <p>{{ training.training_text }}</p>
 
-                    <section class="course-detail__block" aria-labelledby="internship-title">
-                        <h2 id="internship-title">Praktika dhe internship-i</h2>
-                        <div class="rich-content">
-                            <p>Pas përfundimit me sukses të kursit, fitoni të drejtën për t’u përfshirë në programin tonë të internship-it. Do të punoni në grup mbi një projekt real, nën mentorimin e stafit tonë.</p>
-                            <p>Për studentët në universitet, programi mund të shërbejë edhe si praktikë mësimore, me plotësimin e dokumentacionit të kërkuar nga institucioni arsimor.</p>
-                        </div>
-                    </section>
-
-                    <section class="course-detail__block" aria-labelledby="curriculum-title">
-                        <h2 id="curriculum-title">Kurrikula e kursit</h2>
-                        {% if curriculas %}
-                        <div class="curriculum-stack">
-                            {% for curricula in curriculas %}
-                            <details class="curriculum-disclosure" {% if forloop.first %}open{% endif %}>
-                                <summary>{{ curricula.curricula_name }}</summary>
-                                <ol>
-                                    {% for lesson in curricula.get_lesson %}<li>{{ lesson.lesson_name|safe }}</li>{% empty %}<li>Temat do të publikohen së shpejti.</li>{% endfor %}
-                                </ol>
-                            </details>
-                            {% endfor %}
-                        </div>
-                        {% else %}
-                        <p class="rich-content">Kurrikula e detajuar do të publikohet së shpejti. Kontaktoni ekipin për informacion.</p>
-                        {% endif %}
-                    </section>
-                </article>
-
-                <aside class="course-detail__aside" aria-label="Detajet dhe aplikimi">
-                    {% if training.training_image %}<img src="{{ training.training_image.url }}" alt="{{ training.training_image_alt|default:training.training_name }}" width="520" height="390">{% endif %}
-                    <div class="course-detail__aside-content">
-                        <h2>Detajet e kursit</h2>
-                        <ul class="fact-list">
-                            {% if training.training_weeks %}<li><i class="fas fa-calendar-week" aria-hidden="true"></i><span>{{ training.training_weeks }} javë</span></li>{% endif %}
-                            {% if training.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i><span>{{ training.training_hours }} orë</span></li>{% endif %}
-                            {% if training.training_sessions %}<li><i class="fas fa-users" aria-hidden="true"></i><span>{{ training.training_sessions }}</span></li>{% endif %}
-                            {% if training.training_price_lek %}
-                            <li><i class="fas fa-money-bill-wave" aria-hidden="true"></i><span>{{ training.training_price_lek }} ALL</span></li>
-                            <li><i class="fas fa-euro-sign" aria-hidden="true"></i><span>€ {{ training.training_price_eur }}</span></li>
+                        <div class="course-detail__meta">
+                            <p><i class="fas fa-calendar-week" aria-hidden="true"></i><span>Kohëzgjatja: {{ training.training_weeks }} javë / {{ training.training_hours }} orë</span></p>
+                            <p><i class="fas fa-users" aria-hidden="true"></i><span>Pjesëmarrja: {{ training.training_sessions }}</span></p>
+                            {% if training.training_price_lek and training.training_price_lek != 0 %}
+                            <p class="course-price-inline"><i class="fas fa-wallet" aria-hidden="true"></i><span>Çmimi: {{ training.training_price_lek|floatformat:0 }} Lekë / {{ training.training_price_eur|floatformat:2 }} €</span></p>
                             {% endif %}
-                        </ul>
-                        <a class="inner-button inner-button--primary" href="{% url 'student' %}?course={{ training.training_name|urlencode }}">Apliko për këtë kurs</a>
+                        </div>
+
+                        <h3>Kompetencat</h3>
+                        <p>{{ training.training_competence|html_tags }}</p>
+
+                        <h3>Certifikimi</h3>
+                        <p>Pas përfundimit me sukses të kursit, pajiseni me certifikatë të licencuar nga Ministria e Ekonomisë dhe Inovacionit.</p>
+
+                        <h3>Internship</h3>
+                        <p class="course-detail__strong">Për të gjithë pjesëmarrësit që kanë përfunduar me sukses Kursin:</p>
+                        <p>Pas përfundimit të kursit, fitoni të drejtën për t'u përfshirë menjëherë në programin tonë të internship-it. Gjatë këtij programi, do të punoni në grup mbi një projekt real, duke u mentoruar nga stafi ynë me përvojë, duke ndjekur një strukturë pune bashkëpunuese dhe profesionale.</p>
+                        <p class="course-detail__strong">Për studentët, në ndjekje të universitetit, garantohet Praktika Mësimore dhe plotësimi i të gjitha dokumenteve të nevojshme nga institucioni juaj arsimor, duke respektuar afatet zyrtare dhe kërkesat përkatëse.</p>
+                        <p>Nëse keni nevojë për të zhvilluar praktikën mësimore të kërkuar nga universiteti apo departamenti juaj, ky internship mund të shërbejë edhe për këtë qëllim.</p>
+
+                        {% comment %}
+                        <h3>Karriera</h3>
+                        <p>{{ training.training_employment|html_tags }}</p>
+                        {% endcomment %}
                     </div>
-                </aside>
+
+                    <div class="tab-pane fade course-detail__panel" id="pills-curricula" role="tabpanel">
+                        {% for curricula in curriculas %}
+                        <div class="curricula-block">
+                            <h3>{{ curricula.curricula_name }}</h3>
+                            <div class="curricula-list">
+                                {% for lesson in curricula.get_lesson %}
+                                <div class="curricula-item">{{ lesson.lesson_name|safe }}</div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
-            {% else %}
-            <div class="inner-empty">
-                <h2>Regjistrimet hapen së shpejti</h2>
-                <p>Lini të dhënat tuaja dhe do t’ju njoftojmë kur të hapet grupi i radhës.</p>
-                <a class="inner-button inner-button--primary" href="{% url 'student' %}?course={{ training.training_name|urlencode }}">Shpreh interesin</a>
+        </div>
+        {% else %}
+        <p class="text-center display-1">{{ training.training_name }}</p>
+        <h6 class="text-center fw-bold mt-3 text_se_shpejti">Së Shpejti</h6>
+        {% endif %}
+    </div>
+
+    <section class="inner-section inner-section--white" aria-labelledby="training-faq-title">
+        <div class="inner-container">
+            <div class="inner-heading inner-heading--left">
+                <p class="inner-eyebrow">FAQ</p>
+                <h2 id="training-faq-title">Pyetje të shpeshta rreth {{ training.training_name|lower }}</h2>
             </div>
-            {% endif %}
+            <div class="faq-list">
+                <details open>
+                    <summary>A është ky kurs i përshtatshëm për fillestarë?</summary>
+                    <p>Po. Programi është projektuar për të ndihmuar pjesëmarrësit të ndërtojnë një bazë solide, duke filluar nga konceptet thelbësore dhe duke u avancuar gradualisht drejt aplikimeve praktike.</p>
+                </details>
+                <details>
+                    <summary>Si zhvillohet trajnimi?</summary>
+                    <p>Trajnimi kombinon teori, ushtrime praktike, studime të rasteve dhe punë në projekte realë, në mënyrë që njohuritë të zbatohen menjëherë në praktikë.</p>
+                </details>
+                <details>
+                    <summary>Çfarë marr pas përfundimit të kursit?</summary>
+                    <p>Pas përfundimit të suksesshëm të kursit, merrni certifikatimin e programit, mbështetje gjatë procesit të mësimit dhe mundësi për të vazhduar në praktikë ose në projekte të tjera profesionale.</p>
+                </details>
+                <details>
+                    <summary>A mund të bëj pyetje gjatë kursit?</summary>
+                    <p>Po. Mentorët dhe instruktorët janë të disponueshëm për të ndihmuar gjatë sesioneve dhe për të përgjigjur pyetjeve që lindin gjatë procesit të përvetësimit të njohurive.</p>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    <section class="inner-section inner-section--accent" aria-labelledby="training-cta-title">
+        <div class="inner-container inner-cta-box">
+            <div>
+                <p class="inner-eyebrow">Regjistrohu tani</p>
+                <h2 id="training-cta-title">Zgjidh {{ training.training_name|lower }} dhe fillo rrugën tuaj profesionale.</h2>
+            </div>
+            <a class="inner-button inner-button--primary" href="{% url 'student' %}">Regjistrohu në kurs</a>
         </div>
     </section>
 

@@ -4,8 +4,10 @@
 {% block title %}Rreth Nesh | Dominusoft{% endblock %}
 
 {% block meta %}
-<meta name="description" content="Mësoni më shumë rreth Dominusoft, historisë, misionit, vizionit, vlerave, ekipit, licencave dhe partneriteteve tona.">
-<meta name="keywords" content="Dominusoft, rreth nesh, kompani teknologjie Shqipëri, kurse profesionale, software, marketing digital, konsulence IT">
+<meta name="description"
+    content="Mësoni më shumë rreth Dominusoft, historisë, misionit, vizionit, vlerave, ekipit, licencave dhe partneriteteve tona.">
+<meta name="keywords"
+    content="Dominusoft, rreth nesh, kompani teknologjie Shqipëri, kurse profesionale, software, marketing digital, konsulence IT">
 {% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
@@ -29,7 +31,8 @@
                     nga Inteligjenca Artificiale.
                 </p>
                 <div class="inner-hero__actions">
-                    <a class="inner-button inner-button--primary" href="#kontakt">Rezervo konsultë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                    <a class="inner-button inner-button--primary" href="#kontakt">Rezervo konsultë <i
+                            class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     <a class="inner-button inner-button--ghost" href="#historia">Shiko historinë</a>
                 </div>
             </div>
@@ -37,9 +40,12 @@
             <aside class="inner-hero__panel" aria-label="Pikat kryesore të Dominusoft">
                 <h2>Çfarë na përcakton</h2>
                 <ul class="fact-list">
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Trajnim praktik dhe të bazuar në reale</span></li>
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Zhvillim teknologjik me fokus në rezultat</span></li>
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Besueshmëri, inovacion dhe bashkëpunim</span></li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Trajnim praktik dhe të bazuar në
+                            reale</span></li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Zhvillim teknologjik me fokus në
+                            rezultat</span></li>
+                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Besueshmëri, inovacion dhe
+                            bashkëpunim</span></li>
                 </ul>
             </aside>
         </div>
@@ -47,12 +53,12 @@
 
     <section id="historia" class="inner-section inner-section--white" aria-labelledby="history-title">
         <div class="inner-container">
-            <div class="inner-heading text-center">
+            <div class="inner-heading">
                 <p class="inner-eyebrow">Historia jonë</p>
                 <h2 id="history-title">Nga edukimi profesional tek zgjidhjet B2B</h2>
-            </div>
+            <!-- </div> -->
 
-            <div class="story-card" style="max-width: 980px; margin: 0 auto; padding: clamp(1.5rem, 3vw, 2.5rem); border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: #fff; box-shadow: var(--inner-shadow);">
+            <!-- <div> -->
                 <p>
                     Dominusoft u krijua me synimin për të sjellë më pranë tregut shqiptar
                     edukimin profesional, teknologjinë dhe ekspertizën praktike. Me kalimin
@@ -85,27 +91,32 @@
 
             <div class="row g-4">
                 <div class="col-md-6">
-                    <div class="mission-card" style="padding: clamp(1.5rem, 3vw, 2rem); border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: #fff; height: 100%; box-shadow: var(--inner-shadow);">
-                        <div class="mission-icon" style="font-size: 2.2rem; margin-bottom: 1rem;">🎯</div>
-                        <h3 style="margin-bottom: 0.9rem;">Misioni</h3>
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                             <div class="service-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
+                        <h3>Misioni</h3>
                         <p>
                             Të fuqizojmë individët dhe bizneset përmes edukimit profesional,
                             teknologjisë dhe zgjidhjeve digjitale që krijojnë vlerë reale,
                             rrisin efikasitetin dhe përgatisin njerëzit për kërkesat e tregut modern.
                         </p>
-                    </div>
+                        </div>
+                       
+                    </article>
                 </div>
 
                 <div class="col-md-6">
-                    <div class="mission-card" style="padding: clamp(1.5rem, 3vw, 2rem); border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: #fff; height: 100%; box-shadow: var(--inner-shadow);">
-                        <div class="mission-icon" style="font-size: 2.2rem; margin-bottom: 1rem;">🚀</div>
-                        <h3 style="margin-bottom: 0.9rem;">Vizioni</h3>
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="service-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div>
+                        <h3>Vizioni</h3>
                         <p>
                             Të jemi një nga partnerët më të besueshëm në Shqipëri për edukim,
                             teknologji dhe transformim digjital, duke lidhur talentin, biznesin
                             dhe inovacionin në një ekosistem të vetëm.
                         </p>
-                    </div>
+</div>
+                    </article>
                 </div>
             </div>
         </div>
@@ -120,45 +131,69 @@
 
             <div class="row g-4">
                 <div class="col-md-6 col-lg-4">
-                    <div class="value-card" style="padding: 1.4rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <h3>🤝 Besueshmëri</h3>
-                        <p>Marrëdhëniet afatgjata ndërtohen mbi komunikim të qartë, transparencë dhe përgjegjësi.</p>
-                    </div>
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                            <div class="service-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
+                            <h3>Besueshmëri</h3>
+                            <p>Marrëdhëniet afatgjata ndërtohen mbi komunikim të qartë, transparencë dhe përgjegjësi.
+                            </p>
+                        </div>
+                    </article>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="value-card" style="padding: 1.4rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <h3>💡 Inovacion</h3>
-                        <p>Përqafojmë teknologjitë e reja dhe Inteligjencën Artificiale, por gjithmonë me fokus tek zgjidhjet që krijojnë vlerë reale.</p>
-                    </div>
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="service-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
+                        <h3>Inovacion</h3>
+                        <p>Përqafojmë teknologjitë e reja dhe Inteligjencën Artificiale, por gjithmonë me fokus tek
+                            zgjidhjet që krijojnë vlerë reale.</p>
+                        </div>
+                    </article>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="value-card" style="padding: 1.4rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <h3>🎓 Edukim praktik</h3>
-                        <p>Besojmë se aftësitë zhvillohen përmes praktikës, projekteve reale dhe kontaktit të vazhdueshëm me kërkesat e tregut.</p>
-                    </div>
+                     <article class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="service-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                        <h3>Edukim praktik</h3>
+                        <p>Besojmë se aftësitë zhvillohen përmes praktikës, projekteve reale dhe kontaktit të
+                            vazhdueshëm me kërkesat e tregut.</p>
+                        </div>
+                    </article>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="value-card" style="padding: 1.4rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <h3>📈 Rezultate</h3>
-                        <p>Çdo projekt, trajnim apo bashkëpunim duhet të ketë një ndikim të matshëm dhe një rezultat të qartë.</p>
-                    </div>
+                     <article class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="service-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                        <h3>Rezultate</h3>
+                        <p>Çdo projekt, trajnim apo bashkëpunim duhet të ketë një ndikim të matshëm dhe një rezultat të
+                            qartë.</p>
+                        </div>
+                    </article>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="value-card" style="padding: 1.4rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <h3>🧠 Zhvillim i vazhdueshëm</h3>
-                        <p>Teknologjia ndryshon çdo ditë. Ne investojmë vazhdimisht në përmirësimin e njohurive, proceseve dhe metodologjive tona.</p>
-                    </div>
+                     <article class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="service-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
+                        <h3>Zhvillim i vazhdueshëm</h3>
+                        <p>Teknologjia ndryshon çdo ditë. Ne investojmë vazhdimisht në përmirësimin e njohurive,
+                            proceseve dhe metodologjive tona.</p>
+                        </div>
+                    </article>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="value-card" style="padding: 1.4rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <h3>🌍 Bashkëpunim</h3>
-                        <p>Vlera më e madhe krijohet kur ekspertët, kompanitë, institucionet dhe talentet e reja punojnë së bashku.</p>
-                    </div>
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="service-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                        <h3>Bashkëpunim</h3>
+                        <p>Vlera më e madhe krijohet kur ekspertët, kompanitë, institucionet dhe talentet e reja punojnë
+                            së bashku.</p>
+                        </div>
+                    </article>
                 </div>
             </div>
         </div>
@@ -171,44 +206,48 @@
                 <h2 id="timeline-title">Momentet kryesore</h2>
             </div>
 
-            <div class="timeline" style="display: grid; gap: 1.5rem; max-width: 980px; margin: 0 auto;">
-                <div class="timeline-item" style="display:grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items:flex-start; background: #fff; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); padding: 1.2rem 1.4rem; box-shadow: var(--inner-shadow);">
-                    <div class="timeline-dot" style="display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0.5rem; border-radius:999px; background: rgba(62, 196, 237, 0.12); color: var(--inner-navy); font-weight:700;">20XX</div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-dot">20XX</div>
                     <div class="timeline-content">
                         <h3>Fillimi i Dominusoft</h3>
                         <p>Nis aktiviteti me fokus në edukim profesional dhe zhvillim të aftësive teknologjike.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item" style="display:grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items:flex-start; background: #fff; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); padding: 1.2rem 1.4rem; box-shadow: var(--inner-shadow);">
-                    <div class="timeline-dot" style="display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0.5rem; border-radius:999px; background: rgba(62, 196, 237, 0.12); color: var(--inner-navy); font-weight:700;">20XX</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">20XX</div>
                     <div class="timeline-content">
                         <h3>Zgjerimi i programeve profesionale</h3>
-                        <p>Shtohen programe të reja në programim, dizajn grafik, marketing dixhital, arkitekturë dhe teknologji.</p>
+                        <p>Shtohen programe të reja në programim, dizajn grafik, marketing dixhital, arkitekturë dhe
+                            teknologji.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item" style="display:grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items:flex-start; background: #fff; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); padding: 1.2rem 1.4rem; box-shadow: var(--inner-shadow);">
-                    <div class="timeline-dot" style="display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0.5rem; border-radius:999px; background: rgba(62, 196, 237, 0.12); color: var(--inner-navy); font-weight:700;">20XX</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">20XX</div>
                     <div class="timeline-content">
                         <h3>Licencimi institucional</h3>
-                        <p>Dominusoft licencohet nga Ministria e Ekonomisë dhe Inovacionit me numër licence LN-3743-02-2022.</p>
+                        <p>Dominusoft licencohet nga Ministria e Ekonomisë dhe Inovacionit me numër licence
+                            LN-3743-02-2022.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item" style="display:grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items:flex-start; background: #fff; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); padding: 1.2rem 1.4rem; box-shadow: var(--inner-shadow);">
-                    <div class="timeline-dot" style="display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0.5rem; border-radius:999px; background: rgba(62, 196, 237, 0.12); color: var(--inner-navy); font-weight:700;">20XX</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">20XX</div>
                     <div class="timeline-content">
                         <h3>Zgjerimi në shërbime B2B</h3>
-                        <p>Kompania zgjeron aktivitetin në software, konsulencë IT, SEO, marketing dixhital, branding dhe automatizim.</p>
+                        <p>Kompania zgjeron aktivitetin në software, konsulencë IT, SEO, marketing dixhital, branding
+                            dhe automatizim.</p>
                     </div>
                 </div>
 
-                <div class="timeline-item" style="display:grid; grid-template-columns: 120px 1fr; gap: 1rem; align-items:flex-start; background: #fff; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); padding: 1.2rem 1.4rem; box-shadow: var(--inner-shadow);">
-                    <div class="timeline-dot" style="display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:0.5rem; border-radius:999px; background: rgba(62, 196, 237, 0.12); color: var(--inner-navy); font-weight:700;">Sot</div>
+                <div class="timeline-item">
+                    <div class="timeline-dot">Sot</div>
                     <div class="timeline-content">
                         <h3>Integrimi i Inteligjencës Artificiale</h3>
-                        <p>AI integrohet në programet profesionale, proceset e punës dhe zgjidhjet që ofrohen për individë dhe biznese.</p>
+                        <p>AI integrohet në programet profesionale, proceset e punës dhe zgjidhjet që ofrohen për
+                            individë dhe biznese.</p>
                     </div>
                 </div>
             </div>
@@ -224,26 +263,34 @@
 
             <div class="row g-4 justify-content-center">
                 <div class="col-md-6 col-lg-4">
-                    <div class="cert-card" style="padding: 1.5rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <div class="cert-icon" style="font-size: 2rem; margin-bottom: 0.9rem;">🏛️</div>
+                    <div class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="home-icon"><i class="fas fa-landmark" aria-hidden="true"></i></div>
                         <h3>Institucion i licencuar</h3>
-                        <p>Licencuar nga Ministria e Ekonomisë dhe Inovacionit me numër licence <strong>LN-3743-02-2022</strong>.</p>
+                        <p>Licencuar nga Ministria e Ekonomisë dhe Inovacionit me numër licence
+                            <strong>LN-3743-02-2022</strong>.</p>
+                            </div>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="cert-card" style="padding: 1.5rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <div class="cert-icon" style="font-size: 2rem; margin-bottom: 0.9rem;">🎓</div>
+                    <div class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="home-icon"><i class="fas fa-award" aria-hidden="true"></i></div>
                         <h3>Trajnime profesionale</h3>
                         <p>Programe të orientuara drejt aftësive praktike dhe nevojave reale të tregut të punës.</p>
+                        </div>
                     </div>
                 </div>
 
                 <div class="col-md-6 col-lg-4">
-                    <div class="cert-card" style="padding: 1.5rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: var(--inner-soft); height: 100%;">
-                        <div class="cert-icon" style="font-size: 2rem; margin-bottom: 0.9rem;">✅</div>
+                    <div class="inner-card">
+                        <div class="inner-card__body">
+                        <div class="home-icon"><i class="fas fa-check-circle" aria-hidden="true"></i></div>
                         <h3>Standard profesional</h3>
-                        <p>Procese të strukturuara, fokus në cilësi dhe zhvillim të vazhdueshëm në shërbimet dhe programet e ofruara.</p>
+                        <p>Procese të strukturuara, fokus në cilësi dhe zhvillim të vazhdueshëm në shërbimet dhe
+                            programet e ofruara.</p>
+                            </div>
                     </div>
                 </div>
             </div>
@@ -260,30 +307,30 @@
 
             <div class="row g-4">
                 <div class="col-6 col-lg-3">
-                    <div class="stat-box" style="padding: 2rem 1rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: linear-gradient(180deg, #fff 0%, var(--inner-soft) 100%); text-align:center; height:100%;">
-                        <div class="stat-number" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--inner-navy);">[X]+</div>
-                        <div class="stat-label" style="margin-top:0.5rem; color: var(--inner-muted); font-weight:600;">Vite aktiviteti</div>
+                    <div class="stat-box">
+                        <div class="stat-number">[X]+</div>
+                        <div class="stat-label">Vite aktiviteti</div>
                     </div>
                 </div>
 
                 <div class="col-6 col-lg-3">
-                    <div class="stat-box" style="padding: 2rem 1rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: linear-gradient(180deg, #fff 0%, var(--inner-soft) 100%); text-align:center; height:100%;">
-                        <div class="stat-number" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--inner-navy);">[X]+</div>
-                        <div class="stat-label" style="margin-top:0.5rem; color: var(--inner-muted); font-weight:600;">Klientë të shërbyer</div>
+                    <div class="stat-box">
+                        <div class="stat-number">[X]+</div>
+                        <div class="stat-label">Klientë të shërbyer</div>
                     </div>
                 </div>
 
                 <div class="col-6 col-lg-3">
-                    <div class="stat-box" style="padding: 2rem 1rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: linear-gradient(180deg, #fff 0%, var(--inner-soft) 100%); text-align:center; height:100%;">
-                        <div class="stat-number" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--inner-navy);">[X]+</div>
-                        <div class="stat-label" style="margin-top:0.5rem; color: var(--inner-muted); font-weight:600;">Studentë të trajnuar</div>
+                    <div class="stat-box">
+                        <div class="stat-number">[X]+</div>
+                        <div class="stat-label">Studentë të trajnuar</div>
                     </div>
                 </div>
 
                 <div class="col-6 col-lg-3">
-                    <div class="stat-box" style="padding: 2rem 1rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background: linear-gradient(180deg, #fff 0%, var(--inner-soft) 100%); text-align:center; height:100%;">
-                        <div class="stat-number" style="font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; color: var(--inner-navy);">[X]+</div>
-                        <div class="stat-label" style="margin-top:0.5rem; color: var(--inner-muted); font-weight:600;">Projekte të përfunduara</div>
+                    <div class="stat-box">
+                        <div class="stat-number">[X]+</div>
+                        <div class="stat-label">Projekte të përfunduara</div>
                     </div>
                 </div>
             </div>
@@ -297,32 +344,41 @@
                 <h2 id="partners-title">Partnerët tanë</h2>
             </div>
 
-            <div class="row g-4 justify-content-center">
+            {% if partners %}
+            <div class="partner-grid">
                 {% for partner in partners reversed %}
-                <div class="col-6 col-md-4 col-lg-2">
-                    <div class="partner-box" style="display:flex; align-items:center; justify-content:center; min-height:110px; padding:1rem; border: 1px solid var(--inner-line); border-radius: var(--inner-radius); background:#fff; box-shadow: var(--inner-shadow);">
-                        <img src="{{ partner.partner_logo.url }}" alt="{{ partner.partner_image_alt }}" class="img-fluid" style="max-height:72px; width:auto; object-fit:contain;">
-                    </div>
+                {% if partner.partner_logo %}
+                <div class="partner-box">
+                    <img src="{{ partner.partner_logo.url }}"
+                        alt="{{ partner.partner_image_alt|default:partner.partner_name|default:'Partner logo' }}"
+                        loading="lazy" decoding="async">
                 </div>
+                {% endif %}
                 {% empty %}
                 <div class="col-12 text-center">
                     <p class="text-muted mb-0">Logot e partnerëve do të shfaqen këtu.</p>
                 </div>
                 {% endfor %}
             </div>
+            {% else %}
+            <div class="text-center">
+                <p class="text-muted mb-0">Logot e partnerëve do të shfaqen këtu.</p>
+            </div>
+            {% endif %}
         </div>
     </section>
 
     <section id="kontakt" class="inner-section inner-section--white">
         <div class="inner-container">
-            <div class="text-center" style="max-width: 760px; margin: 0 auto; padding: clamp(2rem, 4vw, 3rem); border-radius: var(--inner-radius-lg); background: linear-gradient(135deg, var(--inner-navy-deep), var(--inner-navy)); color: #fff; box-shadow: var(--inner-shadow);">
-                <h2 style="color: #fff; margin-bottom: 0.9rem;">Le të ndërtojmë diçka me vlerë së bashku</h2>
-                <p style="color: rgba(255,255,255,0.8); margin-bottom: 1.5rem;">
+            <div class="text-center">
+                <h2>Le të ndërtojmë diçka me vlerë së bashku</h2>
+                <p>
                     Nëse kërkoni një partner për software, marketing, konsulencë IT,
                     transformim digjital ose trajnim profesional për ekipin tuaj,
                     gjithçka fillon me një bisedë.
                 </p>
-                <a href="#contact" class="home-button home-button--primary">Rezervo konsultë <span aria-hidden="true">→</span></a>
+                <a href="#contact" class="home-button home-button--primary">Rezervo konsultë <span
+                        aria-hidden="true">→</span></a>
             </div>
         </div>
     </section>

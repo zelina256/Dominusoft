@@ -21,40 +21,162 @@
     </section>
 
     <section class="inner-section inner-section--white" id="message_student">
-        <div class="inner-container form-layout">
-            <div class="form-card">
-                <h2>Të dhënat e aplikimit</h2>
-                <p class="form-card__intro">Fushat e shënuara janë të nevojshme për t’iu përgjigjur kërkesës suaj.</p>
-                {% for message in messages %}{% if 'student' in message.tags %}<div class="inner-message" role="status">{{ message }}</div>{% endif %}{% endfor %}
-                <form class="inner-form" method="post" action="#message_student">
-                    {% csrf_token %}
-                    <div class="inner-form__row">
-                        <div class="inner-field"><label for="student-name">Emri</label><input id="student-name" name="name" type="text" autocomplete="given-name" required></div>
-                        <div class="inner-field"><label for="student-surname">Mbiemri</label><input id="student-surname" name="surname" type="text" autocomplete="family-name" required></div>
+        <div class="inner-container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-5">
+                    <div class="contact-card contact-card__body h-100">
+                        <div class="contact-card-header mb-4">
+                            <p class="inner-eyebrow">Na kontakto</p>
+                            <h2>Ke një pyetje para aplikimit?</h2>
+                            <p>Na telefononi, na shkruani ose na vizitoni në zyrat tona. Do të jemi të gatshëm të jemi në kontakt me ju për çdo informacion lidhur me kursin dhe regjistrimin.</p>
+                        </div>
+
+                        <ul class="contact-card__list">
+                            <li>
+                                <i class="fas fa-map-marker-alt" aria-hidden="true"></i>
+                                <span><strong>Adresa</strong>Rr. “Reshit Çollaku”, Tiranë</span>
+                            </li>
+                            <li>
+                                <i class="fas fa-phone-alt" aria-hidden="true"></i>
+                                <span><strong>Telefoni</strong><a href="tel:+355673005050">+355 67 300 5050</a></span>
+                            </li>
+                            <li>
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
+                                <span><strong>WhatsApp</strong><a href="https://wa.me/355673005050" target="_blank" rel="noopener noreferrer">+355 67 300 5050</a></span>
+                            </li>
+                            <li>
+                                <i class="far fa-envelope" aria-hidden="true"></i>
+                                <span><strong>Email</strong><a href="mailto:info@dominusoft.al">info@dominusoft.al</a></span>
+                            </li>
+                        </ul>
                     </div>
-                    <div class="inner-form__row">
-                        <div class="inner-field"><label for="student-email">Email</label><input id="student-email" name="email" type="email" autocomplete="email" required></div>
-                        <div class="inner-field"><label for="student-phone">Numri i telefonit</label><input id="student-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="contact-card h-100" id="message_student_card">
+                        <div class="contact-card-header mb-4">
+                            <p class="inner-eyebrow">Aplikim</p>
+                            <h2>Të dhënat e aplikimit</h2>
+                            <p>Fushat e shënuara janë të nevojshme për t’iu përgjigjur kërkesës suaj.</p>
+                        </div>
+
+                        {% for message in messages %}{% if 'student' in message.tags %}<div class="inner-message" role="status">{{ message }}</div>{% endif %}{% endfor %}
+
+                        <form class="inner-form" method="post" action="#message_student">
+                            {% csrf_token %}
+
+                            <div class="inner-form__row">
+                                <div class="inner-field">
+                                    <label for="student-name">Emri <span class="text-danger">*</span></label>
+                                    <input id="student-name" name="name" type="text" autocomplete="given-name" required>
+                                </div>
+                                <div class="inner-field">
+                                    <label for="student-surname">Mbiemri <span class="text-danger">*</span></label>
+                                    <input id="student-surname" name="surname" type="text" autocomplete="family-name" required>
+                                </div>
+                            </div>
+
+                            <div class="inner-form__row">
+                                <div class="inner-field">
+                                    <label for="student-email">Email <span class="text-danger">*</span></label>
+                                    <input id="student-email" name="email" type="email" autocomplete="email" required>
+                                </div>
+                                <div class="inner-field">
+                                    <label for="student-phone">Numri i telefonit <span class="text-danger">*</span></label>
+                                    <input id="student-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required>
+                                </div>
+                            </div>
+
+                            <div class="inner-field">
+                                <label for="student-training">Kursi që ju intereson <span class="text-danger">*</span></label>
+                                <select id="student-training" name="training" required>
+                                    <option value="">Zgjidh kursin</option>
+                                    {% for training in trainings %}
+                                    <option value="{{ training.training_name }}"{% if request.GET.course == training.training_name %} selected{% endif %}>{{ training.training_name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <div class="inner-field">
+                                <label for="student-message">Mesazhi <span class="text-danger">*</span></label>
+                                <textarea id="student-message" name="message" placeholder="Na tregoni çfarë dëshironi të dini…" required></textarea>
+                            </div>
+                            <div class="inner-field">
+                                <div class="checkbox-row">
+                                <input id="terms-accepted" name="terms_accepted" type="checkbox" required>
+                                <label class="checkbox-row" for="terms-accepted">
+                                    
+                                    Kam lexuar dhe pranë <a href="#" data-bs-toggle="modal" data-bs-target="#termsModal">Termat dhe Kushtet</a> të Dominusoft.
+                                </label>
+                                </div>
+                            </div>
+                            <p class="inner-form__notice">Duke dërguar formularin, ju pranoni që të dhënat të përdoren vetëm për t’ju kontaktuar rreth kësaj kërkese.</p>
+
+                            <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
+
+                            <div>
+                                <button type="submit" name="student_button" class="inner-button inner-button--primary">Dërgo aplikimin <i class="fas fa-arrow-right" aria-hidden="true"></i></button>
+                            </div>
+                        </form>
                     </div>
-                    <div class="inner-field">
-                        <label for="student-training">Kursi që ju intereson</label>
-                        <select id="student-training" name="training" required>
-                            <option value="">Zgjidh kursin</option>
-                            {% for training in trainings %}<option value="{{ training.training_name }}"{% if request.GET.course == training.training_name %} selected{% endif %}>{{ training.training_name }}</option>{% endfor %}
-                        </select>
-                    </div>
-                    <div class="inner-field"><label for="student-message">Mesazhi</label><textarea id="student-message" name="message" placeholder="Na tregoni çfarë dëshironi të dini…" required></textarea></div>
-                    <p class="inner-form__notice">Duke dërguar formularin, ju pranoni që të dhënat të përdoren vetëm për t’ju kontaktuar rreth kësaj kërkese.</p>
-                    <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
-                    <div><button type="submit" name="student_button" class="inner-button inner-button--primary">Dërgo aplikimin <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
-                </form>
+                </div>
             </div>
-            <aside class="contact-card">
-                <div class="contact-card__body"><p class="inner-eyebrow">Na kontakto</p><h2>Ke një pyetje para aplikimit?</h2><ul class="contact-card__list"><li><a href="tel:+355673005050"><i class="fas fa-phone-alt" aria-hidden="true"></i>+355 67 300 5050</a></li><li><a href="mailto:info@dominusoft.al"><i class="far fa-envelope" aria-hidden="true"></i>info@dominusoft.al</a></li><li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Rr. “Reshit Çollaku”, Tiranë</li></ul></div>
-                <iframe title="Vendndodhja e Dominusoft në Tiranë" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!1i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </aside>
         </div>
     </section>
+
+    <section class="inner-section inner-section--compact" aria-labelledby="student-location-title">
+        <div class="inner-container">
+            <div class="inner-heading text-center">
+                <p class="inner-eyebrow">Na gjeni</p>
+                <h2 id="student-location-title">Na gjeni në Tiranë</h2>
+                <p>Vizitoni zyrat e Dominusoft ose përdorni hartën për të planifikuar rrugën tuaj.</p>
+            </div>
+
+            <div class="contact-card">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
+                    title="Vendndodhja e zyrave të Dominusoft në Tiranë"
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    style="display: block; width: 100%; min-height: 340px; border: 0;">
+                </iframe>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title h5" id="termsModalLabel">Termat dhe Kushtet</h2>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+                </div>
+                <div class="modal-body">
+                    <article class="terms-legal-content">
+                        <h3>Mirësevini në Dominusoft!</h3>
+                        <p>Këto terma dhe kushte përshkruajnë rregullat për përdorimin e Website-it të Dominusoft.</p>
+                        <p>Duke hyrë në këtë faqe, ju pranoni këto terma dhe kushte. Nëse nuk jeni dakord, mos vazhdoni të përdorni shërbimet tona.</p>
+                        <h4>Cookies</h4>
+                        <p>Ne përdorim cookies për të siguruar funksionimin e faqes dhe përmirësimin e përdorimit të saj.</p>
+                        <h4>Liçensa</h4>
+                        <p>Materialet në faqen tonë janë të mbrojtura, përveç përdorimit personal të lejuar nga këto kushte.</p>
+                        <h4>Kushte të përgjithshme</h4>
+                        <ul>
+                            <li>Studenti pranon të ruajë dhe përdorë të dhënat e tij në përputhje me politikat tona.</li>
+                            <li>Është e ndaluar regjistrimi ose kopjimi pa lejen tonë.</li>
+                            <li>Trajnimet mund të zhvillohen online ose fizikisht sipas formatit të publikuar.</li>
+                            <li>Certifikimi realizohet pas përfundimit të projektit final dhe në përputhje me afatet e komunikuara.</li>
+                            <li>Nëse pagesa ose pjesëmarrja nuk realizohet sipas kushteve, aplikimi ose regjistrimi mund të konsiderohet i pavlefshëm.</li>
+                        </ul>
+                        <p>Me klikimin e kutisë "Kam lexuar dhe pranoj" ju konfirmoni se e keni lexuar dhe kuptuar këtë dokument.</p>
+                    </article>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="inner-button inner-button--secondary" data-bs-dismiss="modal">Mbyll</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

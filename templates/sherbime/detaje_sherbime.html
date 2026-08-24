@@ -1,12 +1,12 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Zhvillim i Sistemeve të Personalizuara | Dominusoft{% endblock %}
+{% block title %}{{ detail.title|default:service.services_title|default:service.services_name }} | Dominusoft{% endblock %}
 {% block meta %}
-<meta name="description" content="Zhvillim i sistemeve, automateve dhe platformave të personalizuara për bizneset që duan të rrisin efikasitetin dhe përfitimin." />
-<meta name="keywords" content="zhvillim sistemi, platforma biznesi, automatizim procesesh, AI për biznes, aplikacione web, konsultim digital" />
+<meta name="description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}" />
+<meta name="keywords" content="{{ service.services_meta_keyword }}" />
 {% endblock %}
-{% block canonical %}<link rel="canonical" href="https://dominusoft.al/sherbime/zhvillim-sistemeve/">{% endblock %}
+{% block canonical %}<link rel="canonical" href="{{ detail.canonical_url|default:'https://dominusoft.al' }}">{% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
 <link rel="stylesheet" href="{% static 'css/site-shell.css' %}">
@@ -24,17 +24,17 @@
                 <ol class="inner-breadcrumb">
                     <li><a href="{% url 'home' %}">Kryefaqja</a></li>
                     <li><a href="{% url 'services' %}">Sherbime</a></li>
-                    <li aria-current="page">[Sherbimi]</li>
+                    <li aria-current="page">{% if detail and detail.title %}{{ detail.title }}{% else %}{{ service.services_title|default:service.services_name }}{% endif %}</li>
                 </ol>
             </nav>
 
             <div class="inner-hero__layout">
                 <div class="inner-hero__content">
-                    <p class="inner-eyebrow">Sherbimi</p>
-                    <h1 id="service-detail-title">Zhvillim i Sistemeve të Personalizuara</h1>
-                    <p class="inner-hero__lead">Ndërtojmë platforma, aplikacione dhe procese automatike që e bëjnë biznesin tuaj më të shpejtë, më efikas dhe më të qartë në vendimmarrje.</p>
+                    <p class="inner-eyebrow">{% if detail and detail.eyebrow %}{{ detail.eyebrow }}{% else %}Sherbimi{% endif %}</p>
+                    <h1 id="service-detail-title">{% if detail and detail.title %}{{ detail.title }}{% else %}{{ service.services_title|default:service.services_name }}{% endif %}</h1>
+                    <p class="inner-hero__lead">{% if detail and detail.lead %}{{ detail.lead }}{% else %}{{ service.services_description }}{% endif %}</p>
                     <div class="inner-hero__actions">
-                        <a class="inner-button inner-button--primary" href="#rezervo">Rezervo konsultë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a class="inner-button inner-button--primary" href="{% if detail and detail.cta_url %}{{ detail.cta_url }}{% else %}#rezervo{% endif %}">{% if detail and detail.cta_text %}{{ detail.cta_text }}{% else %}Rezervo konsultë{% endif %} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                         <a class="inner-button inner-button--ghost" href="#permbledhje">Shiko detajet</a>
                     </div>
                 </div>
@@ -42,9 +42,13 @@
                 <aside class="inner-hero__panel" aria-label="Pikat kryesore të shërbimit">
                     <h2>Çfarë përfshin</h2>
                     <ul class="fact-list">
-                        <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Analizë e biznesit dhe proceseve</span></li>
-                        <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Zhvillim i përshtatur me nevojat tuaja</span></li>
-                        <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrime, automatizime dhe mbështetje</span></li>
+                        {% for highlight in highlights %}
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ highlight.title }}</span></li>
+                        {% empty %}
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Analizë e biznesit dhe proceseve</span></li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Zhvillim i përshtatur me nevojat tuaja</span></li>
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrime, automatizime dhe mbështetje</span></li>
+                        {% endfor %}
                     </ul>
                 </aside>
             </div>
@@ -55,23 +59,32 @@
         <div class="inner-container">
             <div class="inner-heading">
                 <p class="inner-eyebrow">Përmbledhje</p>
-                <h2 id="service-summary-title">Një zgjidhje e krijuar për performancë dhe rritje</h2>
+                <h2 id="service-summary-title">{% if detail and detail.summary %}{{ detail.summary }}{% else %}Një zgjidhje e krijuar për performancë dhe rritje{% endif %}</h2>
             </div>
 
             <div class="course-detail">
                 <article class="course-detail__main">
-                    <p>Ky shërbim fokusohet në ndërtimin e sistemeve të personalizuara që lidhen me objektivat e biznesit tuaj. Qëllimi ynë është të krijojmë një platformë ose aplikacion që optimizon procese, redukton kohën e punës manuale dhe furnizon të dhëna të qarta për vendimmarrje të shpejtë.</p>
-                    <p>Ne bashkojmë analizën biznesore, planifikimin teknik, projektimin e UX/UI dhe zhvillimin e përgjithshëm për të siguruar që zgjidhja të jetë e dobishme, e përdorshme dhe e mbështetshme në kohë. Kjo mund të përfshijë zhvillim të aplikacioneve web, automatizim të proceseve, integrime me sisteme ekzistuese ose krijim të dashboard-it për kontrollin e performancës.</p>
-                    <p>Gjatë gjithë procesit, ne sjellim qartësi, prioritet dhe vlerë të përditshme, duke u fokusuar në një rezultat që pengon mbajtjen e biznesit në mënyrë të qëndrueshme dhe të transformueshme.</p>
+                    {% if detail and detail.summary_additional %}
+                        <p>{{ detail.summary }}</p>
+                        <p>{{ detail.summary_additional }}</p>
+                    {% elif detail and detail.summary %}
+                        <p>{{ detail.summary }}</p>
+                    {% else %}
+                        <p>{{ service.services_description }}</p>
+                    {% endif %}
                 </article>
 
                 <aside class="course-detail__aside">
                     <div class="inner-card__body">
-                        <p class="inner-eyebrow">Vlerë e shpejtë</p>
+                        <p class="inner-eyebrow">Përfitime</p>
                         <ul class="fact-list fact-list--stacked">
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Proces i përcaktuar dhe transparent</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrim me sisteme ekzistuese</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Mbështetje pas lançimit</span></li>
+                            {% for benefit in benefits %}
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ benefit.title }}</span></li>
+                            {% empty %}
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Proces i përcaktuar dhe transparent</span></li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrim me sisteme ekzistuese</span></li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Mbështetje pas lançimit</span></li>
+                            {% endfor %}
                         </ul>
                     </div>
                 </aside>
@@ -79,207 +92,99 @@
         </div>
     </section>
 
-    <section class="inner-section" aria-labelledby="benefits-title">
-        <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">Përfitimet</p>
-                <h2 id="benefits-title">Perfitimet kryesore</h2>
+    {% if benefits %}
+        <section class="inner-section" aria-labelledby="benefits-title">
+            <div class="inner-container">
+                <div class="inner-heading">
+                    <p class="inner-eyebrow">Përfitimet</p>
+                    <h2 id="benefits-title">Përfitimet kryesore</h2>
+                </div>
+
+                <div class="inner-grid inner-grid--3">
+                    {% for benefit in benefits %}
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="inner-card__badge">0{{ forloop.counter }}</div>
+                                <h3>{{ benefit.title }}</h3>
+                                <p>{{ benefit.description }}</p>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
+        </section>
+    {% endif %}
 
-            <div class="inner-grid inner-grid--3">
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">01</div>
-                        <h3>Rritje e efikasitetit</h3>
-                        <p>Automatizimi i proceseve dhe reduktimi i detyrave manuale lehtësojnë organizimin dhe rrisin produktivitetin.</p>
-                    </div>
-                </article>
+    {% if packages %}
+        <section class="inner-section inner-section--white" aria-labelledby="packages-title">
+            <div class="inner-container">
+                <div class="inner-heading">
+                    <p class="inner-eyebrow">Paketat</p>
+                    <h2 id="packages-title">Paketat e shërbimeve</h2>
+                </div>
 
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">02</div>
-                        <h3>Përshtatje me biznesin</h3>
-                        <p>Çdo zgjidhje është e dizajnuar sipas nevojave të veçanta të klientit, jo me model standard pa kontekst.</p>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">03</div>
-                        <h3>Vendimmarrje e bazuar në të dhëna</h3>
-                        <p>Dashboard-et dhe raportet ofrojnë një pamje të qartë të performancës dhe treguesve kryesorë të suksesit.</p>
-                    </div>
-                </article>
+                <div class="inner-grid inner-grid--3">
+                    {% for package in packages %}
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="inner-card__badge">0{{ forloop.counter }}</div>
+                                <h3 class="mb-3">{{ package.name }}</h3>
+                                {% if package.price %}<p class="inner-card__price">{{ package.price }}</p>{% endif %}
+                                <ul class="fact-list fact-list--stacked">
+                                    {% for item in package.items.all %}
+                                        <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ item.text }}</span></li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 
-    <section class="inner-section inner-section--white" aria-labelledby="packages-title">
-        <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">Paketat</p>
-                <h2 id="packages-title">Paketat e shërbimeve</h2>
+    {% if faqs %}
+        <section class="inner-section" aria-labelledby="faq-title">
+            <div class="inner-container">
+                <div class="inner-heading">
+                    <p class="inner-eyebrow">FAQ</p>
+                    <h2 id="faq-title">Pyetje të shpeshta</h2>
+                </div>
+
+                <div class="faq-list">
+                    {% for faq in faqs %}
+                        <details {% if faq.is_open %}open{% endif %}>
+                            <summary>{{ faq.question }}</summary>
+                            <p>{{ faq.answer }}</p>
+                        </details>
+                    {% endfor %}
+                </div>
             </div>
+        </section>
+    {% endif %}
 
-            <div class="inner-grid inner-grid--3">
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">01</div>
-                        <h3 class="mb-3">Paketa Start</h3>
-                        <!-- <p class="inner-card__price">Nga 650€</p> -->
-                        <ul class="fact-list fact-list--stacked">
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Analizë fillestare e biznesit</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>1 modul kryesor i aplikacionit</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Dashboard bazë dhe raporte</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Mbështetje fillestare pas lançimit</span></li>
-                        </ul>
-                    </div>
-                </article>
+    {% if related_services %}
+        <section class="inner-section inner-section--white" aria-labelledby="related-title">
+            <div class="inner-container">
+                <div class="inner-heading">
+                    <p class="inner-eyebrow">Shërbime</p>
+                    <h2 id="related-title">Shërbime të ngjashme</h2>
+                </div>
 
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">02</div>
-                        <h3 class="mb-3">Paketa Growth</h3>
-                        <!-- <p class="inner-card__price">Nga 1.200€</p> -->
-                        <ul class="fact-list fact-list--stacked">
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Proces i plotë i kërkimeve dhe dizajnit</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrime me sistemet ekzistuese</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Automatizime dhe workflow</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Optimizim i performancës</span></li>
-                        </ul>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">03</div>
-                        <h3 class="mb-3">Paketa Enterprise</h3>
-                        <!-- <p class="inner-card__price">Me porosi</p> -->
-                        <ul class="fact-list fact-list--stacked">
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Platformë e personalizuar për biznesin</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Modulë të shumtë dhe role të përdoruesve</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrim me API dhe baza të dhënash</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Mbështetje dhe zhvillim i vazhdueshëm</span></li>
-                        </ul>
-                    </div>
-                </article>
+                <div class="inner-grid inner-grid--5">
+                    {% for relation in related_services %}
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="inner-card__badge">0{{ forloop.counter }}</div>
+                                <h3>{{ relation.related.services_title|default:relation.related.services_name }}</h3>
+                                <a class="category-card__link" href="{% url 'tech_services' relation.related.slug %}">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                            </div>
+                        </article>
+                    {% endfor %}
+                </div>
             </div>
-        </div>
-    </section>
-
-    <!-- <section class="inner-section" aria-labelledby="tech-title">
-        <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">Teknologjitë</p>
-                <h2 id="tech-title">Teknologjitë e përdorura</h2>
-            </div>
-
-            <div class="tech-stack" aria-label="Teknologjitë e përdorura në këtë shërbim">
-                <span>Python</span>
-                <span>Django</span>
-                <span>JavaScript</span>
-                <span>React</span>
-                <span>MySQL</span>
-                <span>PostgreSQL</span>
-                <span>REST API</span>
-                <span>AI & Automation</span>
-                <span>Cloud</span>
-                <span>Integrime</span>
-            </div>
-        </div>
-    </section> -->
-
-
-    <section class="inner-section" aria-labelledby="faq-title">
-        <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">FAQ</p>
-                <h2 id="faq-title">Pyetje të shpeshta</h2>
-            </div>
-
-            <div class="faq-list">
-                <details open>
-                    <summary>Sa kohë zgjat realizimi i një projekti?</summary>
-                    <p>Koha varet nga kompleksiteti, por zakonisht fillon nga disa javë dhe mund të shtrihet në disa muaj për projekte më të mëdha.</p>
-                </details>
-
-                <details>
-                    <summary>A mund të integrohet me sistemet ekzistuese?</summary>
-                    <p>Po, ne e projektuam zgjidhjen për të punuar me sisteme ekzistuese, API dhe rrjete të dhënash të ndryshme.</p>
-                </details>
-
-                <details>
-                    <summary>A ofroni mbështetje pas lançimit?</summary>
-                    <p>Po, me mbështetje të vazhdueshme pas publikimit, përmirësime, rregullime dhe asistencë teknike.</p>
-                </details>
-
-                <details>
-                    <summary>A mund të fillojmë me një vlerësim të vogël?</summary>
-                    <p>Po, ne mund të fillojmë me një analizë fillestare dhe të përcaktojmë hapin e radhës me një konsultim të qartë.</p>
-                </details>
-            </div>
-        </div>
-    </section>
-
-    <section class="inner-section inner-section--white" aria-labelledby="related-title">
-        <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">Shërbime</p>
-                <h2 id="related-title">Shërbime të ngjashme</h2>
-            </div>
-
-            <div class="inner-grid inner-grid--5">
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">01</div>
-                        <h3>Website & E-commerce</h3>
-                        <a class="category-card__link" href="#">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">02</div>
-                        <h3>AI & Automatizim</h3>
-                        <a class="category-card__link" href="#">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">03</div>
-                        <h3>Marketing Digjital</h3>
-                        <a class="category-card__link" href="#">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">04</div>
-                        <h3>UI/UX Design</h3>
-                        <a class="category-card__link" href="#">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-
-                <article class="inner-card">
-                    <div class="inner-card__body">
-                        <div class="inner-card__badge">05</div>
-                        <h3>Konsulencë IT</h3>
-                        <a class="category-card__link" href="#">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    </div>
-                </article>
-            </div>
-        </div>
-    </section>
-
-    <section id="rezervo" class="inner-section inner-section--compact" aria-labelledby="final-cta-title">
-        <div class="inner-container">
-            <div class="inner-cta">
-                <h2 id="final-cta-title">Gati për të ndërtuar një zgjidhje që mbushë realisht nevojat tuaja?</h2>
-                <p>Rezervoni një konsultim fillestar dhe do t’ju ndihmojmë të identifikoni rrugën më të mirë për biznesin tuaj.</p>
-                <a href="{% url 'business' %}" class="inner-button inner-button--primary">Rezervo konsultë</a>
-            </div>
-        </div>
-    </section>
+        </section>
+    {% endif %}
 </main>
-{% endblock %}
+{% endblock content %}
+{% block legacy_scripts %}{% endblock %}

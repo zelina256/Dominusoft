@@ -6,7 +6,38 @@
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/apliko/biznes">{% endblock %}
 {% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
 {% block legacy_styles %}{% endblock %}
-{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block page_styles %}
+<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
+<style>
+    .business-success-modal .modal-content {
+        border-radius: 18px;
+        border: 1px solid rgba(26, 103, 206, 0.12);
+        box-shadow: 0 24px 60px rgba(13, 28, 45, 0.18);
+        overflow: hidden;
+    }
+    .business-success-modal .modal-header {
+        background: linear-gradient(135deg, rgba(19, 150, 88, 0.08), rgba(13, 92, 184, 0.06));
+        padding: 1.25rem 1.5rem 0.75rem;
+    }
+    .business-success-modal .modal-title {
+        color: #173b67;
+        font-size: 1.2rem;
+    }
+    .business-success-modal .modal-body {
+        padding: 2rem 1.5rem 1.25rem;
+    }
+    .business-success-modal .modal-footer {
+        padding: 0 1.5rem 1.5rem;
+    }
+    .business-success-modal .btn-primary {
+        background: linear-gradient(135deg, #0d6efd, #1d4ed8);
+        border: none;
+        border-radius: 12px;
+        padding: 0.7rem 1.5rem;
+        font-weight: 600;
+    }
+</style>
+{% endblock %}
 {% block body_class %}inner-page{% endblock %}
 
 {% block content %}
@@ -25,8 +56,7 @@
             <div class="form-card">
                 <h2>Na tregoni për projektin</h2>
                 <p class="form-card__intro">Sa më i qartë konteksti, aq më mirë mund të përgatitemi për bisedën e parë.</p>
-                {% for message in messages %}{% if 'business' in message.tags %}<div class="inner-message" role="status">{{ message }}</div>{% endif %}{% endfor %}
-                <form class="inner-form" method="post" action="#message_business">
+                <form id="business-form" class="inner-form" method="post" action="#message_business">
                     {% csrf_token %}
                     <div class="inner-form__row">
                         <div class="inner-field"><label for="business-name">Emri i kompanisë</label><input id="business-name" name="name" type="text" autocomplete="organization" required></div>
@@ -52,7 +82,44 @@
             </aside>
         </div>
     </section>
+    {% if show_business_success_modal %}
+    <div class="modal fade business-success-modal" id="businessSuccessModal" tabindex="-1" aria-labelledby="businessSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="businessSuccessModalLabel">Aplikimi u dërgua</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <div class="mb-3 text-success"><i class="fas fa-check-circle fa-3x" aria-hidden="true"></i></div>
+                    {% for message in messages %}
+                        {% if 'business' in message.tags and message.level_tag == 'success' %}
+                            <p class="mb-0 fw-semibold">{{ message }}</p>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mbyll</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}
-{% block page_scripts %}<script>if(window.grecaptcha){grecaptcha.ready(function(){grecaptcha.execute('{{ recaptcha_site_key|escapejs }}',{action:'business_inquiry'}).then(function(token){document.getElementById('g-recaptcha-response').value=token;});});}</script>{% endblock %}
+{% block page_scripts %}
+<script>
+    window.addEventListener('load', function () {
+        const formSection = document.getElementById('business-form');
+        if (formSection) {
+            setTimeout(function () { formSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
+        }
+        const successModalEl = document.getElementById('businessSuccessModal');
+        if (successModalEl && typeof bootstrap !== 'undefined') {
+            const successModal = new bootstrap.Modal(successModalEl, { backdrop: 'static', keyboard: true });
+            setTimeout(function () { successModal.show(); }, 250);
+        }
+    });
+</script>
+<script>if(window.grecaptcha){grecaptcha.ready(function(){grecaptcha.execute('{{ recaptcha_site_key|escapejs }}',{action:'business_inquiry'}).then(function(token){document.getElementById('g-recaptcha-response').value=token;});});}</script>{% endblock %}

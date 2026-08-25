@@ -571,7 +571,7 @@
 
 .inner-card h2,
 .inner-card h3 {
-    margin: 0;
+    margin: 0 0 10px;
     color: var(--inner-navy);
     font-weight: 750;
     letter-spacing: -0.02em;
@@ -973,7 +973,7 @@
     /* border: 1px solid var(--inner-line); */
     border-radius: var(--inner-radius);
     /* background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%); */
-    box-shadow: 0 10px 24px rgba(49, 52, 75, 0.04);
+    /* box-shadow: 0 10px 24px rgba(49, 52, 75, 0.04); */
 }
 
 .course-tabs .nav-item {
@@ -1655,7 +1655,33 @@
 .contact-card__list a:focus-visible {
     text-decoration: underline;
 }
-
+    .student-success-modal .modal-content {
+        border-radius: 18px;
+        border: 1px solid rgba(26, 103, 206, 0.12);
+        box-shadow: 0 24px 60px rgba(13, 28, 45, 0.18);
+        overflow: hidden;
+    }
+    .student-success-modal .modal-header {
+        background: linear-gradient(135deg, rgba(19, 150, 88, 0.08), rgba(13, 92, 184, 0.06));
+        padding: 1.25rem 1.5rem 0.75rem;
+    }
+    .student-success-modal .modal-title {
+        color: #173b67;
+        font-size: 1.2rem;
+    }
+    .student-success-modal .modal-body {
+        padding: 2rem 1.5rem 1.25rem;
+    }
+    .student-success-modal .modal-footer {
+        padding: 0 1.5rem 1.5rem;
+    }
+    .student-success-modal .btn-primary {
+        background: linear-gradient(135deg, #0d6efd, #1d4ed8);
+        border: none;
+        border-radius: 12px;
+        padding: 0.7rem 1.5rem;
+        font-weight: 600;
+    }
 .contact-card iframe {
     display: block;
     width: 100%;

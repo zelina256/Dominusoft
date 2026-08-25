@@ -28,6 +28,40 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
 {% block page_styles %}
 <link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
 <link rel="stylesheet" href="{% static 'css/home-modern.css' %}">
+<style>
+  .contact-success-modal .modal-content {
+    border-radius: 18px;
+    border: 1px solid rgba(26, 103, 206, 0.12);
+    box-shadow: 0 24px 60px rgba(13, 28, 45, 0.18);
+    overflow: hidden;
+  }
+
+  .contact-success-modal .modal-header {
+    background: linear-gradient(135deg, rgba(19, 150, 88, 0.08), rgba(13, 92, 184, 0.06));
+    padding: 1.25rem 1.5rem 0.75rem;
+  }
+
+  .contact-success-modal .modal-title {
+    color: #173b67;
+    font-size: 1.2rem;
+  }
+
+  .contact-success-modal .modal-body {
+    padding: 2rem 1.5rem 1.25rem;
+  }
+
+  .contact-success-modal .modal-footer {
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .contact-success-modal .btn-primary {
+    background: linear-gradient(135deg, #0d6efd, #1d4ed8);
+    border: none;
+    border-radius: 12px;
+    padding: 0.7rem 1.5rem;
+    font-weight: 600;
+  }
+</style>
 {% endblock %}
 {% block body_class %}inner-page{% endblock %}
 
@@ -96,41 +130,59 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
               </p>
             </div>
 
-            <form method="POST" class="inner-form">
+            <form id="contact-form" method="POST" action="#contact-form" class="inner-form">
               {% csrf_token %}
 
               <div class="inner-form__row">
                 <div class="inner-field">
                   <label for="name">Emri <span class="text-danger">*</span></label>
-                  <input type="text" id="name" name="name" placeholder="Shkruani emrin tuaj" autocomplete="given-name">
+                  <input type="text" id="name" name="name" value="{{ form_data.name|default:'' }}" placeholder="Shkruani emrin tuaj" autocomplete="given-name" class="{% if field_errors.name %}is-invalid{% endif %}">
+                  {% if field_errors.name %}
+                    <div class="invalid-feedback d-block">{{ field_errors.name }}</div>
+                  {% endif %}
                 </div>
 
                 <div class="inner-field">
                   <label for="surname">Mbiemri <span class="text-danger">*</span></label>
-                  <input type="text" id="surname" name="surname" placeholder="Shkruani mbiemrin tuaj" autocomplete="family-name">
+                  <input type="text" id="surname" name="surname" value="{{ form_data.surname|default:'' }}" placeholder="Shkruani mbiemrin tuaj" autocomplete="family-name" class="{% if field_errors.surname %}is-invalid{% endif %}">
+                  {% if field_errors.surname %}
+                    <div class="invalid-feedback d-block">{{ field_errors.surname }}</div>
+                  {% endif %}
                 </div>
               </div>
 
               <div class="inner-form__row">
                 <div class="inner-field">
                   <label for="email">Adresa e email-it <span class="text-danger">*</span></label>
-                  <input type="email" id="email" name="email" placeholder="shembull@email.com" autocomplete="email">
+                  <input type="email" id="email" name="email" value="{{ form_data.email|default:'' }}" placeholder="shembull@email.com" autocomplete="email" class="{% if field_errors.email %}is-invalid{% endif %}">
+                  {% if field_errors.email %}
+                    <div class="invalid-feedback d-block">{{ field_errors.email }}</div>
+                  {% endif %}
                 </div>
 
                 <div class="inner-field">
                   <label for="phone">Numri i telefonit <span class="text-danger">*</span></label>
-                  <input type="tel" id="phone" name="phone" placeholder="+355..." autocomplete="tel">
+                  <input type="tel" id="phone" name="phone" value="{{ form_data.phone|default:'' }}" placeholder="+355..." autocomplete="tel" class="{% if field_errors.phone %}is-invalid{% endif %}">
+                  {% if field_errors.phone %}
+                    <div class="invalid-feedback d-block">{{ field_errors.phone }}</div>
+                  {% endif %}
                 </div>
               </div>
 
               <div class="inner-field">
                 <label for="subject">Për çfarë jeni të interesuar? <span class="text-danger">*</span></label>
-                <input type="text" id="subject" name="subject" placeholder="P.sh. kurs profesional, internship, website ose bashkëpunim">
+                <input type="text" id="subject" name="subject" value="{{ form_data.subject|default:'' }}" placeholder="P.sh. kurs profesional, internship, website ose bashkëpunim" class="{% if field_errors.subject %}is-invalid{% endif %}">
+                {% if field_errors.subject %}
+                  <div class="invalid-feedback d-block">{{ field_errors.subject }}</div>
+                {% endif %}
               </div>
 
               <div class="inner-field">
                 <label for="message">Mesazhi <span class="text-danger">*</span></label>
-                <textarea id="message" rows="6" name="message" placeholder="Na tregoni më shumë rreth kërkesës suaj..."></textarea>
+                <textarea id="message" rows="6" name="message" placeholder="Na tregoni më shumë rreth kërkesës suaj..." class="{% if field_errors.message %}is-invalid{% endif %}">{{ form_data.message|default:'' }}</textarea>
+                {% if field_errors.message %}
+                  <div class="invalid-feedback d-block">{{ field_errors.message }}</div>
+                {% endif %}
               </div>
 
               <p class="small">
@@ -183,5 +235,54 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
     </div>
   </section>
 
+  {% if show_contact_success_modal %}
+    <div class="modal fade contact-success-modal" id="contactSuccessModal" tabindex="-1" aria-labelledby="contactSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg">
+          <div class="modal-header border-0 pb-0">
+            <h5 class="modal-title fw-bold" id="contactSuccessModalLabel">Mesazhi u dërgua</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+          </div>
+          <div class="modal-body text-center py-4">
+            <div class="mb-3 text-success">
+              <i class="fas fa-check-circle fa-3x" aria-hidden="true"></i>
+            </div>
+            {% for message in messages %}
+              {% if 'contact' in message.tags and message.level_tag == 'success' %}
+                <p class="mb-0 fw-semibold">{{ message }}</p>
+              {% endif %}
+            {% endfor %}
+          </div>
+          <div class="modal-footer border-0 pt-0">
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mbyll</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  {% endif %}
+
 </main>
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+  window.addEventListener('load', function () {
+    const formSection = document.getElementById('contact-form');
+    if (formSection) {
+      setTimeout(function () {
+        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 150);
+    }
+
+    const successModalEl = document.getElementById('contactSuccessModal');
+    if (!successModalEl || typeof bootstrap === 'undefined') {
+      return;
+    }
+
+    const successModal = new bootstrap.Modal(successModalEl, { backdrop: 'static', keyboard: true });
+    setTimeout(function () {
+      successModal.show();
+    }, 250);
+  });
+</script>
 {% endblock %}

@@ -1,0 +1,27 @@
+# pull official base image
+FROM registry.tracki.in/dominusoft/dominusoft_web:1.4.5
+
+# set work directory
+WORKDIR /usr/src/app
+
+COPY . .
+
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# install dependencies
+RUN apk update \
+    && apk add --virtual python3-dev mariadb-dev gcc g++ jpeg-dev zlib-dev
+
+# install dependencies
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+
+# copy entrypoint.sh
+
+RUN chmod +x /usr/src/app/entrypoint.sh
+
+# run entrypoint.sh
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]

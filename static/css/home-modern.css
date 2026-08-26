@@ -206,7 +206,7 @@
     padding-top: 1.5rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1.5rem;
+    gap: 6rem;
     border-top: 1px solid rgba(255, 255, 255, 0.17);
 }
 
@@ -356,7 +356,7 @@
 
 .home-why-layout {
     display: grid;
-    grid-template-columns: 0.8fr 1.2fr;
+    grid-template-columns: 0.9fr 1.2fr;
     gap: clamp(3rem, 8vw, 7rem);
     align-items: start;
 }

@@ -2,8 +2,28 @@
 {% load static %}
 
 {% block title %}Karriera | Bëhu pjesë e Dominusoft{% endblock %}
-{% block meta %}<meta name="description" content="Dërgo aplikimin dhe CV-në për t’u bërë pjesë e ekipit Dominusoft në një mjedis modern të edukimit dhe teknologjisë.">{% endblock %}
+{% block meta %}
+<meta name="description" content="Dërgo aplikimin dhe CV-në për t’u bërë pjesë e ekipit Dominusoft në një mjedis modern të edukimit dhe teknologjisë.">
+<meta name="keywords" content="karriera, punësim, aplikim për punë, Dominusoft, teknologji, edukim, zhvillim profesional, ekip, CV, Tiranë">
+{% endblock %}
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/apliko/karriera">{% endblock %}
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="Karriera | Bëhu pjesë e Dominusoft">
+<meta property="og:description" content="Dërgo aplikimin dhe CV-në për t’u bërë pjesë e ekipit Dominusoft në një mjedis modern të edukimit dhe teknologjisë.">
+<meta property="og:url" content="https://dominusoft.al/apliko/karriera">
+<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — Karriera">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Karriera | Bëhu pjesë e Dominusoft">
+<meta name="twitter:description" content="Dërgo aplikimin dhe CV-në për t’u bërë pjesë e ekipit Dominusoft në një mjedis modern të edukimit dhe teknologjisë.">
+<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta name="twitter:image:alt" content="Dominusoft — Karriera">
+{% endblock %}
 {% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}

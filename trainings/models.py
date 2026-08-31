@@ -16,10 +16,17 @@ class Category_training(models.Model):
     cat_training_text_description = models.TextField(null=True)
     cat_training_img = models.ImageField(upload_to="static/images/training", null=True)
     cat_training_img_alt = models.CharField(max_length=50, null=True)
-    cat_meta_keyword = models.CharField(max_length=200, null=True)
-    cat_meta_description = models.CharField(max_length=300, null=True)
+    cat_training_icon = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        default="fas fa-graduation-cap",
+        help_text="P.sh. 'fas fa-code' ose 'fas fa-chart-line'",
+    )
+    cat_meta_keyword = models.CharField(max_length=500, null=True, blank=True)
+    cat_meta_description = models.CharField(max_length=500, null=True, blank=True)
     cat_slug = models.SlugField(unique=True)
-    cat_title_tag = models.CharField(max_length=200, null=True)
+    cat_title_tag = models.CharField(max_length=300, null=True, blank=True)
 
     def __str__(self):
         return f"{self.cat_training_name}"
@@ -49,13 +56,20 @@ class Training(models.Model):
     )
     training_image = models.ImageField(upload_to="static/images/training", null=True)
     training_image_alt = models.CharField(max_length=50, null=True)
+    training_icon = models.CharField(
+        max_length=100,
+        null=True,
+        blank=True,
+        default="fas fa-laptop-code",
+        help_text="P.sh. 'fab fa-python' ose 'fas fa-chart-line'",
+    )
     training_category = models.ForeignKey(
         Category_training, on_delete=models.CASCADE, null=True
     )
     training_slug = models.SlugField(unique=True)
-    training_meta_keywords = models.CharField(max_length=300, null=True)
-    training_meta_descriptions = models.CharField(max_length=300, null=True)
-    training_title_tag = models.CharField(max_length=200, null=True)
+    training_meta_keywords = models.CharField(max_length=500, null=True, blank=True)
+    training_meta_descriptions = models.CharField(max_length=500, null=True, blank=True)
+    training_title_tag = models.CharField(max_length=300, null=True, blank=True)
     training_price_lek = models.DecimalField(
         max_digits=12,
         decimal_places=2,

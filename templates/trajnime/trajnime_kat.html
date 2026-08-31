@@ -48,16 +48,13 @@
             <div class="inner-grid inner-grid--3">
                 {% for train in training %}
                 <article class="inner-card training-card">
-                    <div class="training-card__media">
-                        {% if train.training_image %}<img src="{{ train.training_image.url }}" alt="{{ train.training_image_alt|default:train.training_name }}" width="480" height="320" loading="lazy">{% endif %}
+                    <div class="training-card__media" aria-hidden="true">
+                        <i class="{{ train.training_icon|default:'fas fa-laptop-code' }}"></i>
                     </div>
                     <div class="training-card__body">
                         <h2>{{ train.training_name }}</h2>
                         <p>{{ train.training_text|truncatewords:28 }}</p>
-                        <ul class="inner-meta" aria-label="Detajet e kursit">
-                            {% if train.training_sessions %}<li><i class="fas fa-calendar-week" aria-hidden="true"></i>{{ train.training_sessions }}</li>{% endif %}
-                            {% if train.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i>{{ train.training_hours }} orë</li>{% endif %}
-                        </ul>
+                        <ul class="inner-meta" aria-label="Detajet e kursit">{% if train.training_sessions %}<li><i class="fas fa-calendar-week" aria-hidden="true"></i>{{ train.training_sessions }}</li>{% endif %}{% if train.training_hours %}<li><i class="far fa-clock" aria-hidden="true"></i>{{ train.training_hours }} orë</li>{% endif %}</ul>
                         <a class="training-card__link" href="{% url 'curricula' cat_training.cat_slug train.training_slug %}">Shiko kursin <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </article>
@@ -153,14 +150,15 @@
             </div>
         </div>
     </section>
-
-    <section class="inner-section inner-section--accent" aria-labelledby="final-cta-heading">
-        <div class="inner-container inner-cta-box">
+    <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
+        <div class="site-container home-final-cta__inner">
             <div>
-                <p class="inner-eyebrow">Regjistrohu tani</p>
-                <h2 id="final-cta-heading">Zgjidh programin e duhur dhe fillo rrugën tuaj profesionale.</h2>
+                <p class="home-eyebrow">Regjistrohu tani</p>
+                <h2 id="final-cta-title">Zgjidh programin e duhur dhe fillo rrugën tuaj profesionale.</h2>
             </div>
-            <a class="inner-button inner-button--primary" href="{% url 'training_category' %}">Regjistrohu në Trajnim</a>
+            <div class="home-final-cta__actions">
+                <a class="home-button home-button--primary" href="{% url 'training_category' %}">Regjistrohu në Kurs</a>
+            </div>
         </div>
     </section>
 </main>

@@ -1,8 +1,11 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Kërko konsultë për biznesin | Dominusoft{% endblock %}
-{% block meta %}<meta name="description" content="Na tregoni sfidën e biznesit tuaj dhe diskutoni me Dominusoft një zgjidhje në software, AI, automatizim ose rritje digjitale.">{% endblock %}
+{% block title %}Kërko Konsultë Biznesi | Zgjidhje B2B | Dominusoft{% endblock %}
+{% block meta %}
+<meta name="description" content="Kërkoni një konsultë falas me Dominusoft për shërbime software, SEO, marketing dhe konsulencë biznesi. Na tregoni sfidën, ne sjellim zgjidhjen.">
+<meta name="keywords" content="konsultë biznesi Tiranë, kërkesë shërbim B2B, konsulencë software Shqipëri, kontakt biznes dominusoft, zgjidhje teknologjike biznes">
+{% endblock %}
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/apliko/biznes">{% endblock %}
 {% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
 {% block legacy_styles %}{% endblock %}
@@ -43,11 +46,13 @@
 {% block content %}
 {% include 'navbar.html' %}
 <main id="main-content" class="inner-main">
-    <section class="inner-hero inner-section--compact">
-        <div class="inner-container inner-hero__content">
+    <section class="inner-hero">
+        <div class="inner-container inner-hero__layout">
+            <div class="inner-hero__content">
             <p class="inner-eyebrow">Bashkëpunim biznesi</p>
             <h1>Le ta kthejmë sfidën në një zgjidhje.</h1>
             <p class="inner-hero__lead">Na jepni kontekstin bazë. Ekipi ynë do ta shqyrtojë kërkesën dhe do t’ju kontaktojë për hapat e ardhshëm.</p>
+     </div>
         </div>
     </section>
 
@@ -111,10 +116,6 @@
 {% block page_scripts %}
 <script>
     window.addEventListener('load', function () {
-        const formSection = document.getElementById('business-form');
-        if (formSection) {
-            setTimeout(function () { formSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
-        }
         const successModalEl = document.getElementById('businessSuccessModal');
         if (successModalEl && typeof bootstrap !== 'undefined') {
             const successModal = new bootstrap.Modal(successModalEl, { backdrop: 'static', keyboard: true });

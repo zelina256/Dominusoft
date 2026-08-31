@@ -1,15 +1,15 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Kurse profesionale të certifikuara | Dominusoft{% endblock %}
+{% block title %}Kurse të Certifikuara | Tiranë & Online | Dominusoftt{% endblock %}
 {% block meta %}
-<meta name="keywords" content="kurse profesionale Tiranë, trajnime të certifikuara, formim profesional">
-<meta name="description" content="Zgjidhni një program profesional me mësim praktik, mbështetje nga pedagogët dhe orientim drejt tregut të punës.">
+<meta name="keywords" content="kategori kursesh Tiranë, kurse të certifikuara Shqipëri, kurse online Tiranë, krahaso kurse profesionale, trajnime profesionale dominusoft">
+<meta name="description" content="Shfleto të gjitha kategoritë e kurseve profesionale të Dominusoft: programim, dizajn grafik, marketing digjital, IT, siguri kibernetike dhe arkitekturë.">
 {% endblock %}
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/trajnime-profesionale/">{% endblock %}
 {% block social_meta %}
 <meta property="og:locale" content="sq_AL"><meta property="og:type" content="website">
-<meta property="og:title" content="Kurse profesionale të certifikuara | Dominusoft">
+<meta property="og:title" content="Kurse të Certifikuara | Tiranë & Online | Dominusoft">
 <meta property="og:description" content="Programe praktike për aftësi që kërkohen në tregun e punës.">
 <meta property="og:url" content="https://dominusoft.al/trajnime-profesionale/">
 <meta property="og:image" content="https://dominusoft.al{% static 'images/og-dominusoft-home.png' %}">
@@ -65,12 +65,8 @@
             <div class="inner-grid inner-grid--3">
                 {% for cat_training in cat_trainings %}
                 <article class="inner-card category-card">
-                    <div class="category-card__media">
-                        {% if cat_training.cat_training_img %}
-                        <img src="{{ cat_training.cat_training_img.url }}" alt="{{ cat_training.cat_training_img_alt|default:cat_training.cat_training_name }}" loading="lazy" width="480" height="320">
-                        {% else %}
-                        <i class="fas fa-graduation-cap" aria-hidden="true"></i>
-                        {% endif %}
+                    <div class="category-card__media" aria-hidden="true">
+                        <i class="{{ cat_training.cat_training_icon|default:'fas fa-graduation-cap' }}"></i>
                     </div>
                     <div class="category-card__body">
                         <span class="category-card__count">{{ cat_training.get_training|length }} kurse</span>
@@ -123,14 +119,15 @@
         </div>
     </section>
 
-
-    <section class="inner-section inner-section--highlight">
-        <div class="inner-container inner-cta">
+    <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
+        <div class="site-container home-final-cta__inner">
             <div>
-                <p class="inner-eyebrow">Regjistrohu tani</p>
-                <h2>Gati për hapin tjetër në karrierë?</h2>
+                <p class="home-eyebrow">Regjistrohu tani</p>
+                <h2 id="final-cta-title">Gati për hapin tjetër në karrierë?</h2>
             </div>
-            <a class="inner-button inner-button--primary" href="{% url 'student' %}">Regjistrohu në Trajnim</a>
+            <div class="home-final-cta__actions">
+                <a class="home-button home-button--primary" href="{% url 'student' %}">Regjistrohu në Kurs</a>
+            </div>
         </div>
     </section>
 </main>

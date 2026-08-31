@@ -1,9 +1,12 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Dominusoft | Kurse profesionale & zgjidhje digjitale{% endblock %}
+{% block title %} Kurse Profesionale & Zgjidhje Digjitale në Tiranë | Dominusoft{% endblock %}
 {% block meta %}
-<meta name="description" content="Kurse profesionale të certifikuara dhe zgjidhje digjitale për biznese në Tiranë. Ndërto aftësi praktike dhe rrit biznesin me Dominusoft.">
+<meta name="description" content="Dominusoft ofron kurse profesionale të certifikuara dhe zgjidhje digjitale B2B në Tiranë - nga SEO e
+marketing te software dhe automatizim. Nis rrugëtimin sot!">
+<meta name="keywords" content="kurse profesionale Tiranë, kurse profesionale online kudo, zgjidhje digjitale Shqipëri, edukim profesional Tiranë, shërbime B2B Tiranë,
+dominusof">
 {% endblock %}
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/">{% endblock %}
 {% block social_meta %}
@@ -159,9 +162,11 @@
             <div class="home-course-grid">
                 {% for cat_training in cat_trainings %}
                 <article class="home-course-card">
-                    {% if cat_training.cat_training_img %}
-                    <img src="{{ cat_training.cat_training_img.url }}" width="72" height="72" loading="lazy" decoding="async" alt="{{ cat_training.cat_training_img_alt|default:cat_training.cat_training_name }}">
-                    {% endif %}
+                    <div class="category-card__icon" aria-hidden="true">
+                        <div class="home-icon">
+                        <i class="{{ cat_training.cat_training_icon|default:'fas fa-graduation-cap' }}"></i>
+                    </div>
+                    </div>
                     <h3>{{ cat_training.cat_training_name }}</h3>
                     <p>{{ cat_training.cat_training_text_short }}</p>
                     <a href="{% url 'trainings' cat_training.cat_slug %}" aria-label="Shiko kurset në {{ cat_training.cat_training_name }}">Shiko programet <span aria-hidden="true">→</span></a>

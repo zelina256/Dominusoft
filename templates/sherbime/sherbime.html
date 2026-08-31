@@ -1,16 +1,16 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Shërbime digjitale për biznese | Dominusoft{% endblock %}
+{% block title %}Shërbime B2B Tiranë | Software, SEO, Marketing | Dominusoft{% endblock %}
 {% block meta %}
-<meta name="keywords" content="zhvillim software Shqipëri, automatizim AI, marketing digjital, konsulencë IT Tiranë">
-<meta name="description" content="Zgjidhje software, automatizim me AI dhe rritje digjitale për bizneset që duan të punojnë më mirë dhe të rriten me siguri.">
+<meta name="keywords" content="shërbime B2B Tiranë, zhvillim software Shqipëri, konsulencë biznesi Tiranë, SEO për biznese Shqipëri, marketing digjital B2B">
+<meta name="description" content="Zgjidhje B2B në Tiranë: zhvillim software, SEO, marketing digjital, design dhe konsulencë biznesi. Rritni efikasitetin me partnerin tuaj teknologjik.">
 {% endblock %}
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/sherbime-per-biznese/">{% endblock %}
 {% block social_meta %}
 <meta property="og:locale" content="sq_AL">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Shërbime digjitale për biznese | Dominusoft">
+<meta property="og:title" content="Shërbime B2B Tiranë | Software, SEO, Marketing | Dominusoft">
 <meta property="og:description" content="Software, automatizim me AI dhe rritje digjitale të përshtatura për objektivat e biznesit tuaj.">
 <meta property="og:url" content="https://dominusoft.al/sherbime-per-biznese/">
 <meta property="og:image" content="https://dominusoft.al{% static 'images/og-dominusoft-home.png' %}">
@@ -95,7 +95,7 @@
         <div class="inner-container">
             <div class="inner-heading">
                 <p class="inner-eyebrow">Procesi</p>
-                <h2 id="process-heading">Permbledhje e procesit të punës</h2>
+                <h2 id="process-heading">Përmbledhje e procesit të punës</h2>
             </div>
 
             <div class="inner-grid inner-grid--4">
@@ -172,16 +172,14 @@
             </div>
         </div>
     </section>
-
-    <section class="consultation-banner" aria-labelledby="consultation-banner-heading">
-        <div class="inner-container consultation-banner__inner">
-            <div class="consultation-banner__copy">
-                <p class="inner-eyebrow consultation-banner__eyebrow">Rezervoni një konsultë</p>
-                <h2 id="">Identifikuar strategjinë më të përshtatshme për biznesin tuaj.</h2>
+    <section class="home-final-cta" aria-labelledby="final-cta-title">
+        <div class="site-container home-final-cta__inner">
+            <div>
+                <p class="home-eyebrow">Rezervoni një konsultë</p>
+                <h2 id="final-cta-title">Identifikuar strategjinë më të përshtatshme për biznesin tuaj.</h2>
             </div>
-
-            <div class="consultation-banner__actions">
-                <a class="consultation-banner__button consultation-banner__button--secondary" href="/sherbime/zhvillim-sistemeve/">Kërko konsultë</a>
+            <div class="home-final-cta__actions">
+                <a class="home-button home-button--outline-dark" href="{% url 'business' %}">Kërko konsultë</a>
             </div>
         </div>
     </section>

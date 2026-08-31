@@ -3,8 +3,28 @@
 
 {% block title %}{% if searched %}Rezultate për “{{ searched }}”{% else %}Kërko kurse{% endif %} | Dominusoft{% endblock %}
 {% block robots %}<meta name="robots" content="noindex,follow">{% endblock %}
-{% block meta %}<meta name="description" content="Kërko në katalogun e kurseve profesionale Dominusoft.">{% endblock %}
+{% block meta %}
+<meta name="description" content="Kërko në katalogun e kurseve profesionale Dominusoft.">
+<meta name="keywords" content="kërko kurs, kurse profesionale, katalog kursesh, traine, formim profesional, programim, marketing, dizajn, AI, Dominusoft">
+{% endblock %}
 {% block canonical %}<link rel="canonical" href="https://dominusoft.al/kerkimi/">{% endblock %}
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="Kërko kurse | Dominusoft">
+<meta property="og:description" content="Kërko në katalogun e kurseve profesionale Dominusoft.">
+<meta property="og:url" content="https://dominusoft.al/kerkimi/">
+<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — Kërko kurse">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kërko kurse | Dominusoft">
+<meta name="twitter:description" content="Kërko në katalogun e kurseve profesionale Dominusoft.">
+<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta name="twitter:image:alt" content="Dominusoft — Kërko kurse">
+{% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
 {% block body_class %}inner-page{% endblock %}

@@ -1,34 +1,43 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Apliko për kurs profesional | Dominusoft{% endblock %}
+{% block title %}Apliko për Kurs | Dominusoft Tiranë dhe Online{% endblock %}
 {% block meta %}
-<meta name="keywords" content="kurse profesionale Tiranë, trajnime të certifikuara, formim profesional">
-<meta name="description" content="Zgjidhni një program profesional me mësim praktik, mbështetje nga pedagogët dhe orientim drejt tregut të punës.">
+<meta name="keywords" content="apliko për kurs Tiranë, regjistrim kurs profesional, formular aplikimi dominusoft, kurs profesional online Shqipëri, aplikim trajnim IT, aplikim kurs dizajn, aplikim kurs marketing, aplikim kurs siguri kibernetike, aplikim kurs arkitekturë, regjistrohu në kurs profesional">
+<meta name="description" content="Plotësoni formularin për t'u regjistruar në një kurs profesional të Dominusoft. Ekipi ynë ju kontakton me detajet e programit dhe regjistrimit.">
 {% endblock %}
-{% block canonical %}<link rel="canonical" href="https://dominusoft.al/trajnime-profesionale/">{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/apliko-per-kurs/">{% endblock %}
 {% block social_meta %}
-<meta property="og:locale" content="sq_AL"><meta property="og:type" content="website">
-<meta property="og:title" content="Apliko për kurs profesional | Dominusoft">
-<meta property="og:description" content="Programe praktike për aftësi që kërkohen në tregun e punës.">
-<meta property="og:url" content="https://dominusoft.al/trajnime-profesionale/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="Apliko për kurs profesional | Kurse profesionale me praktikë, certifikim dhe mbështetje | Dominusoft">
+<meta property="og:description" content="Apliko për një kurs profesional në Dominusoft dhe zgjidh një program me mësim praktik, mentorim, certifikim dhe mbështetje për zhvillimin e aftësive të nevojshme për tregun e punës.">
+<meta property="og:url" content="https://dominusoft.al/apliko-per-kurs/">
 <meta property="og:image" content="https://dominusoft.al{% static 'images/og-dominusoft-home.png' %}">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — Apliko për kurs profesional">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Apliko për kurs profesional | Dominusoft">
+<meta name="twitter:description" content="Apliko për një kurs profesional në Dominusoft dhe zgjidh një program me mësim praktik, mentorim, certifikim dhe mbështetje për zhvillimin e aftësive të nevojshme për tregun e punës.">
+<meta name="twitter:image" content="https://dominusoft.al{% static 'images/og-dominusoft-home.png' %}">
+<meta name="twitter:image:alt" content="Dominusoft — Apliko për kurs profesional">
 {% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
-{% block body_class %}inner-page{% endblock %}
-{% endblock %}
 {% block body_class %}inner-page{% endblock %}
 
 {% block content %}
 {% include 'navbar.html' %}
 <main id="main-content" class="inner-main">
-    <section class="inner-hero inner-section--compact">
-        <div class="inner-container inner-hero__content">
+    <section class="inner-hero">
+        <div class="inner-container inner-hero__layout">
+            <div class="inner-hero__content">
             <p class="inner-eyebrow">Aplikim për kurs</p>
             <h1>Hapi i parë drejt aftësisë së re.</h1>
             <p class="inner-hero__lead">Plotëso formularin dhe ekipi ynë do të të kontaktojë me informacionin për programin dhe regjistrimin.</p>
+        </div>
         </div>
     </section>
 
@@ -474,11 +483,6 @@
 <script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>
 <script>
     window.addEventListener('load', function () {
-        const formSection = document.getElementById('studentApplicationForm');
-        if (formSection) {
-            setTimeout(function () { formSection.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
-        }
-
         const studentSuccessModalEl = document.getElementById('studentSuccessModal');
         if (studentSuccessModalEl && typeof bootstrap !== 'undefined') {
             const successModal = new bootstrap.Modal(studentSuccessModalEl, { backdrop: 'static', keyboard: true });

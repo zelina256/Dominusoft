@@ -3,7 +3,28 @@
 
 {% block title %}Faqja nuk u gjet | Dominusoft{% endblock %}
 {% block robots %}<meta name="robots" content="noindex,follow">{% endblock %}
-{% block meta %}<meta name="description" content="Faqja që kërkuat nuk u gjet.">{% endblock %}
+{% block meta %}
+<meta name="description" content="Faqja që kërkuat nuk u gjet.">
+<meta name="keywords" content="faqja nuk u gjet, faqja e drejt, Dominusoft, kurse profesionale, menu, navigim">
+{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/404/">{% endblock %}
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="Faqja nuk u gjet | Dominusoft">
+<meta property="og:description" content="Faqja që kërkuat nuk u gjet.">
+<meta property="og:url" content="https://dominusoft.al/404/">
+<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — Faqja nuk u gjet">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Faqja nuk u gjet | Dominusoft">
+<meta name="twitter:description" content="Faqja që kërkuat nuk u gjet.">
+<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta name="twitter:image:alt" content="Dominusoft — Faqja nuk u gjet">
+{% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
 {% block body_class %}inner-page{% endblock %}

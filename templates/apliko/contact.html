@@ -3,15 +3,15 @@
 {% load static %}
 
 {% block title %}
-Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
+Kontakt | Dominusoft - Kurse Profesionale & Zgjidhje B2B
 {% endblock %}
 
 {% block meta %}
 <meta name="description"
-  content="Kontaktoni Dominusoft në Tiranë për informacion rreth kurseve profesionale, internship-eve, zhvillimit të website-ve, projekteve digjitale dhe bashkëpunimeve me biznese." />
+  content="Kontaktoni Dominusoft për informacion mbi kurset profesionale, internship-et dhe shërbimet B2B në Tiranë. Konsultim fillestar pa angazhim." />
 
 <meta name="keywords"
-  content="kontakt Dominusoft, kurse profesionale Tiranë, trajnime programimi, internship Tiranë, zhvillim website, shërbime digjitale, konsultim biznesi" />
+  content="kontakt dominusoft, adresa dominusoft Tiranë, konsulencë kursesh Shqipëri, telefon dominusoft, email dominusoft" />
 
 <meta name="robots" content="index, follow" />
 
@@ -21,6 +21,24 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
 <meta property="og:type" content="website" />
 {% endblock %}
 
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/kontakt/">{% endblock %}
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="Kontakt | Dominusoft">
+<meta property="og:description" content="Kontaktoni Dominusoft për informacion mbi kurset profesionale, internship-et dhe shërbimet B2B në Tiranë. Konsultim fillestar pa angazhim.">
+<meta property="og:url" content="https://dominusoft.al/kontakt/">
+<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — Kontakt">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Kontakt | Dominusoft">
+<meta name="twitter:description" content="Kontaktoni Dominusoft për informacion mbi kurset profesionale, internship-et dhe shërbimet B2B në Tiranë. Konsultim fillestar pa angazhim.">
+<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta name="twitter:image:alt" content="Dominusoft — Kontakt">
+{% endblock %}
 {% block scripts %}
 
 {% endblock %}
@@ -221,19 +239,19 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
     </div>
   </section>
 
-  <section class="inner-section inner-section--white" aria-labelledby="consultation-title">
-    <div class="inner-container">
-      <div class="text-center" >
-        <h2 id="consultation-title">Nuk jeni të sigurt se cili kurs ose shërbim ju përshtatet?</h2>
-        <p>
-          Rezervoni një konsultim fillestar me ekipin tonë. Do të
+      <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
+        <div class="site-container home-final-cta__inner">
+            <div>
+                <p class="home-eyebrow"> Rezervoni një konsultim fillestar me ekipin tonë. Do të
           diskutojmë objektivat, nevojat dhe mundësitë më të përshtatshme
-          për zhvillimin tuaj profesional ose për projektin e biznesit tuaj.
-        </p>
-        <a href="#message_student" class="inner-button inner-button--primary">Kërko një konsultim</a>
-      </div>
-    </div>
-  </section>
+          për zhvillimin tuaj profesional ose për projektin e biznesit tuaj.</p>
+                <h2 id="final-cta-title">Nuk jeni të sigurt se cili kurs ose shërbim ju përshtatet?</h2>
+            </div>
+            <div class="home-final-cta__actions">
+                <a class="home-button home-button--primary" href="#message_student">Kërko një konsultim</a>
+            </div>
+        </div>
+    </section>
 
   {% if show_contact_success_modal %}
     <div class="modal fade contact-success-modal" id="contactSuccessModal" tabindex="-1" aria-labelledby="contactSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
@@ -267,13 +285,6 @@ Kontakt | Kurse Profesionale dhe Shërbime Digjitale | Dominusoft
 {% block page_scripts %}
 <script>
   window.addEventListener('load', function () {
-    const formSection = document.getElementById('contact-form');
-    if (formSection) {
-      setTimeout(function () {
-        formSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 150);
-    }
-
     const successModalEl = document.getElementById('contactSuccessModal');
     if (!successModalEl || typeof bootstrap === 'undefined') {
       return;

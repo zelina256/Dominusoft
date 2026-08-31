@@ -7,6 +7,23 @@
 <meta name="keywords" content="{{ service.services_meta_keyword }}" />
 {% endblock %}
 {% block canonical %}<link rel="canonical" href="{{ detail.canonical_url|default:'https://dominusoft.al' }}">{% endblock %}
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="{{ detail.title|default:service.services_title|default:service.services_name }} | Dominusoft">
+<meta property="og:description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
+<meta property="og:url" content="{{ detail.canonical_url|default:'https://dominusoft.al' }}">
+<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — {{ detail.title|default:service.services_title|default:service.services_name }}">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ detail.title|default:service.services_title|default:service.services_name }} | Dominusoft">
+<meta name="twitter:description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
+<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta name="twitter:image:alt" content="Dominusoft — {{ detail.title|default:service.services_title|default:service.services_name }}">
+{% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
 <link rel="stylesheet" href="{% static 'css/site-shell.css' %}">
@@ -55,39 +72,38 @@
         </div>
     </section>
 
-    <section id="permbledhje" class="inner-section inner-section--white" aria-labelledby="service-summary-title">
+    <section id="permbledhje" class="inner-section inner-section--summary" aria-labelledby="service-summary-title">
         <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">Përmbledhje</p>
-                <h2 id="service-summary-title">{% if detail and detail.summary %}{{ detail.summary }}{% else %}Një zgjidhje e krijuar për performancë dhe rritje{% endif %}</h2>
+            <div class="summary-header">
+                <p class="inner-eyebrow inner-eyebrow--dark">PËRMBDHJE</p>
+                <h2 id="service-summary-title" class="summary-title">{% if detail and detail.summary %}{{ detail.summary }}{% else %}Një zgjidhje e krijuar për performancë dhe rritje{% endif %}</h2>
             </div>
 
-            <div class="course-detail">
-                <article class="course-detail__main">
+            <div class="summary-layout">
+                <aside class="summary-aside">
                     {% if detail and detail.summary_additional %}
-                        <p>{{ detail.summary }}</p>
                         <p>{{ detail.summary_additional }}</p>
                     {% elif detail and detail.summary %}
                         <p>{{ detail.summary }}</p>
                     {% else %}
-                        <p>{{ service.services_description }}</p>
+                        <p>Në çdo biznes, një identitet unik dhe një qasje e saktë mund të krijojë një diferencë të dukshme. Ne i ofrojmë zgjidhje profesionale në branding, dizajn grafik dhe komunikim që ndihmojnë biznesin të rritet me siguri dhe konsistencë.</p>
                     {% endif %}
-                </article>
+                </aside>
 
-                <aside class="course-detail__aside">
-                    <div class="inner-card__body">
-                        <p class="inner-eyebrow">Përfitime</p>
-                        <ul class="fact-list fact-list--stacked">
+                <div class="summary-feature">
+                    <div class="summary-feature__inner">
+                        <p class="summary-feature__eyebrow">PËRFITIME</p>
+                        <ul class="fact-list summary-fact-list">
                             {% for benefit in benefits %}
                                 <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ benefit.title }}</span></li>
                             {% empty %}
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Proces i përcaktuar dhe transparent</span></li>
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrim me sisteme ekzistuese</span></li>
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Mbështetje pas lançimit</span></li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Ndërtoni identitet unik të biznesit tuaj me zgjidhje profesionale në branding, dizajn grafik dhe komunikim.</span></li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Rritni vizibilitetin online dhe siguroni një përvojë të qartë dhe të besueshme për klientët.</span></li>
+                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integroni strategjinë, dizajnin dhe zhvillimin në një model të vetëm me rezultate të matshme.</span></li>
                             {% endfor %}
                         </ul>
                     </div>
-                </aside>
+                </div>
             </div>
         </div>
     </section>

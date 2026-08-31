@@ -40,6 +40,7 @@ class TemporaryMediaTestCase(TestCase):
             cat_training_text_short="Aftësi praktike për zhvillim software.",
             cat_training_img=test_image("category.gif"),
             cat_training_img_alt="Ikonë programimi",
+            cat_training_icon="fas fa-code",
             cat_slug=slug,
         )
 
@@ -78,6 +79,14 @@ class HomepageTests(TemporaryMediaTestCase):
         structured_data = json.loads(structured_data_match.group(1))
         structured_types = {item["@type"] for item in structured_data["@graph"]}
         self.assertEqual(structured_types, {"WebSite", "EducationalOrganization"})
+
+    def test_homepage_uses_configurable_training_icons(self):
+        category = self.create_category()
+        response = self.client.get(reverse("home"))
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "fas fa-code")
+        self.assertContains(response, reverse("trainings", args=[category.cat_slug]))
 
     def test_homepage_hides_empty_dynamic_sections(self):
         response = self.client.get(reverse("home"))

@@ -1,13 +1,31 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Rreth Nesh | Dominusoft{% endblock %}
+{% block title %}Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë{% endblock %}
 
 {% block meta %}
 <meta name="description"
-    content="Mësoni më shumë rreth Dominusoft, historisë, misionit, vizionit, vlerave, ekipit, licencave dhe partneriteteve tona.">
+    content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale.">
 <meta name="keywords"
-    content="Dominusoft, rreth nesh, kompani teknologjie Shqipëri, kurse profesionale, software, marketing digital, konsulence IT">
+    content="rreth dominusoft, kompani edukimi Tiranë, qendër trajnimesh e licencuar, partner teknologjik B2B Shqipëri, misioni dominusoft">
+{% endblock %}
+{% block canonical %}<link rel="canonical" href="https://dominusoft.al/rreth-nesh/">{% endblock %}
+{% block social_meta %}
+<meta property="og:type" content="website">
+<meta property="og:locale" content="sq_AL">
+<meta property="og:site_name" content="Dominusoft">
+<meta property="og:title" content="Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë">
+<meta property="og:description" content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale.">
+<meta property="og:url" content="https://dominusoft.al/rreth-nesh/">
+<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Dominusoft — Rreth nesh">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë">
+<meta name="twitter:description" content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale.">
+<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+<meta name="twitter:image:alt" content="Dominusoft — Rreth nesh">
 {% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
@@ -31,9 +49,14 @@
                     nga Inteligjenca Artificiale.
                 </p>
                 <div class="inner-hero__actions">
-                    <a class="inner-button inner-button--primary" href="#kontakt">Rezervo konsultë <i
-                            class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                    <a class="inner-button inner-button--ghost" href="#historia">Shiko historinë</a>
+                    <a class="inner-button inner-button--primary" href="#kontakt" data-click-counter="rreth_hero_cta">
+                        Rezervo konsultë <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        <span class="click-counter" aria-live="polite">(Klikime: <strong data-click-count>0</strong>)</span>
+                    </a>
+                    <a class="inner-button inner-button--ghost" href="#historia" data-click-counter="rreth_history_cta">
+                        Shiko historinë
+                        <span class="click-counter" aria-live="polite">(Klikime: <strong data-click-count>0</strong>)</span>
+                    </a>
                 </div>
             </div>
 
@@ -56,9 +79,9 @@
             <div class="inner-heading">
                 <p class="inner-eyebrow">Historia jonë</p>
                 <h2 id="history-title">Nga edukimi profesional tek zgjidhjet B2B</h2>
-            <!-- </div> -->
+                <!-- </div> -->
 
-            <!-- <div> -->
+                <!-- <div> -->
                 <p>
                     Dominusoft u krijua me synimin për të sjellë më pranë tregut shqiptar
                     edukimin profesional, teknologjinë dhe ekspertizën praktike. Me kalimin
@@ -93,25 +116,29 @@
                 <div class="col-md-6">
                     <article class="inner-card">
                         <div class="inner-card__body">
-                             <div class="service-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
-                        <h3>Misioni</h3>
-                        <p>
-                           Misioni ynë është të fuqizojmë bizneset përmes teknologjisë inovative dhe zgjidhjeve dixhitale që përmirësojnë efikasitetin, thjeshtojnë proceset dhe mbështesin rritjen e qëndrueshme.
-                        </p>
+                            <div class="service-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
+                            <h3>Misioni</h3>
+                            <p>
+                                Misioni ynë është të fuqizojmë bizneset përmes teknologjisë inovative dhe zgjidhjeve
+                                dixhitale që përmirësojnë efikasitetin, thjeshtojnë proceset dhe mbështesin rritjen e
+                                qëndrueshme.
+                            </p>
                         </div>
-                       
+
                     </article>
                 </div>
 
                 <div class="col-md-6">
                     <article class="inner-card">
                         <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div>
-                        <h3>Vizioni</h3>
-                        <p>
-                           Vizioni ynë është të bëhemi një partner teknologjik i besueshëm për bizneset në Shqipëri, Evropë dhe tregjet ndërkombëtare, duke ofruar zgjidhje dixhitale inovative, të shkallëzueshme dhe me cilësi të lartë.
-                        </p>
-</div>
+                            <div class="service-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div>
+                            <h3>Vizioni</h3>
+                            <p>
+                                Vizioni ynë është të bëhemi një partner teknologjik i besueshëm për bizneset në
+                                Shqipëri, Evropë dhe tregjet ndërkombëtare, duke ofruar zgjidhje dixhitale inovative, të
+                                shkallëzueshme dhe me cilësi të lartë.
+                            </p>
+                        </div>
                     </article>
                 </div>
             </div>
@@ -140,43 +167,10 @@
                 <div class="col-md-6 col-lg-4">
                     <article class="inner-card">
                         <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
-                        <h3>Inovacion</h3>
-                        <p>Përqafojmë teknologjitë e reja dhe Inteligjencën Artificiale, por gjithmonë me fokus tek
-                            zgjidhjet që krijojnë vlerë reale.</p>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                     <article class="inner-card">
-                        <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
-                        <h3>Edukim praktik</h3>
-                        <p>Besojmë se aftësitë zhvillohen përmes praktikës, projekteve reale dhe kontaktit të
-                            vazhdueshëm me kërkesat e tregut.</p>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                     <article class="inner-card">
-                        <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
-                        <h3>Rezultate</h3>
-                        <p>Çdo projekt, trajnim apo bashkëpunim duhet të ketë një ndikim të matshëm dhe një rezultat të
-                            qartë.</p>
-                        </div>
-                    </article>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                     <article class="inner-card">
-                        <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
-                        <h3>Zhvillim i vazhdueshëm</h3>
-                        <p>Teknologjia ndryshon çdo ditë. Ne investojmë vazhdimisht në përmirësimin e njohurive,
-                            proceseve dhe metodologjive tona.</p>
+                            <div class="service-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
+                            <h3>Inovacion</h3>
+                            <p>Përqafojmë teknologjitë e reja dhe Inteligjencën Artificiale, por gjithmonë me fokus tek
+                                zgjidhjet që krijojnë vlerë reale.</p>
                         </div>
                     </article>
                 </div>
@@ -184,10 +178,45 @@
                 <div class="col-md-6 col-lg-4">
                     <article class="inner-card">
                         <div class="inner-card__body">
-                        <div class="service-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
-                        <h3>Bashkëpunim</h3>
-                        <p>Vlera më e madhe krijohet kur ekspertët, kompanitë, institucionet dhe talentet e reja punojnë
-                            së bashku.</p>
+                            <div class="service-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
+                            <h3>Edukim praktik</h3>
+                            <p>Besojmë se aftësitë zhvillohen përmes praktikës, projekteve reale dhe kontaktit të
+                                vazhdueshëm me kërkesat e tregut.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                            <div class="service-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
+                            <h3>Rezultate</h3>
+                            <p>Çdo projekt, trajnim apo bashkëpunim duhet të ketë një ndikim të matshëm dhe një rezultat
+                                të
+                                qartë.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                            <div class="service-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
+                            <h3>Zhvillim i vazhdueshëm</h3>
+                            <p>Teknologjia ndryshon çdo ditë. Ne investojmë vazhdimisht në përmirësimin e njohurive,
+                                proceseve dhe metodologjive tona.</p>
+                        </div>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="inner-card">
+                        <div class="inner-card__body">
+                            <div class="service-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
+                            <h3>Bashkëpunim</h3>
+                            <p>Vlera më e madhe krijohet kur ekspertët, kompanitë, institucionet dhe talentet e reja
+                                punojnë
+                                së bashku.</p>
                         </div>
                     </article>
                 </div>
@@ -250,48 +279,7 @@
         </div>
     </section>
 
-    <section class="inner-section inner-section--white" aria-labelledby="certificates-title">
-        <div class="inner-container">
-            <div class="inner-heading text-center">
-                <p class="inner-eyebrow">Standard dhe besueshmëri</p>
-                <h2 id="certificates-title">Certifikimet dhe licencat</h2>
-            </div>
 
-            <div class="row g-4 justify-content-center">
-                <div class="col-md-6 col-lg-4">
-                    <div class="inner-card">
-                        <div class="inner-card__body">
-                        <div class="home-icon"><i class="fas fa-landmark" aria-hidden="true"></i></div>
-                        <h3>Institucion i licencuar</h3>
-                        <p>Licencuar nga Ministria e Ekonomisë dhe Inovacionit me numër licence
-                            <strong>LN-3743-02-2022</strong>.</p>
-                            </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="inner-card">
-                        <div class="inner-card__body">
-                        <div class="home-icon"><i class="fas fa-award" aria-hidden="true"></i></div>
-                        <h3>Trajnime profesionale</h3>
-                        <p>Programe të orientuara drejt aftësive praktike dhe nevojave reale të tregut të punës.</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-6 col-lg-4">
-                    <div class="inner-card">
-                        <div class="inner-card__body">
-                        <div class="home-icon"><i class="fas fa-check-circle" aria-hidden="true"></i></div>
-                        <h3>Standard profesional</h3>
-                        <p>Procese të strukturuara, fokus në cilësi dhe zhvillim të vazhdueshëm në shërbimet dhe
-                            programet e ofruara.</p>
-                            </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
 
 
     <section class="inner-section inner-section--white" aria-labelledby="stats-title">
@@ -332,49 +320,19 @@
             </div>
         </div>
     </section>
-
-    <section class="inner-section inner-section--compact" aria-labelledby="partners-title">
-        <div class="inner-container">
-            <div class="inner-heading text-center">
-                <p class="inner-eyebrow">Bashkëpunime</p>
-                <h2 id="partners-title">Partnerët tanë</h2>
-            </div>
-
-            {% if partners %}
-            <div class="partner-grid">
-                {% for partner in partners reversed %}
-                {% if partner.partner_logo %}
-                <div class="partner-box">
-                    <img src="{{ partner.partner_logo.url }}"
-                        alt="{{ partner.partner_image_alt|default:partner.partner_name|default:'Partner logo' }}"
-                        loading="lazy" decoding="async">
-                </div>
-                {% endif %}
-                {% empty %}
-                <div class="col-12 text-center">
-                    <p class="text-muted mb-0">Logot e partnerëve do të shfaqen këtu.</p>
-                </div>
-                {% endfor %}
-            </div>
-            {% else %}
-            <div class="text-center">
-                <p class="text-muted mb-0">Logot e partnerëve do të shfaqen këtu.</p>
-            </div>
-            {% endif %}
-        </div>
-    </section>
-
-    <section id="kontakt" class="inner-section inner-section--white">
-        <div class="inner-container">
-            <div class="text-center">
-                <h2>Le të ndërtojmë diçka me vlerë së bashku</h2>
-                <p>
-                    Nëse kërkoni një partner për software, marketing, konsulencë IT,
+    <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
+        <div class="site-container home-final-cta__inner">
+            <div>
+                <p class="home-eyebrow"> Nëse kërkoni një partner për software, marketing, konsulencë IT,
                     transformim digjital ose trajnim profesional për ekipin tuaj,
-                    gjithçka fillon me një bisedë.
-                </p>
-                <a href="#contact" class="home-button home-button--primary">Rezervo konsultë <span
-                        aria-hidden="true">→</span></a>
+                    gjithçka fillon me një bisedë.</p>
+                <h2 id="final-cta-title">Le të ndërtojmë diçka me vlerë së bashku</h2>
+            </div>
+            <div class="home-final-cta__actions">
+                <a class="home-button home-button--primary" href="{% url 'contact' %}" data-click-counter="rreth_final_cta">
+                    Rezervo konsultë <span aria-hidden="true">→</span>
+                    <span class="click-counter" aria-live="polite">(Klikime: <strong data-click-count>0</strong>)</span>
+                </a>
             </div>
         </div>
     </section>

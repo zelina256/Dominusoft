@@ -13,7 +13,6 @@
 <meta property="og:title" content="{{ training.training_name }} | Dominusoft">
 <meta property="og:description" content="{{ training.training_meta_descriptions|default:training.training_text|striptags|truncatechars:180 }}">
 <meta property="og:url" content="https://dominusoft.al{% url 'curricula' cat_training.cat_slug training.training_slug %}">
-{% if training.training_image %}<meta property="og:image" content="https://dominusoft.al{{ training.training_image.url }}">{% endif %}
 <meta name="twitter:card" content="summary_large_image">
 {% endblock %}
 {% block legacy_styles %}{% endblock %}
@@ -157,7 +156,9 @@
             <div class="inner-grid inner-grid--3">
                 {% for train in same_training %}
                 <article class="inner-card training-card">
-                    <div class="training-card__media">{% if train.training_image %}<img src="{{ train.training_image.url }}" alt="{{ train.training_image_alt|default:train.training_name }}" width="480" height="320" loading="lazy">{% endif %}</div>
+                    <div class="training-card__media" aria-hidden="true">
+                        <i class="{{ train.training_icon|default:'fas fa-laptop-code' }}"></i>
+                    </div>
                     <div class="training-card__body"><h3>{{ train.training_name }}</h3><p>{{ train.training_text|truncatewords:24 }}</p><a class="training-card__link" href="{% url 'curricula' cat_training.cat_slug train.training_slug %}">Shiko kursin <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 {% endfor %}

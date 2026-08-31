@@ -7,10 +7,27 @@
     {% block robots %}<meta name="robots" content="index,follow">{% endblock %}
     {% block meta %}
     <meta name="description" content="Dominusoft ofron kurse profesionale të certifikuara dhe zgjidhje digjitale për biznese në Tiranë.">
+    <meta name="keywords" content="Dominusoft, kurse profesionale, trajnime, formim profesional, zhvillim digjital, software, AI, marketing digjital, Tiranë, bizneset, teknologji">
     {% endblock %}
     <title>{% block title %}Dominusoft | Kurse profesionale dhe zgjidhje digjitale{% endblock %}</title>
-    {% block canonical %}{% endblock %}
-    {% block social_meta %}{% endblock %}
+    {% block canonical %}<link rel="canonical" href="https://dominusoft.al/">{% endblock %}
+    {% block social_meta %}
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sq_AL">
+    <meta property="og:site_name" content="Dominusoft">
+    <meta property="og:title" content="Dominusoft | Kurse profesionale dhe zgjidhje digjitale">
+    <meta property="og:description" content="Kurse profesionale të certifikuara dhe zgjidhje digjitale të ndërtuara për rezultate reale.">
+    <meta property="og:url" content="https://dominusoft.al/">
+    <meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="Dominusoft — Kurse profesionale dhe zgjidhje digjitale">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dominusoft | Kurse profesionale dhe zgjidhje digjitale">
+    <meta name="twitter:description" content="Kurse profesionale të certifikuara dhe zgjidhje digjitale të ndërtuara për rezultate reale.">
+    <meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
+    <meta name="twitter:image:alt" content="Dominusoft — Kurse profesionale dhe zgjidhje digjitale">
+    {% endblock %}
     {% block structured_data %}{% endblock %}
 
     <link rel="icon" type="image/png" href="{% static 'images/fav_icon.png' %}">
@@ -58,6 +75,28 @@
 
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
     <script src="{% static 'js/site-shell.js' %}" defer></script>
+    <script>
+        function initButtonClickCounters() {
+            document.querySelectorAll('[data-click-counter]').forEach(function (element) {
+                const key = element.dataset.clickCounter;
+                const storageKey = 'dominusoft_click_counter_' + key;
+                const counterNode = element.querySelector('[data-click-count]');
+
+                if (!counterNode) return;
+
+                const currentCount = Number(localStorage.getItem(storageKey) || 0);
+                counterNode.textContent = currentCount;
+
+                element.addEventListener('click', function () {
+                    const nextCount = Number(localStorage.getItem(storageKey) || 0) + 1;
+                    localStorage.setItem(storageKey, String(nextCount));
+                    counterNode.textContent = nextCount;
+                }, { passive: true });
+            });
+        }
+
+        document.addEventListener('DOMContentLoaded', initButtonClickCounters);
+    </script>
     {% block legacy_scripts %}
     <script src="{% static 'js/jquery.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>

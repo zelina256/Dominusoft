@@ -13,8 +13,6 @@ from .models import *
 from trainings.models import *
 from blog.models import Article
 from services.models import Services
-from internship.models import Internship
-from student_project.models import Student_work
 
 # from contact.models import *
 from apply.models import *

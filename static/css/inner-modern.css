@@ -105,12 +105,7 @@
     text-transform: uppercase;
 }
 
-.inner-eyebrow::before {
-    width: 28px;
-    height: 2px;
-    background: currentColor;
-    content: "";
-}
+
 
 .inner-hero h1,
 .inner-heading h2,

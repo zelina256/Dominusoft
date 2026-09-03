@@ -39,7 +39,7 @@ def searchvenues(request):
             | Q(training_category__cat_training_name__icontains=searched)
         ).select_related("training_category").distinct()[:25]
 
-        article_results = Article.objects.filter(
+        article_results = Article.published_objects.filter(
             Q(article_title__icontains=searched)
             | Q(article_excerpt__icontains=searched)
             | Q(article_infos__icontains=searched)
@@ -181,7 +181,7 @@ def robots_txt(request):
 def home(request):
     partners = Partner.objects.all()
     cat_trainings = Category_training.objects.all()
-    latest_articles = Article.objects.select_related("article_category").order_by(
+    latest_articles = Article.published_objects.select_related("article_category").order_by(
         "-article_created_at", "-id"
     )[:3]
 

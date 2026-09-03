@@ -39,11 +39,7 @@
 
     <section class="inner-section inner-section--white" aria-labelledby="courses-heading">
         <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">Zgjidh kursin</p>
-                <h2 id="courses-heading">Programet në këtë kategori</h2>
-                {% if cat_training.cat_training_text_description %}<p>{{ cat_training.cat_training_text_description|striptags }}</p>{% endif %}
-            </div>
+      
             {% if training %}
             <div class="inner-grid inner-grid--3">
                 {% for train in training %}
@@ -70,7 +66,7 @@
         <div class="inner-container">
             <div class="inner-heading inner-heading--left">
                 <p class="inner-eyebrow">Përmbledhje e kategorisë</p>
-                <h2 id="summary-heading">Pse ky program është i rëndësishëm për karrierën tuaj?</h2>
+                <h2 id="summary-heading">Pse programimii është i rëndësishëm për karrierën tuaj?</h2>
             </div>
             <div class="inner-grid inner-grid--3">
                 <article class="inner-card">
@@ -105,10 +101,12 @@
             <div class="inner-grid inner-grid--2">
                 <div>
                     <ul class="inner-check-list">
-                        <li>Certifikim zyrtar nga Dominusoft</li>
-                        <li>Portfolio ose projekte të realizuara gjatë trajnimit</li>
-                        <li>Udhëzime praktike të personalizuara nga mentorë</li>
-                        <li>Mbështetje për zhvillimin e kompetencave profesionale</li>
+                        <li>Certifikim nga institucion i licencuar nga Ministria e Ekonomisë dhe Inovacionit</li>
+                        <li>Projekte praktike të zhvilluara gjatë trajnimit</li>
+                        <li>Portfolio me punime konkrete, sipas programit të ndjekur</li>
+                        <li>Udhëzim dhe feedback profesional nga instruktorët</li>
+                        <li>Aftësi praktike të aplikueshme në projekte dhe situata reale pune</li>
+                        <li>Përgatitje për zhvillim profesional dhe kërkesat e tregut të punës</li>
                     </ul>
                 </div>
                 <div>

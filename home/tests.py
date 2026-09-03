@@ -1,11 +1,13 @@
 import json
 import re
+from datetime import timedelta
 from tempfile import TemporaryDirectory
 
 from django.contrib.messages import get_messages
 from django.core.files.uploadedfile import SimpleUploadedFile
 from django.test import Client, TestCase, override_settings
 from django.urls import reverse
+from django.utils import timezone
 
 from apply.models import Subscribe
 from blog.models import Article
@@ -149,6 +151,35 @@ class SearchTests(TemporaryMediaTestCase):
             f'{reverse("searchvenues")}?q=Python+Profesional',
             fetch_redirect_response=False,
         )
+
+
+class ArticleSchedulingTests(TemporaryMediaTestCase):
+    def test_article_status_supports_draft_and_scheduled_publish(self):
+        now = timezone.now()
+        published = Article.objects.create(
+            article_slug="published-article",
+            article_title="Published article",
+            article_image=test_image("published.gif"),
+            article_status=Article.ArticleStatus.PUBLISHED,
+        )
+        draft = Article.objects.create(
+            article_slug="draft-article",
+            article_title="Draft article",
+            article_image=test_image("draft.gif"),
+            article_status=Article.ArticleStatus.DRAFT,
+        )
+        scheduled = Article.objects.create(
+            article_slug="scheduled-article",
+            article_title="Scheduled article",
+            article_image=test_image("scheduled.gif"),
+            article_status=Article.ArticleStatus.SCHEDULED,
+            article_publish_at=now + timedelta(days=1),
+        )
+
+        self.assertTrue(published.is_published)
+        self.assertFalse(draft.is_published)
+        self.assertFalse(scheduled.is_published)
+        self.assertEqual(Article.ArticleStatus.choices[0][0], "draft")
 
 
 class SubscribeTests(TestCase):

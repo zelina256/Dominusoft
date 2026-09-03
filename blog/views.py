@@ -15,7 +15,7 @@ def blog(request):
     search_query = (raw_search_query or "").strip()
     if raw_search_query is not None and not search_query:
         return redirect(request.path)
-    articles = Article.objects.all().order_by("-article_created_at", "-id")
+    articles = Article.published_objects.all().order_by("-article_created_at", "-id")
     if selected_category:
         articles = articles.filter(
             article_category__category_slug=selected_category
@@ -42,10 +42,10 @@ def blog(request):
 
 def article(request, slug):
     articleInfo = get_object_or_404(
-        Article.objects.select_related("article_category"), article_slug=slug
+        Article.published_objects.select_related("article_category"), article_slug=slug
     )
     cat_trainings = Category_training.objects.all()
-    articles = Article.objects.select_related("article_category").exclude(
+    articles = Article.published_objects.select_related("article_category").exclude(
         pk=articleInfo.pk
     ).order_by("-article_created_at", "-id")
     related_articles = articles.filter(

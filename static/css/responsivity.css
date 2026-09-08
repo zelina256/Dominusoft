@@ -1,14 +1,4 @@
-/* Media: responsive */
-@media screen and (max-width: 1056px){
-    .infoNav,.contactNav{
-        display: none !important;
-    }
- 
-} 
 @media screen and (max-width: 992px){
-    .moto2 h3 {
-        font-size: 1.2em;
-    }
     .border_start, .border_end{
         border-left: none;
         border-right: none;
@@ -56,9 +46,6 @@
     .navbar-nav .dropdown-menu {
         text-align: center;
     } 
-    .moto h1 {
-        font-size: 30px;
-    }
     .form-control, .form-select, textarea.form-control {
         width: 100%;
     }
@@ -119,88 +106,14 @@
     .dropdown-menu {
         transform: translateX(0);
     }
-    .moto h1 {
-        font-size: 30px;
-    }
-   
-}
-@media screen and (max-width: 751px){
-    .infoNav, .contactNav{
-        display: none;
-    }
 }
 @media screen and (max-width: 577px){
-    .section_kursant {
-        margin-top: 5.7rem;
-    }
-    .section_event {
-        margin-top: 7.2rem;
-    }
-    .section_kat {
-        padding-top: 3.3rem;
-    }
-    .section-lg {
-        padding-top: 4rem;
-        padding-bottom: 2rem;
-    }
-    .event_container{
-        width: 100%;
-    }
-    .map {
-        height: 350px;
-        width: 375px;
-    }
-    .map_kont iframe {
-        height: 300px;
-    }
-    .follow{
-        padding: 0 5px 0 0;
-    }
     textarea.form-control, .form-control, button[type="submit"]{
         width: 100%;
-    }
-    .submit{
-        padding-right: 0 !important;
-        padding-left: 0 !important;
-    }
-    .pjesmarrja{
-        padding-left: 0.8rem !important;
-        padding-right: 0.8rem !important;
-    }
-    .t_certifikim{
-        font-size: 2rem !important;
-    }
-    .traj_ngjashme {
-        padding-top: 3rem;
-    }
-    .owl-theme .owl-dots .owl-dot span, .owl-theme .owl-dots .owl-dot.active span {
-        width: 10px !important;
-        height: 10px !important;
-        border-radius: 50%;
-    }
-    .events_cont{
-        padding-left: 0 !important;
-        padding-bottom: 0 !important;
-        padding-right: 0!important;
-    }
-    .terms ul li a{
-        padding: 5px 0;
-        font-size: 1rem;
-    }
-    .trajnime_list > p a {
-        font-size: 1rem;
-        padding: 10px 0px;
-    }
-
-    .moto h1 {
-        font-size: 2em;
     }
     .event_page .row img {
         height: 248px;
         border-radius: 0.25rem;
-    }
-    .trajnime_list > p a:hover {
-        padding: 10px 20px;
     }
     .form-select {
         width: 100%;
@@ -221,33 +134,9 @@
     .legend{
         margin-top: 42px !important;
     }
-    .trajnime_list > p a {
-        font-size: 1rem;
-        padding: 10px 0px;
-    }
-    .kat_card .card-body {
-        padding: 2rem;
-    }
-    .traj_ngjashme {
-        font-size: 1.79rem;
-        padding-top: 3rem;
-    }
-
 }
 /* mobile */
 @media screen and (max-width: 320px){
-    .aktivitet_legend{
-        margin-left: 0px !important;
-    }
-    .trajnime_list > p a {
-        font-size: 0.569999999999rem;
-    }
-    .t_certifikim {
-        font-size: 1.3rem !important;
-    }
-    .traj_ngjashme {
-        font-size: 1.4rem;
-    }
     .text_se_shpejti {
         font-size: 5rem;
         opacity: 0.5;

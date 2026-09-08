@@ -34,11 +34,13 @@
                 </ol>
                 <span class="article-card__category">{{ articleInfo|article_category_label }}</span>
                 <h1 class="article-page__title">{{ articleInfo.article_title }}</h1>
+                 {% comment %}
                 <ul class="inner-meta">
                     {% if articleInfo.article_author %}<li><i class="far fa-user" aria-hidden="true"></i>{{ articleInfo.article_author }}</li>{% endif %}
                     <li><i class="far fa-calendar-alt" aria-hidden="true"></i><time datetime="{{ articleInfo.article_created_at|date:'Y-m-d' }}">{{ articleInfo.article_created_at|date:'d M Y' }}</time></li>
                     <li><i class="far fa-clock" aria-hidden="true"></i>{{ articleInfo.estimated_read_time }} min lexim</li>
                 </ul>
+                {% endcomment %}
                 {% if articleInfo.article_excerpt %}<p class="article-page__excerpt">{{ articleInfo.article_excerpt }}</p>{% endif %}
             </header>
             {% if articleInfo.article_image %}<img src="{{ articleInfo.article_image.url }}" class="article-page__image" alt="{{ articleInfo.article_image_alt|default:articleInfo.article_title }}" width="1200" height="720" fetchpriority="high">{% endif %}
@@ -52,9 +54,17 @@
             <div class="inner-heading"><p class="inner-eyebrow">Vazhdo leximin</p><h2 id="related-articles-title">Artikuj të ngjashëm</h2></div>
             <div class="inner-grid inner-grid--3">
                 {% for article in same_training %}
-                <article class="inner-card article-card">
-                    <div class="article-card__media">{% if article.article_image %}<img src="{{ article.article_image.url }}" alt="{{ article.article_image_alt|default:article.article_title }}" width="480" height="320" loading="lazy">{% endif %}</div>
-                    <div class="article-card__body"><span class="article-card__category">{{ article|article_category_label }}</span><h3>{{ article.article_title }}</h3><ul class="inner-meta"><li>{{ article.article_created_at|date:'d M Y' }}</li><li>{{ article.estimated_read_time }} min lexim</li></ul><a class="article-card__link" href="{% url 'article' article.article_slug %}">Lexo artikullin <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
+                <article class="inner-card article-card pb-3">
+                    <div class="article-card__body">
+                        <span class="article-card__category">{{ article|article_category_label }}</span>
+                        <h3>{{ article.article_title }}</h3>
+                        {% comment %}
+                        <ul class="inner-meta">
+                            <li>{{ article.article_created_at|date:'d M Y' }}</li>
+                            <li>{{ article.estimated_read_time }} min lexim</li>
+                        </ul>
+                        {% endcomment %}
+                        <a class="article-card__link" href="{% url 'article' article.article_slug %}">Lexo artikullin <i class="fas fa-arrow-right" aria-hidden="true"></i></a></div>
                 </article>
                 {% endfor %}
             </div>

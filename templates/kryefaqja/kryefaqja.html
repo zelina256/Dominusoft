@@ -65,7 +65,7 @@ dominusof">
 {% endblock %}
 {% block body_class %}home-page{% endblock %}
 {% block legacy_styles %}{% endblock %}
-{% block page_styles %}<link rel="stylesheet" href="{% static 'css/home-modern.css' %}">{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
 {% block legacy_scripts %}{% endblock %}
 
 {% block content %}
@@ -101,8 +101,8 @@ dominusof">
     <section class="home-section home-section--intro" aria-labelledby="offer-title">
         <div class="site-container">
             <div class="home-section__heading">
-                <p class="home-eyebrow">Një partner i besuar.</p>
-                <h2 id="offer-title">Zgjidh mënyrën si dëshiron të ecësh përpara</h2>
+                <p class="home-eyebrow">Një partner i besuar</p>
+                <h2 id="offer-title">Për karrierën dhe biznesin tënd</h2>
                 <p>Dominusoft lidh edukimin profesional me ekspertizën teknologjike për të krijuar progres të matshëm.</p>
             </div>
             <div class="home-audience-grid">
@@ -162,11 +162,11 @@ dominusof">
             <div class="home-course-grid">
                 {% for cat_training in cat_trainings %}
                 <article class="home-course-card">
-                    <div class="category-card__icon" aria-hidden="true">
+                    <!-- <div class="category-card__icon" aria-hidden="true"> -->
                         <div class="home-icon">
                         <i class="{{ cat_training.cat_training_icon|default:'fas fa-graduation-cap' }}"></i>
                     </div>
-                    </div>
+                    <!-- </div> -->
                     <h3>{{ cat_training.cat_training_name }}</h3>
                     <p>{{ cat_training.cat_training_text_short }}</p>
                     <a href="{% url 'trainings' cat_training.cat_slug %}" aria-label="Shiko kurset në {{ cat_training.cat_training_name }}">Shiko programet <span aria-hidden="true">→</span></a>
@@ -215,15 +215,12 @@ dominusof">
             </div>
             <div class="home-course-grid">
                 {% for article in latest_articles %}
-                <article class="home-course-card">
-                    {% if article.article_image %}
-                    <img src="{{ article.article_image.url }}" width="72" height="72" loading="lazy" decoding="async" alt="{{ article.article_image_alt|default:article.article_title }}">
-                    {% endif %}
+                <article class="home-course-card article">
+        
                     {% if article.article_category %}
                     <p class="home-card-label">{{ article.article_category.category_title }}</p>
                     {% endif %}
                     <h3>{{ article.article_title }}</h3>
-                    <p>{{ article.article_excerpt|striptags|truncatechars:160 }}</p>
                     <a href="{% url 'article' article.article_slug %}">Lexo artikullin <span aria-hidden="true">→</span></a>
                 </article>
                 {% endfor %}

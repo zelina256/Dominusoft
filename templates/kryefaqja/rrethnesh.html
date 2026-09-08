@@ -1,327 +1,517 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë{% endblock %}
+{% block title %}
+    Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë
+{% endblock %}
 
 {% block meta %}
-<meta name="description"
-    content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale.">
-<meta name="keywords"
-    content="rreth dominusoft, kompani edukimi Tiranë, qendër trajnimesh e licencuar, partner teknologjik B2B Shqipëri, misioni dominusoft">
+    <meta
+        name="description"
+        content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale."
+    />
+    <meta
+        name="keywords"
+        content="rreth dominusoft, kompani edukimi Tiranë, qendër trajnimesh e licencuar, partner teknologjik B2B Shqipëri, misioni dominusoft"
+    />
 {% endblock %}
-{% block canonical %}<link rel="canonical" href="https://dominusoft.al/rreth-nesh/">{% endblock %}
+{% block canonical %}
+    <link rel="canonical" href="https://dominusoft.al/rreth-nesh/" />
+{% endblock %}
 {% block social_meta %}
-<meta property="og:type" content="website">
-<meta property="og:locale" content="sq_AL">
-<meta property="og:site_name" content="Dominusoft">
-<meta property="og:title" content="Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë">
-<meta property="og:description" content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale.">
-<meta property="og:url" content="https://dominusoft.al/rreth-nesh/">
-<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Dominusoft — Rreth nesh">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë">
-<meta name="twitter:description" content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale.">
-<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
-<meta name="twitter:image:alt" content="Dominusoft — Rreth nesh">
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="sq_AL" />
+    <meta property="og:site_name" content="Dominusoft" />
+    <meta
+        property="og:title"
+        content="Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë"
+    />
+    <meta
+        property="og:description"
+        content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale."
+    />
+    <meta property="og:url" content="https://dominusoft.al/rreth-nesh/" />
+    <meta
+        property="og:image"
+        content="https://dominusoft.al/static/images/og-dominusoft-home.png"
+    />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Dominusoft — Rreth nesh" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+        name="twitter:title"
+        content="Rreth Dominusoft - Edukim Profesional dhe Zgjidhje Teknologjike në Tiranë"
+    />
+    <meta
+        name="twitter:description"
+        content="Njihuni me Dominusoft, institucion i licencuar në Tiranë për edukim profesional, teknologji dhe zgjidhje B2B të mbështetura nga Inteligjenca Artificiale."
+    />
+    <meta
+        name="twitter:image"
+        content="https://dominusoft.al/static/images/og-dominusoft-home.png"
+    />
+    <meta name="twitter:image:alt" content="Dominusoft — Rreth nesh" />
 {% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
-<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
-<link rel="stylesheet" href="{% static 'css/home-modern.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inner-modern.css' %}" />
 {% endblock %}
-{% block body_class %}inner-page{% endblock %}
+{% block body_class %}
+    inner-page
+{% endblock %}
 
 {% block content %}
-{% include '../navbar.html' %}
+    {% include '../navbar.html' %}
 
-<main id="main-content" class="inner-main">
-    <section class="inner-hero">
-        <div class="inner-container inner-hero__layout">
-            <div class="inner-hero__content">
-                <p class="inner-eyebrow">Rreth Dominusoft</p>
-                <h1>Institucion për Edukimin Profesional dhe Shërbime Teknologjike</h1>
-                <p class="inner-hero__lead">
-                    Misioni ynë është të ndihmojmë individët dhe bizneset të rriten përmes
-                    teknologjisë, edukimit profesional dhe zgjidhjeve moderne të mbështetura
-                    nga Inteligjenca Artificiale.
-                </p>
-                <div class="inner-hero__actions">
-           <a class="home-button home-button--primary" href="{% url 'training_category' %}">Shiko kurset <span aria-hidden="true">→</span></a>
-                    <a class="home-button home-button--ghost" href="{% url 'services' %}">Shiko shërbimet <span aria-hidden="true">→</span></a>
+    <main id="main-content" class="inner-main">
+        <section class="inner-hero">
+            <div class="inner-container inner-hero__layout">
+                <div class="inner-hero__content">
+                    <p class="inner-eyebrow">Rreth Dominusoft</p>
+                    <h1>
+                        Institucion për Edukimin Profesional dhe Shërbime
+                        Teknologjike
+                    </h1>
+                    <p class="inner-hero__lead">
+                        Misioni ynë është të ndihmojmë individët dhe bizneset të
+                        rriten përmes teknologjisë, edukimit profesional dhe
+                        zgjidhjeve moderne të mbështetura nga Inteligjenca
+                        Artificiale.
+                    </p>
+                    <div class="inner-hero__actions">
+                        <a
+                            class="home-button home-button--primary"
+                            href="{% url 'training_category' %}"
+                            >Shiko kurset <span aria-hidden="true">→</span></a
+                        >
+                        <a
+                            class="home-button home-button--ghost"
+                            href="{% url 'services' %}"
+                            >Shiko shërbimet
+                            <span aria-hidden="true">→</span></a
+                        >
+                    </div>
                 </div>
-            </div>
 
-            <aside class="inner-hero__panel" aria-label="Pikat kryesore të Dominusoft">
-                <h2>Çfarë na përcakton</h2>
-                <ul class="fact-list">
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Profesionalizëm në çdo shërbim dhe bashkëpunim</span></li>
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Cilësi dhe fokus në rezultate konkrete</span></li>
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Inovacion dhe përshtatje me zhvillimet e reja</span></li>
-                    <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Besueshmëri dhe përgjegjësi në marrëdhëniet me klientët dhe partnerët</span></li> 
-                     <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Bashkëpunim dhe krijim i vlerës afatgjatë</span></li>
-                </ul>
-            </aside>
-        </div>
-    </section>
+                <aside
+                    class="inner-hero__panel"
+                    aria-label="Pikat kryesore të Dominusoft"
+                >
+                    <h2>Çfarë na përcakton</h2>
+                    <ul class="fact-list">
+                        <li>
+                            <i
+                                class="fas fa-check-circle"
+                                aria-hidden="true"
+                            ></i
+                            ><span
+                                >Profesionalizëm në çdo shërbim dhe
+                                bashkëpunim</span
+                            >
+                        </li>
+                        <li>
+                            <i
+                                class="fas fa-check-circle"
+                                aria-hidden="true"
+                            ></i
+                            ><span>Cilësi dhe fokus në rezultate konkrete</span>
+                        </li>
+                        <li>
+                            <i
+                                class="fas fa-check-circle"
+                                aria-hidden="true"
+                            ></i
+                            ><span
+                                >Inovacion dhe përshtatje me zhvillimet e
+                                reja</span
+                            >
+                        </li>
+                        <li>
+                            <i
+                                class="fas fa-check-circle"
+                                aria-hidden="true"
+                            ></i
+                            ><span
+                                >Besueshmëri dhe përgjegjësi në marrëdhëniet me
+                                klientët dhe partnerët</span
+                            >
+                        </li>
+                        <li>
+                            <i
+                                class="fas fa-check-circle"
+                                aria-hidden="true"
+                            ></i
+                            ><span
+                                >Bashkëpunim dhe krijim i vlerës afatgjatë</span
+                            >
+                        </li>
+                    </ul>
+                </aside>
+            </div>
+        </section>
 
     <section id="historia" class="inner-section inner-section--white" aria-labelledby="history-title">
         <div class="inner-container">
             <div class="inner-heading">
                 <p class="inner-eyebrow">Historia jonë</p>
-                <h2 id="history-title">Nga edukimi profesional tek zgjidhjet B2B</h2>
-                <!-- </div> -->
-
-                <!-- <div> -->
+                <h2>Partner në teknologji B2B i besuar</h2>
                 <p>
-                    Dominusoft u krijua me synimin për të sjellë më pranë tregut shqiptar
-                    edukimin profesional, teknologjinë dhe ekspertizën praktike. Me kalimin
-                    e viteve, aktiviteti ynë është zgjeruar përtej trajnimeve, duke përfshirë
-                    zhvillim software-i, konsulencë IT, marketing dixhital, SEO, branding
-                    dhe zgjidhje të mbështetura nga Inteligjenca Artificiale.
-                </p>
+        Dominusoft u krijua me synimin për të sjellë më pranë
+                        tregut shqiptar edukimin profesional, teknologjinë dhe
+                        ekspertizën praktike. Me kalimin e viteve, aktiviteti
+                        ynë është zgjeruar përtej trajnimeve, duke përfshirë
+                        zhvillim software-i, konsulencë IT, marketing dixhital,
+                        SEO, branding dhe zgjidhje të mbështetura nga
+                        Inteligjenca Artificiale.
+                   <br>
+                        Sot, Dominusoft punon me individë, kompani dhe
+                        institucione që kërkojnë të zhvillojnë aftësi të reja,
+                        të modernizojnë proceset e tyre dhe të ndërtojnë një
+                        prani më të fortë në treg.
+                   <br>
+                        Ajo që na dallon është kombinimi i dy botëve:
+                        eksperienca reale në projekte teknologjike dhe marketing
+                        për biznese, dhe kapaciteti për të trajnuar
+                        profesionistë dhe ekipe në të njëjtat fusha ku punojmë
+                        çdo ditë.
 
-                <p>
-                    Sot, Dominusoft punon me individë, kompani dhe institucione që kërkojnë
-                    të zhvillojnë aftësi të reja, të modernizojnë proceset e tyre dhe të
-                    ndërtojnë një prani më të fortë në treg.
-                </p>
-
-                <p class="mb-0">
-                    Ajo që na dallon është kombinimi i dy botëve: eksperienca reale në projekte
-                    teknologjike dhe marketing për biznese, dhe kapaciteti për të trajnuar
-                    profesionistë dhe ekipe në të njëjtat fusha ku punojmë çdo ditë.
                 </p>
             </div>
         </div>
     </section>
+        <section
+            class="inner-section inner-section--compact"
+            aria-labelledby="mission-title">
+            <div class="inner-container">
+                <div class="inner-heading text-center">
+                    <p class="inner-eyebrow">Në themel të Dominusoft</p>
+                    <h2 id="mission-title">Misioni dhe vizioni</h2>
+                </div>
 
-    <section class="inner-section inner-section--compact" aria-labelledby="mission-title">
-        <div class="inner-container">
-            <div class="inner-heading text-center">
-                <p class="inner-eyebrow">Në themel të Dominusoft</p>
-                <h2 id="mission-title">Misioni dhe vizioni</h2>
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-bullseye"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Misioni</h3>
+                                <p>
+                                    Misioni ynë është të fuqizojmë bizneset
+                                    përmes teknologjisë inovative dhe zgjidhjeve
+                                    dixhitale që përmirësojnë efikasitetin,
+                                    thjeshtojnë proceset dhe mbështesin rritjen
+                                    e qëndrueshme.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-rocket"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Vizioni</h3>
+                                <p>
+                                    Vizioni ynë është të bëhemi një partner
+                                    teknologjik i besueshëm për bizneset në
+                                    Shqipëri, Evropë dhe tregjet ndërkombëtare,
+                                    duke ofruar zgjidhje dixhitale inovative, të
+                                    shkallëzueshme dhe me cilësi të lartë.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
             </div>
+        </section>
 
-            <div class="row g-4">
-                <div class="col-md-6">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-bullseye" aria-hidden="true"></i></div>
-                            <h3>Misioni</h3>
+        <section
+            class="inner-section inner-section--white values-section "
+            aria-labelledby="values-title"
+        >
+            <div class="inner-container">
+                <div class="inner-heading text-center">
+                    <p class="inner-eyebrow">Çfarë na udhëheq</p>
+                    <h2 id="values-title">Vlerat themelore</h2>
+                </div>
+
+                <div class="row g-4">
+                    <div class="col-md-6 col-lg-4">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-handshake"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Profesionalizëm</h3>
+                                <p>
+                                    Ofrimi i trajnimeve profesionale dhe
+                                    shërbimeve për bizneset mbështetet në
+                                    standarde të larta pune, përgjegjësi dhe
+                                    komunikim të qartë.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-lightbulb"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Cilësi</h3>
+                                <p>
+                                    Synojmë cilësi në çdo trajnim, projekt dhe
+                                    shërbim IT, duke u fokusuar në zgjidhje të
+                                    përshtatura me nevojat reale të individëve
+                                    dhe bizneseve.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-graduation-cap"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Inovacion dhe Teknologji</h3>
+                                <p>
+                                    Ndjekim zhvillimet në teknologji dhe
+                                    Inteligjencë Artificiale për t'i integruar
+                                    ato në trajnimet tona dhe në zgjidhjet
+                                    digjitale që zhvillojmë për bizneset.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-chart-line"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Orientim drejt Rezultatit</h3>
+                                <p>
+                                    Çdo trajnim, projekt apo bashkëpunim
+                                    ndërtohet me objektiva të qarta dhe me fokus
+                                    në rezultate konkrete dhe të matshme.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-brain"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Zhvillim i Vazhdueshëm</h3>
+                                <p>
+                                    Përditësojmë vazhdimisht njohuritë,
+                                    metodologjitë dhe teknologjitë tona për t'iu
+                                    përshtatur zhvillimeve të tregut të punës
+                                    dhe transformimit digjital.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+
+                    <div class="col-md-6 col-lg-4">
+                        <article class="inner-card">
+                            <div class="inner-card__body">
+                                <div class="service-icon">
+                                    <i
+                                        class="fas fa-globe"
+                                        aria-hidden="true"
+                                    ></i>
+                                </div>
+                                <h3>Bashkëpunim</h3>
+                                <p>
+                                    Ndërtojmë marrëdhënie afatgjata me individë,
+                                    biznese, institucione dhe partnerë, duke
+                                    nxitur shkëmbimin e eksperiencës, zhvillimin
+                                    profesional dhe bashkëpunimet B2B.
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="inner-section inner-section--compact"
+            aria-labelledby="timeline-title"
+        >
+            <div class="inner-container">
+                <div class="inner-heading text-center">
+                    <p class="inner-eyebrow">Rrugëtimi</p>
+                    <h2 id="timeline-title">Momentet kryesore</h2>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2018</div>
+                        <div class="timeline-content">
+                            <h3>Fillimi i Dominusoft</h3>
                             <p>
-                                Misioni ynë është të fuqizojmë bizneset përmes teknologjisë inovative dhe zgjidhjeve
-                                dixhitale që përmirësojnë efikasitetin, thjeshtojnë proceset dhe mbështesin rritjen e
-                                qëndrueshme.
+                                Nis aktiviteti me fokus në edukim profesional
+                                dhe zhvillim të aftësive teknologjike.
                             </p>
                         </div>
+                    </div>
 
-                    </article>
-                </div>
-
-                <div class="col-md-6">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-rocket" aria-hidden="true"></i></div>
-                            <h3>Vizioni</h3>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2019</div>
+                        <div class="timeline-content">
+                            <h3>Zgjerimi i programeve profesionale</h3>
                             <p>
-                                Vizioni ynë është të bëhemi një partner teknologjik i besueshëm për bizneset në
-                                Shqipëri, Evropë dhe tregjet ndërkombëtare, duke ofruar zgjidhje dixhitale inovative, të
-                                shkallëzueshme dhe me cilësi të lartë.
+                                Shtohen programe të reja në programim, dizajn
+                                grafik, marketing dixhital, arkitekturë dhe
+                                teknologji.
                             </p>
                         </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </section>
+                    </div>
 
-    <section class="inner-section inner-section--white" aria-labelledby="values-title">
-        <div class="inner-container">
-            <div class="inner-heading text-center">
-                <p class="inner-eyebrow">Çfarë na udhëheq</p>
-                <h2 id="values-title">Vlerat themelore</h2>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-handshake" aria-hidden="true"></i></div>
-                            <h3>Profesionalizëm</h3>
-                            <p>Ofrimi i trajnimeve profesionale dhe shërbimeve për bizneset mbështetet në standarde të larta pune, përgjegjësi dhe komunikim të qartë.
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2022</div>
+                        <div class="timeline-content">
+                            <h3>Licencimi institucional</h3>
+                            <p>
+                                Dominusoft licencohet nga Ministria e Ekonomisë
+                                dhe Inovacionit me numër licence
+                                LN-3743-02-2022.
                             </p>
                         </div>
-                    </article>
-                </div>
+                    </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-lightbulb" aria-hidden="true"></i></div>
-                            <h3>Cilësi</h3>
-                            <p>Synojmë cilësi në çdo trajnim, projekt dhe shërbim IT, duke u fokusuar në zgjidhje të përshtatura me nevojat reale të individëve dhe bizneseve.</p>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">2023</div>
+                        <div class="timeline-content">
+                            <h3>Zgjerimi në shërbime B2B</h3>
+                            <p>
+                                Kompania zgjeron aktivitetin në software,
+                                konsulencë IT, SEO, marketing dixhital, branding
+                                dhe automatizim.
+                            </p>
                         </div>
-                    </article>
-                </div>
+                    </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-graduation-cap" aria-hidden="true"></i></div>
-                            <h3>Inovacion dhe Teknologji</h3>
-                            <p>Ndjekim zhvillimet në teknologji dhe Inteligjencë Artificiale për t'i integruar ato në trajnimet tona dhe në zgjidhjet digjitale që zhvillojmë për bizneset.</p>
+                    <div class="timeline-item">
+                        <div class="timeline-dot">Sot</div>
+                        <div class="timeline-content">
+                            <h3>Integrimi i Inteligjencës Artificiale</h3>
+                            <p>
+                                AI integrohet në programet profesionale,
+                                proceset e punës dhe zgjidhjet që ofrohen për
+                                individë dhe biznese.
+                            </p>
                         </div>
-                    </article>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section
+            class="inner-section inner-section--white"
+            aria-labelledby="stats-title"
+        >
+            <div class="inner-container">
+                <div class="inner-heading text-center">
+                    <p class="inner-eyebrow">Statistika</p>
+                    <h2 id="stats-title">
+                        Ndikim i madh dhe një rrugë të qartë përpara
+                    </h2>
                 </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-chart-line" aria-hidden="true"></i></div>
-                            <h3>Orientim drejt Rezultatit</h3>
-                            <p>Çdo trajnim, projekt apo bashkëpunim ndërtohet me objektiva të qarta dhe me fokus në rezultate konkrete dhe të matshme.</p>
+                <div class="row g-4">
+                    <div class="col-6 col-lg-4">
+                        <div class="stat-box">
+                            <div class="stat-number">200 +</div>
+                            <div class="stat-label">Klientë të shërbyer</div>
                         </div>
-                    </article>
-                </div>
+                    </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-brain" aria-hidden="true"></i></div>
-                            <h3>Zhvillim i Vazhdueshëm</h3>
-                            <p>Përditësojmë vazhdimisht njohuritë, metodologjitë dhe teknologjitë tona për t'iu përshtatur zhvillimeve të tregut të punës dhe transformimit digjital.</p>
+                    <div class="col-6 col-lg-4">
+                        <div class="stat-box">
+                            <div class="stat-number">8000 +</div>
+                            <div class="stat-label">Studentë të trajnuar</div>
                         </div>
-                    </article>
-                </div>
+                    </div>
 
-                <div class="col-md-6 col-lg-4">
-                    <article class="inner-card">
-                        <div class="inner-card__body">
-                            <div class="service-icon"><i class="fas fa-globe" aria-hidden="true"></i></div>
-                            <h3>Bashkëpunim</h3>
-                            <p>Ndërtojmë marrëdhënie afatgjata me individë, biznese, institucione dhe partnerë, duke nxitur shkëmbimin e eksperiencës, zhvillimin profesional dhe bashkëpunimet B2B.</p>
+                    <div class="col-6 col-lg-4">
+                        <div class="stat-box">
+                            <div class="stat-number">120 +</div>
+                            <div class="stat-label">
+                                Projekte të përfunduara
+                            </div>
                         </div>
-                    </article>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="inner-section inner-section--compact" aria-labelledby="timeline-title">
-        <div class="inner-container">
-            <div class="inner-heading text-center">
-                <p class="inner-eyebrow">Rrugëtimi</p>
-                <h2 id="timeline-title">Momentet kryesore</h2>
-            </div>
-
-            <div class="timeline">
-                <div class="timeline-item">
-                    <div class="timeline-dot">2018</div>
-                    <div class="timeline-content">
-                        <h3>Fillimi i Dominusoft</h3>
-                        <p>Nis aktiviteti me fokus në edukim profesional dhe zhvillim të aftësive teknologjike.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot">2019</div>
-                    <div class="timeline-content">
-                        <h3>Zgjerimi i programeve profesionale</h3>
-                        <p>Shtohen programe të reja në programim, dizajn grafik, marketing dixhital, arkitekturë dhe
-                            teknologji.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot">2022</div>
-                    <div class="timeline-content">
-                        <h3>Licencimi institucional</h3>
-                        <p>Dominusoft licencohet nga Ministria e Ekonomisë dhe Inovacionit me numër licence
-                            LN-3743-02-2022.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot">2023</div>
-                    <div class="timeline-content">
-                        <h3>Zgjerimi në shërbime B2B</h3>
-                        <p>Kompania zgjeron aktivitetin në software, konsulencë IT, SEO, marketing dixhital, branding
-                            dhe automatizim.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-dot">Sot</div>
-                    <div class="timeline-content">
-                        <h3>Integrimi i Inteligjencës Artificiale</h3>
-                        <p>AI integrohet në programet profesionale, proceset e punës dhe zgjidhjet që ofrohen për
-                            individë dhe biznese.</p>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-
-
-
-    <section class="inner-section inner-section--white" aria-labelledby="stats-title">
-        <div class="inner-container">
-            <div class="inner-heading text-center">
-                <p class="inner-eyebrow">Statistika</p>
-                <h2 id="stats-title">Ndikim i madh dhe një rrugë të qartë përpara</h2>
-            </div>
-
-            <div class="row g-4">
-                <div class="col-6 col-lg-3">
-                    <div class="stat-box">
-                        <div class="stat-number">7 +</div>
-                        <div class="stat-label">Vite aktiviteti</div>
-                    </div>
+        </section>
+        <section
+            class="home-final-cta"
+            aria-labelledby="final-cta-title"
+            id="kontakt"
+        >
+            <div class="site-container home-final-cta__inner">
+                <div>
+                    <!-- <p class="home-eyebrow">
+                        Nëse kërkoni një partner për software, marketing,
+                        konsulencë IT, transformim digjital ose trajnim
+                        profesional për ekipin tuaj, gjithçka fillon me një
+                        bisedë.
+                    </p> -->
+                     <p class="home-eyebrow">
+                        Nëse kërkoni një partner  gjithçka fillon me një
+                        bisedë.
+                    </p>
+                    <h2 id="final-cta-title">
+                        Le të ndërtojmë diçka me vlerë së bashku
+                    </h2>
                 </div>
-
-                <div class="col-6 col-lg-3">
-                    <div class="stat-box">
-                        <div class="stat-number">200 +</div>
-                        <div class="stat-label">Klientë të shërbyer</div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                    <div class="stat-box">
-                        <div class="stat-number">8000 +</div>
-                        <div class="stat-label">Studentë të trajnuar</div>
-                    </div>
-                </div>
-
-                <div class="col-6 col-lg-3">
-                    <div class="stat-box">
-                        <div class="stat-number">120 +</div>
-                        <div class="stat-label">Projekte të përfunduara</div>
-                    </div>
+                <div class="home-final-cta__actions">
+                    <a
+                        class="home-button home-button--primary"
+                        href="{% url 'contact' %}"
+                        data-click-counter="rreth_final_cta"
+                    >
+                        Rezervo konsultë <span aria-hidden="true">→</span>
+                        <!-- <span class="click-counter" aria-live="polite">(Klikime: <strong data-click-count>0</strong>)</span> -->
+                    </a>
                 </div>
             </div>
-        </div>
-    </section>
-    <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
-        <div class="site-container home-final-cta__inner">
-            <div>
-                <p class="home-eyebrow"> Nëse kërkoni një partner për software, marketing, konsulencë IT,
-                    transformim digjital ose trajnim profesional për ekipin tuaj,
-                    gjithçka fillon me një bisedë.</p>
-                <h2 id="final-cta-title">Le të ndërtojmë diçka me vlerë së bashku</h2>
-            </div>
-            <div class="home-final-cta__actions">
-                <a class="home-button home-button--primary" href="{% url 'contact' %}" data-click-counter="rreth_final_cta">
-                    Rezervo konsultë <span aria-hidden="true">→</span>
-                    <!-- <span class="click-counter" aria-live="polite">(Klikime: <strong data-click-count>0</strong>)</span> -->
-                </a>
-            </div>
-        </div>
-    </section>
-</main>
+        </section>
+    </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

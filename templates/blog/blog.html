@@ -67,7 +67,12 @@
                     <div class="article-card__body">
                         <span class="article-card__category">{{ article|article_category_label }}</span>
                         <h2>{{ article.article_title }}</h2>
-                        <ul class="inner-meta"><li><time datetime="{{ article.article_created_at|date:'Y-m-d' }}">{{ article.article_created_at|date:'d M Y' }}</time></li><li><i class="far fa-clock" aria-hidden="true"></i>{{ article.estimated_read_time }} min lexim</li></ul>
+                        {% comment %}
+                        <ul class="inner-meta">
+                            <li><time datetime="{{ article.article_created_at|date:'Y-m-d' }}">{{ article.article_created_at|date:'d M Y' }}</time></li>
+                            <li><i class="far fa-clock" aria-hidden="true"></i>{{ article.estimated_read_time }} min lexim</li>
+                        </ul>
+                        {% endcomment %}
                         {% if article.article_excerpt %}<p>{{ article.article_excerpt|truncatewords:24 }}</p>{% endif %}
                         <a class="article-card__link" href="{% url 'article' article.article_slug %}">Lexo artikullin <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>

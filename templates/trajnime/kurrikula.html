@@ -112,42 +112,26 @@
         {% endif %}
     </div>
 
+    {% if training.faqs.all %}
     <section class="inner-section inner-section--white" aria-labelledby="training-faq-title">
         <div class="inner-container">
-            <div class="inner-heading inner-heading--left">
+            <div class="inner-heading">
                 <p class="inner-eyebrow">FAQ</p>
-                <h2 id="training-faq-title">Pyetje të shpeshta rreth {{ training.training_name|lower }}</h2>
+                <h2 id="training-faq-title">Pyetje të shpeshta rreth <br> {{ training.training_name }}</h2>
             </div>
             <div class="faq-list">
-                <details open>
-                    <summary>A është ky kurs i përshtatshëm për fillestarë?</summary>
-                    <p>Po. Programi është projektuar për të ndihmuar pjesëmarrësit të ndërtojnë një bazë solide, duke filluar nga konceptet thelbësore dhe duke u avancuar gradualisht drejt aplikimeve praktike.</p>
+                {% for faq in training.faqs.all %}
+                <details{% if faq.is_open %} open{% endif %}>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
                 </details>
-                <details>
-                    <summary>Si zhvillohet trajnimi?</summary>
-                    <p>Trajnimi kombinon teori, ushtrime praktike, studime të rasteve dhe punë në projekte realë, në mënyrë që njohuritë të zbatohen menjëherë në praktikë.</p>
-                </details>
-                <details>
-                    <summary>Çfarë marr pas përfundimit të kursit?</summary>
-                    <p>Pas përfundimit të suksesshëm të kursit, merrni certifikatimin e programit, mbështetje gjatë procesit të mësimit dhe mundësi për të vazhduar në praktikë ose në projekte të tjera profesionale.</p>
-                </details>
-                <details>
-                    <summary>A mund të bëj pyetje gjatë kursit?</summary>
-                    <p>Po. Mentorët dhe instruktorët janë të disponueshëm për të ndihmuar gjatë sesioneve dhe për të përgjigjur pyetjeve që lindin gjatë procesit të përvetësimit të njohurive.</p>
-                </details>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
-    <section class="inner-section inner-section--accent" aria-labelledby="training-cta-title">
-        <div class="inner-container inner-cta-box">
-            <div>
-                <p class="inner-eyebrow">Regjistrohu tani</p>
-                <h2 id="training-cta-title">Zgjidh {{ training.training_name|lower }} dhe fillo rrugën tuaj profesionale.</h2>
-            </div>
-            <a class="inner-button inner-button--primary" href="{% url 'student' %}">Regjistrohu në kurs</a>
-        </div>
-    </section>
+
 
     {% if same_training %}
     <section class="inner-section" aria-labelledby="related-courses-title">
@@ -166,6 +150,17 @@
         </div>
     </section>
     {% endif %}
+        <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
+        <div class="site-container home-final-cta__inner">
+            <div>
+                <p class="home-eyebrow">Regjistrohu tani</p>
+                <h2 id="final-cta-title">Zgjidh {{ training.training_name|lower }} dhe fillo rrugën tuaj profesionale.</h2>
+            </div>
+            <div class="home-final-cta__actions">
+                <a class="home-button home-button--primary" href="{% url 'student' %}">Regjistrohu në Kurs</a>
+            </div>
+        </div>
+    </section>
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

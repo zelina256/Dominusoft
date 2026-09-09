@@ -182,6 +182,23 @@
     </div>
   </div>
 
+  <fieldset class="module aligned">
+    <h2>Frequently asked questions</h2>
+    {{ faq_fs.management_form }}
+    {{ faq_fs.non_form_errors }}
+    {% for faq_form in faq_fs %}
+      <div class="form-row{% if faq_form.errors %} errors{% endif %}">
+        {% for hidden in faq_form.hidden_fields %}{{ hidden }}{% endfor %}
+        {{ faq_form.non_field_errors }}
+        <div>{{ faq_form.question.errors }}{{ faq_form.question.label_tag }} {{ faq_form.question }}</div>
+        <div>{{ faq_form.answer.errors }}{{ faq_form.answer.label_tag }} {{ faq_form.answer }}</div>
+        <div>{{ faq_form.order.errors }}{{ faq_form.order.label_tag }} {{ faq_form.order }}</div>
+        <div>{{ faq_form.is_open }} {{ faq_form.is_open.label_tag }}</div>
+        {% if faq_form.instance.pk %}<div>{{ faq_form.DELETE }} {{ faq_form.DELETE.label_tag }}</div>{% endif %}
+      </div>
+    {% endfor %}
+  </fieldset>
+
   <div class="submit-row">
     <input type="submit" value="Save" class="default" name="_save">
     <a href="../" class="closelink">Cancel</a>

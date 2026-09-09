@@ -51,19 +51,6 @@ def searchvenues(request):
             | Q(services_title__icontains=searched)
         ).distinct()[:25]
 
-        internship_results = Internship.objects.filter(
-            Q(internship_project_title__icontains=searched)
-            | Q(internship_project_text__icontains=searched)
-        ).select_related("internship_project_category").distinct()[:25]
-
-        student_project_results = Student_work.objects.filter(
-            Q(student_project_name__icontains=searched)
-            | Q(student_project_surname__icontains=searched)
-            | Q(student_project_text__icontains=searched)
-            | Q(student_project_training__icontains=searched)
-            | Q(student_project_training_category__student_project_category_name__icontains=searched)
-        ).select_related("student_project_training_category").distinct()[:25]
-
         search_results = [
             {
                 "title": item.training_name,
@@ -87,28 +74,10 @@ def searchvenues(request):
                 "title": item.services_name,
                 "description": item.services_description or "",
                 "category": None,
-                "url": reverse("services"),
+                "url": reverse("tech_services", args=[item.slug]),
                 "kind": "Shërbim",
             }
             for item in service_results
-        ] + [
-            {
-                "title": item.internship_project_title,
-                "description": item.internship_project_text or "",
-                "category": item.internship_project_category.internship_category_name if item.internship_project_category else None,
-                "url": reverse("services"),
-                "kind": "Internship",
-            }
-            for item in internship_results
-        ] + [
-            {
-                "title": f"{item.student_project_name} {item.student_project_surname}".strip(),
-                "description": item.student_project_text or "",
-                "category": item.student_project_training_category.student_project_category_name if item.student_project_training_category else None,
-                "url": reverse("services"),
-                "kind": "Projekt",
-            }
-            for item in student_project_results
         ]
 
         search_results = sorted(
@@ -264,7 +233,7 @@ def terms(request):
     context = {"cat_trainings": cat_trainings}
     return render(request, "kryefaqja/termat_kushtet.html", context)
 # function for 404 page
-def error_404(request, exception):
+def error_404(request, exception=None, unmatched_path=None):
     cat_trainings = Category_training.objects.all()
     context = {"cat_trainings": cat_trainings}
     return render(request, "404_page.html", context, status=404)

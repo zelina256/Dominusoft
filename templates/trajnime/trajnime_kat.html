@@ -32,7 +32,7 @@
             <div class="inner-hero__content">
                 <p class="inner-eyebrow">Programet profesionale</p>
                 <h1>{{ cat_training.cat_training_name }}</h1>
-                <p class="inner-hero__lead">{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags }}</p>
+                <p class="inner-hero__lead">{{ cat_training.cat_training_text_short|striptags }}</p>
             </div>
         </div>
     </section>
@@ -62,36 +62,28 @@
         </div>
     </section>
 
+    {% if cat_training.highlights.all %}
     <section class="inner-section inner-section--muted" aria-labelledby="summary-heading">
         <div class="inner-container">
             <div class="inner-heading inner-heading--left">
                 <p class="inner-eyebrow">Përmbledhje e kategorisë</p>
-                <h2 id="summary-heading">Pse programimii është i rëndësishëm për karrierën tuaj?</h2>
+                <h2 id="summary-heading">Pse {{ cat_training.category_name_why_text }} është i rëndësishëm për karrierën tuaj?</h2>
             </div>
             <div class="inner-grid inner-grid--3">
+                {% for highlight in cat_training.highlights.all %}
                 <article class="inner-card">
                     <div class="inner-card__body">
-                    <h3>Fokus praktik</h3>
-                    <p>Secili kurs kombinon teorinë me detyrat e vërteta profesionale, duke ju ndihmuar të krijoni vlerë menjëherë pas përfundimit.</p>
-                </div>
+                        <h3>{{ highlight.title }}</h3>
+                        <p>{{ highlight.description }}</p>
+                    </div>
                 </article>
-                <article class="inner-card">
-                      <div class="inner-card__body">
-                    <h3>Mentorë ekspertë</h3>
-                    <p>Çdo program udhëhiqet nga instruktorë me përvojë reale në sektorin e zgjedhur, me qasje të orientuar drejt rezultateve.</p>
-                </div>
-                </article>
-                <article class="inner-card">
-                      <div class="inner-card__body">
-                    <h3>Rruga drejt punësimit</h3>
-                    <p>Programet janë projektuar për të zhvilluar kompetenca të kërkuara nga tregu dhe për të ndihmuar në kalimin në pozicione profesionale.</p>
-                </div>
-                </article>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
 
-
+    {% if cat_training.certification_items.all or cat_training.category_learning_title or cat_training.category_learning_description %}
     <section class="inner-section inner-section--muted" aria-labelledby="certification-heading">
         <div class="inner-container">
             <div class="inner-heading inner-heading--left">
@@ -99,29 +91,27 @@
                 <h2 id="certification-heading">Çfarë merrni pas përfundimit të programit?</h2>
             </div>
             <div class="inner-grid inner-grid--2">
+                {% if cat_training.certification_items.all %}
                 <div>
-                    <ul class="inner-check-list">
-                        <li>Certifikim nga institucion i licencuar nga Ministria e Ekonomisë dhe Inovacionit</li>
-                        <li>Projekte praktike të zhvilluara gjatë trajnimit</li>
-                        <li>Portfolio me punime konkrete, sipas programit të ndjekur</li>
-                        <li>Udhëzim dhe feedback profesional nga instruktorët</li>
-                        <li>Aftësi praktike të aplikueshme në projekte dhe situata reale pune</li>
-                        <li>Përgatitje për zhvillim profesional dhe kërkesat e tregut të punës  </li>
-                    </ul>
+                    <ul class="inner-check-list">{% for item in cat_training.certification_items.all %}<li>{{ item.text }}</li>{% endfor %}</ul>
                 </div>
+                {% endif %}
+                {% if cat_training.category_learning_title or cat_training.category_learning_description %}
                 <div>
                     <div class="inner-card">
-                           <div class="inner-card__body">
-                        <h3>Çfarë do të mësoni?</h3>
-                        <p>{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags }}</p>
-                        <p>Programet janë të strukturuara për të përmirësuar aftësitë, përgatitjen profesionale dhe gatishmërinë e studentëve për situata reale të punës.</p>
-                   </div>
+                        <div class="inner-card__body">
+                            <h3>Çfarë do të mësoni?</h3>
+                            <p>{{ cat_training.category_learning_description }}</p>
+                        </div>
                     </div>
                 </div>
+                {% endif %}
             </div>
         </div>
     </section>
+    {% endif %}
 
+    {% if cat_training.faqs.all %}
     <section class="inner-section inner-section--white" aria-labelledby="faq-heading">
         <div class="inner-container">
             <div class="inner-heading inner-heading--left">
@@ -129,25 +119,16 @@
                 <h2 id="faq-heading">Pse studentët zgjedhin {{ cat_training.cat_training_name|lower }}?</h2>
             </div>
             <div class="faq-list">
-                <details open>
-                    <summary>A është programi i përshtatshëm për fillestarë?</summary>
-                    <p>Po. Programet janë të ndërtuara me qasje të hapur, ku fokusohet në rritjen gradual të aftësive dhe në ndërtimin e bazës profesionale.</p>
+                {% for faq in cat_training.faqs.all %}
+                <details{% if faq.is_open %} open{% endif %}>
+                    <summary>{{ faq.question }}</summary>
+                    <p>{{ faq.answer }}</p>
                 </details>
-                <details>
-                    <summary>Si zhvillohet trajnimi?</summary>
-                    <p>Trajnimet kombinojnë sesione teorike, ushtrime praktike, projekte dhe udhëzime të synuara drejt zbatimit real në punë.</p>
-                </details>
-                <details>
-                    <summary>Çfarë marr pas përfundimit?</summary>
-                    <p>Pas përfundimit merrni certifikatimin, mbështetje të vazhdueshme dhe një kuptim më të qartë të rrugës profesionale në fushën e zgjedhur.</p>
-                </details>
-                <details>
-                    <summary>A mund të regjistrohem në një program të ri?</summary>
-                    <p>Po. Studentët mund të zgjidhin programin e duhur sipas nivelit të tyre dhe të ndiqen nga grupet e reja që formohen vazhdimisht.</p>
-                </details>
+                {% endfor %}
             </div>
         </div>
     </section>
+    {% endif %}
     <section class="home-final-cta" aria-labelledby="final-cta-title" id="kontakt">
         <div class="site-container home-final-cta__inner">
             <div>

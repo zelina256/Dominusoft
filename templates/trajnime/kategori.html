@@ -37,18 +37,18 @@
                 <h2>Trajnim Profesional i Orientuar drejt Praktikës dhe Karrierës</h2>
                 <ul class="fact-list">
                     <li><i class="fas fa-certificate" aria-hidden="true"></i><span>Institucion i licencuar për formim profesional</span></li>
-                    <li><i class="fas fa-user-tie" aria-hidden="true"></i><span>Programe të përshtatura me kërkesat e tregut të punës</span></li>
+                    <li><i class="fas fa-user-tie" aria-hidden="true"></i><span>Programe të përshtatura me kërkesat e tregut</span></li>
                     <li><i class="fas fa-briefcase" aria-hidden="true"></i><span>Instruktorë me eksperiencë praktike dhe profesionale</span></li>
-                       <li><i class="fas fa-certificate" aria-hidden="true"></i><span>IMësim praktik përmes ushtrimeve dhe projekteve reale</span></li>
-                    <li><i class="fas fa-user-tie" aria-hidden="true"></i><span>Teknologji moderne dhe integrim i Inteligjencës Artificiale</span></li>
+                       <li><i class="fas fa-certificate" aria-hidden="true"></i><span>Mësim praktik përmes ushtrimeve dhe projekteve</span></li>
+                    <li><i class="fas fa-user-tie" aria-hidden="true"></i><span>Teknologji moderne dhe integrim i AI</span></li>
                     <li><i class="fas fa-briefcase" aria-hidden="true"></i><span>Orientim drejt karrierës dhe zhvillimit profesional</span></li>
                 </ul>
             </aside>
         </div>
     </section>
     <section id="programet" class="inner-section inner-section--white" aria-labelledby="categories-heading">
-        <div class="inner-container">
-            <div class="inner-heading">
+        <div class="inner-container ">
+            <div class="inner-heading categories-heading ">
                 <p class="inner-eyebrow">Zgjidhni fushën tuaj</p>
                 <h2 id="categories-heading">Kategoritë kryesore të trajnimeve</h2>
             </div>
@@ -62,7 +62,7 @@
                     <div class="category-card__body">
                         <span class="category-card__count">{{ cat_training.get_training|length }} kurse</span>
                         <h3>{{ cat_training.cat_training_name }}</h3>
-                        <p>{{ cat_training.cat_training_text_short|default:cat_training.cat_training_text_description|striptags|truncatewords:26 }}</p>
+                        <p>{{ cat_training.cat_training_text_short|striptags|truncatewords:26 }}</p>
                         <a class="category-card__link" href="{% url 'trainings' cat_training.cat_slug %}">Shiko programet <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
                     </div>
                 </article>
@@ -78,7 +78,7 @@
         </div>
     </section>
     <section class="inner-section inner-section--white">
-        <div class="inner-container">
+        <div class="inner-container categories-heading ">
             <div class="inner-heading">
                 <p class="inner-eyebrow">Pse të Zgjidhni Dominusoft</p>
                 <h2>Aftësi Praktike për Tregun e Punës</h2>
@@ -90,9 +90,9 @@
 
 
 
-    <section class="inner-section inner-section--muted">
+    <section class="inner-section inner-section--muted benefits-section">
         <div class="inner-container">
-            <div class="inner-heading">
+            <div class="inner-heading  categories-heading ">
                 <p class="inner-eyebrow">Pse të zgjidhësh Dominusoft</p>
                 <h2>Më Shumë se një Kurs Profesional</h2>
             </div>

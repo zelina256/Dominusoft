@@ -13,9 +13,6 @@ class Category_training(models.Model):
     cat_training_id = models.AutoField(primary_key=True)
     cat_training_name = models.CharField(max_length=100, null=True)
     cat_training_text_short = models.TextField(max_length=200, null=True)
-    cat_training_text_description = models.TextField(null=True)
-    cat_training_img = models.ImageField(upload_to="static/images/training", null=True)
-    cat_training_img_alt = models.CharField(max_length=50, null=True)
     cat_training_icon = models.CharField(
         max_length=100,
         null=True,
@@ -27,6 +24,9 @@ class Category_training(models.Model):
     cat_meta_description = models.CharField(max_length=500, null=True, blank=True)
     cat_slug = models.SlugField(unique=True)
     cat_title_tag = models.CharField(max_length=300, null=True, blank=True)
+    category_name_why_text = models.CharField(max_length=250, blank=True)
+    category_learning_title = models.CharField(max_length=250, blank=True)
+
 
     def __str__(self):
         return f"{self.cat_training_name}"
@@ -36,6 +36,57 @@ class Category_training(models.Model):
         return Training.objects.filter(
             training_category__cat_training_name=self.cat_training_name
         )
+
+
+class CategoryHighlight(models.Model):
+    category = models.ForeignKey(
+        Category_training,
+        on_delete=models.CASCADE,
+        related_name="highlights",
+    )
+    title = models.CharField(max_length=120)
+    description = models.TextField(max_length=500)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.title
+
+
+class CategoryCertificationItem(models.Model):
+    category = models.ForeignKey(
+        Category_training,
+        on_delete=models.CASCADE,
+        related_name="certification_items",
+    )
+    text = models.CharField(max_length=300)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.text
+
+
+class CategoryFaq(models.Model):
+    category = models.ForeignKey(
+        Category_training,
+        on_delete=models.CASCADE,
+        related_name="faqs",
+    )
+    question = models.CharField(max_length=300)
+    answer = models.TextField(max_length=1000)
+    order = models.PositiveIntegerField(default=0)
+    is_open = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.question
 
 
 # Trajnimet te grupuara ne kategori
@@ -123,6 +174,24 @@ class Training(models.Model):
 
     def __str__(self):
         return f"{self.training_name}"
+
+
+class TrainingFaq(models.Model):
+    training = models.ForeignKey(
+        Training,
+        on_delete=models.CASCADE,
+        related_name="faqs",
+    )
+    question = models.CharField(max_length=300)
+    answer = models.TextField(max_length=1000)
+    order = models.PositiveIntegerField(default=0)
+    is_open = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["order", "id"]
+
+    def __str__(self):
+        return self.question
 
 
 # Projektet qe mund te ndertohen gjate trajnimeve

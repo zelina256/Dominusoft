@@ -32,19 +32,20 @@
 {% block content %}
 {% include 'navbar.html' %}
 <main id="main-content" class="inner-main">
-    <section class="inner-hero inner-section--compact">
-        <div class="inner-container inner-hero__content">
+    <section class="inner-hero">
+         <div class="inner-container inner-hero__layout">
+        <div class="inner-hero__content">
             <p class="inner-eyebrow">Katalogu Dominusoft</p>
             <h1>Kërko kursin e duhur.</h1>
             <p class="inner-hero__lead">Kërko sipas emrit, fushës ose aftësisë që dëshiron të zhvillosh.</p>
-            <form method="get" action="{% url 'searchvenues' %}" role="search" class="inner-search" style="margin-top: 30px; max-width: 620px;">
-                <label class="sr-only" for="catalog-search">Kërko sipas emrit të kursit</label>
+            <form method="get" action="{% url 'searchvenues' %}" role="search" class="inner-search mt-3">
+                <!-- <label class="sr-only" for="catalog-search">Kërko sipas emrit të kursit</label> -->
                 <input id="catalog-search" type="search" name="q" value="{{ searched }}" placeholder="P.sh. Python, dizajn, marketing…">
                 <button type="submit" aria-label="Kërko"><i class="fas fa-search" aria-hidden="true"></i></button>
             </form>
         </div>
+        </div>
     </section>
-
     <section class="inner-section inner-section--white">
         <div class="inner-container">
             {% if searched %}
@@ -54,7 +55,7 @@
                     {% for result in search_results %}
                     <article class="search-result-card">
                         <p class="inner-eyebrow">{{ result.kind }}</p>
-                        <h2>{{ result.title }}</h2>
+                        <h2 class="mt-2">{{ result.title }}</h2>
                         <p>{{ result.description|striptags|truncatewords:32 }}</p>
                         {% if result.category %}
                         <ul class="inner-meta">
@@ -66,7 +67,7 @@
                     {% endfor %}
                 </div>
                 {% else %}
-                <div class="inner-empty"><h2>Nuk u gjet asnjë rezultat</h2><p>Provoni një term tjetër ose shikoni të gjitha kategoritë.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Shiko të gjitha kurset</a></div>
+                    <div class="inner-empty"><h2>Nuk u gjet asnjë rezultat</h2><p>Provoni një term tjetër ose eksploroni kurset, shërbimet dhe blogun tonë.</p><div class="inner-actions search-empty-actions"><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Shiko të gjitha kurset</a><a class="inner-button inner-button--secondary" href="{% url 'services' %}">Shiko shërbimet</a><a class="inner-button inner-button--secondary" href="{% url 'blog' %}">Lexo blogun</a></div></div>
                 {% endif %}
             {% else %}
             <div class="inner-empty"><h2>Çfarë dëshironi të mësoni?</h2><p>Vendosni emrin ose fushën e kursit në kutinë e kërkimit.</p><a class="inner-button inner-button--secondary" href="{% url 'training_category' %}">Eksploro kategoritë</a></div>

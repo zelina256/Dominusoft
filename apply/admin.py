@@ -13,11 +13,6 @@ class BusinessAdmin(admin.ModelAdmin):
     list_display = ("business_name", "business_delegate", "business_service", "submit_at")
     search_fields = ("business_name", "business_delegate", "business_service", "submit_at")
 
-
-@admin.register(NewStaff)
-class NewStaffAdmin(admin.ModelAdmin):
-    list_display = ("staff_name", "staff_surname", "staff_position", "submit_at")
-    search_fields = ("staff_name", "staff_surname", "staff_position", "submit_at")
     
 @admin.register(Subscribe)
 class Subscribe(admin.ModelAdmin):

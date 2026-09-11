@@ -7,11 +7,13 @@ from services.models import Services
 # Form Kursant
 class Student(models.Model):
     class UniversityDegreeChoices(models.TextChoices):
+        ARSIM_9_VJEC = "arsim_9_vjec", "Arsim 9-vjeçar"
+        GJIMNAZPERGJITHSHEM = "gjimnaz_pergjithshem", "Gjimnaz i Përgjithshëm"
+        GJIMNAZPROFESIONAL = "gjimnaz_profesional", "Gjimnaz Profesional"
         BACHELOR = "bachelor", "Bachelor"
-        MASTER = "master", "Master"
-        DOCTORATE = "doctorate", "Doktoraturë"
-        OTHER = "other", "Tjetër"
-
+        MASTERPROFESIONAL = "master_profesional", "Master Profesional"
+        MASTERSHENCOR = "master_shencor", "Master Shkencor"
+    
     student_id = models.AutoField(primary_key=True)
     student_name = models.CharField(max_length=50, null=True, blank=True)
     student_surname = models.CharField(max_length=50, null=True, blank=True)
@@ -30,6 +32,7 @@ class Student(models.Model):
     student_timetable = models.CharField(max_length=20, null=True, blank=True)
     student_terms_accepted = models.BooleanField(default=False)
     student_message = models.TextField(max_length=300, null=True, blank=True)
+    submission_token = models.CharField(max_length=32, unique=True)
     submit_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     def __str__(self):
         return f"{self.student_name} {self.student_surname} - {self.student_training}"
@@ -37,6 +40,7 @@ class Student(models.Model):
 # Form Biznes
 class Business(models.Model):
     business_id = models.AutoField(primary_key=True)
+    submission_token = models.CharField(max_length=32, unique=True)
     business_name = models.CharField(max_length=100, null=True, blank=True)
     business_delegate = models.CharField(max_length=100, null=True, blank=True)
     business_email = models.EmailField(max_length=254, null=True, blank=True)
@@ -47,29 +51,10 @@ class Business(models.Model):
     def __str__(self):
         return f"{self.business_name} - {self.business_service}"
 
-# Form Staff
-class NewStaff(models.Model):
-    staff_id = models.AutoField(primary_key=True)
-    staff_name = models.CharField(max_length=50, null=True, blank=True)
-    staff_surname = models.CharField(max_length=50, null=True, blank=True)
-    staff_email = models.EmailField(max_length=254, null=True, blank=True)
-    staff_phone = models.CharField(max_length=50, null=False, blank=False)
-    staff_position = models.TextField(null=True, blank=True)
-    staff_cv = models.FileField()
-    staff_message = models.TextField(max_length=300, null=True, blank=True)
-    submit_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-    def __str__(self):
-        return f"{self.staff_name} {self.staff_surname} - {self.staff_position}"
-class Subscribe(models.Model):
-    subscribe_id = models.AutoField(primary_key=True)
-    subscribe_email = models.EmailField(max_length=254, null=True)
-    submit_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return f"{self.subscribe_id} - {self.subscribe_email}"
     
     
 class Contact(models.Model):
+    submission_token = models.CharField(max_length=32, unique=True)
     contact_name = models.CharField(max_length=50, null=True, blank=True)
     contact_surname = models.CharField(max_length=50, null=True, blank=True)
     contact_email = models.EmailField(max_length=254, null=True, blank=True)
@@ -80,3 +65,11 @@ class Contact(models.Model):
 
     def __str__(self):
         return f"{self.contact_name} {self.contact_surname} - {self.contact_subject}"
+    
+class Subscribe(models.Model):
+    subscribe_id = models.AutoField(primary_key=True)
+    subscribe_email = models.EmailField(max_length=254, null=True, unique=True)
+    submit_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.subscribe_id} - {self.subscribe_email}"

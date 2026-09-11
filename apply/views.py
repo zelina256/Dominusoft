@@ -11,6 +11,7 @@ import datetime
 import json
 import logging
 import re
+import uuid
 from urllib import error, request as urllib_request
 from services.models import Services
 from trainings.models import *
@@ -234,43 +235,77 @@ def _send_student_procedure_email(student_data):
 def business(request):
     cat_trainings = Category_training.objects.all()
     services = Services.objects.all()
+    form_data = {
+        "submission_token": uuid.uuid4().hex,
+        "name": "",
+        "delegate": "",
+        "email": "",
+        "phone": "",
+        "service": "",
+        "message": "",
+    }
+    field_errors = {}
+
     if request.method == "POST" and "business_button" in request.POST:
-        name_business = (request.POST.get("name") or "").strip()
-        delegate_business = (request.POST.get("delegate") or "").strip()
-        email_business = (request.POST.get("email") or "").strip()
-        phone_business = (request.POST.get("phone") or "").strip()
-        service_business = (request.POST.get("service") or "").strip()
-        message_business = (request.POST.get("message") or "").strip()
+        form_data["submission_token"] = request.POST.get("submission_token") or ""
+        form_data["name"] = (request.POST.get("name") or "").strip()
+        form_data["delegate"] = (request.POST.get("delegate") or "").strip()
+        form_data["email"] = (request.POST.get("email") or "").strip()
+        form_data["phone"] = (request.POST.get("phone") or "").strip()
+        form_data["service"] = (request.POST.get("service") or "").strip()
+        form_data["message"] = (request.POST.get("message") or "").strip()
 
         errors = []
-        if not name_business:
-            errors.append("Emri i kompanisë është i detyrueshëm.")
-        if not delegate_business:
-            errors.append("Përfaqësuesi është i detyrueshëm.")
+        if not re.fullmatch(r"[0-9a-f]{32}", form_data["submission_token"]):
+            errors.append("Kërkesa nuk është e vlefshme. Ju lutem provoni përsëri.")
 
-        email_error = _validate_email_address(email_business, "Email")
+        name_error = _validate_required_text(form_data["name"], "Emri i kompanisë", max_length=100)
+        if name_error:
+            field_errors["name"] = name_error
+            errors.append(name_error)
+
+        delegate_error = _validate_required_text(form_data["delegate"], "Përfaqësuesi", max_length=100)
+        if delegate_error:
+            field_errors["delegate"] = delegate_error
+            errors.append(delegate_error)
+
+        email_error = _validate_email_address(form_data["email"], "Email")
         if email_error:
+            field_errors["email"] = email_error
             errors.append(email_error)
 
-        phone_error = _validate_phone(phone_business)
+        phone_error = _validate_phone(form_data["phone"])
         if phone_error:
+            field_errors["phone"] = phone_error
             errors.append(phone_error)
 
-        selected_service = Services.objects.filter(services_name=service_business).first()
+        selected_service = Services.objects.filter(services_name=form_data["service"]).first()
         if not selected_service:
-            errors.append("Shërbimi i zgjedhur nuk është i vlefshëm.")
+            service_error = "Shërbimi i zgjedhur nuk është i vlefshëm."
+            field_errors["service"] = service_error
+            errors.append(service_error)
 
-        if not message_business:
-            errors.append("Mesazhi është i detyrueshëm.")
+        message_error = _validate_required_text(
+            form_data["message"],
+            "Mesazhi",
+            min_length=10,
+            max_length=300,
+        )
+        if message_error:
+            field_errors["message"] = message_error
+            errors.append(message_error)
 
         if not errors:
-            Business.objects.create(
-                business_name=name_business,
-                business_delegate=delegate_business,
-                business_email=email_business,
-                business_phone=phone_business,
-                business_service=selected_service,
-                business_message=message_business,
+            Business.objects.get_or_create(
+                submission_token=form_data["submission_token"],
+                defaults={
+                    "business_name": form_data["name"],
+                    "business_delegate": form_data["delegate"],
+                    "business_email": form_data["email"],
+                    "business_phone": form_data["phone"],
+                    "business_service": selected_service,
+                    "business_message": form_data["message"],
+                },
             )
             messages.add_message(
                 request,
@@ -278,15 +313,8 @@ def business(request):
                 "Aplikimi u dërgua me sukses.",
                 extra_tags="business",
             )
-            return render(
-                request,
-                "apliko/biznes.html",
-                {
-                    "cat_trainings": cat_trainings,
-                    "services": services,
-                    "show_business_success_modal": True,
-                },
-            )
+            request.session["show_business_success_modal"] = True
+            return redirect("business")
         _add_errors(request, errors, "business")
 
     # Subscribe
@@ -313,92 +341,31 @@ def business(request):
     context = {
         "cat_trainings": cat_trainings,
         "services": services,
-        "show_business_success_modal": False,
+        "form_data": form_data,
+        "field_errors": field_errors,
+        "show_business_success_modal": request.session.pop("show_business_success_modal", False),
     }
     return render(request, "apliko/biznes.html", context)
 
-
-# Form Staf
-def career(request):
-    cat_trainings = Category_training.objects.all()
-    if request.method == "POST" and "career_button" in request.POST:
-        name_staff = (request.POST.get("name") or "").strip()
-        surname_staff = (request.POST.get("surname") or "").strip()
-        email_staff = (request.POST.get("email") or "").strip()
-        phone_staff = (request.POST.get("phone") or "").strip()
-        job_staff = (request.POST.get("job") or "").strip()
-        cv_staff = request.FILES.get("cv")
-        message_staff = (request.POST.get("message") or "").strip()
-
-        errors = []
-        if not name_staff:
-            errors.append("Emri është i detyrueshëm.")
-        if not surname_staff:
-            errors.append("Mbiemri është i detyrueshëm.")
-
-        email_error = _validate_email_address(email_staff, "Email")
-        if email_error:
-            errors.append(email_error)
-
-        phone_error = _validate_phone(phone_staff)
-        if phone_error:
-            errors.append(phone_error)
-
-        if not job_staff:
-            errors.append("Pozicioni i punës është i detyrueshëm.")
-        if not cv_staff:
-            errors.append("CV është i detyrueshëm.")
-        if not message_staff:
-            errors.append("Mesazhi është i detyrueshëm.")
-
-        if not errors:
-            NewStaff.objects.create(
-                staff_name=name_staff,
-                staff_surname=surname_staff,
-                staff_email=email_staff,
-                staff_phone=phone_staff,
-                staff_position=job_staff,
-                staff_cv=cv_staff,
-                staff_message=message_staff,
-            )
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                "Aplikimi u dërgua me sukses.",
-                extra_tags="staf",
-            )
-            return redirect("career")
-        _add_errors(request, errors, "staf")
-
-    # Subscribe
-    if request.method == "POST" and "subscribe_button" in request.POST:
-        if request.POST.get("subscribe_email"):
-            email = request.POST.get("subscribe_email")
-            subscribe = Subscribe()
-            subscribe.subscribe_email = request.POST.get("subscribe_email")
-            if Subscribe.objects.filter(subscribe_email=email).exists():
-                messages.add_message(
-                    request,
-                    messages.WARNING,
-                    "Ju jeni bërë subscribe më parë në faqen tonë. Faleminderit !",
-                    extra_tags="subscribe",
-                )
-            else:
-                subscribe.save()
-                messages.add_message(
-                    request,
-                    messages.SUCCESS,
-                    "Ju tashmë jeni pjesë e jona!",
-                    extra_tags="subscribe",
-                )
-    context = {
-        "cat_trainings": cat_trainings,
-    }
-    return render(request, "apliko/karriera.html", context)
-
-
 # Form Kursant
 def student(request):
+    form_data = {
+        "submission_token": uuid.uuid4().hex,
+        "name": "",
+        "father_name": "",
+        "surname": "",
+        "birthday": "",
+        "email": "",
+        "phone": "",
+        "card_id_number": "",
+        "university_degree": "",
+        "training": "",
+        "timetable": "",
+        "message": "",
+        "terms_conditions": "",
+    }
+    field_errors = {}
+
     # Subscribe
     if request.method == "POST" and "subscribe_button" in request.POST:
         if request.POST.get("subscribe_email"):
@@ -424,6 +391,7 @@ def student(request):
     cat_trainings = Category_training.objects.all()
     trainings = Training.objects.all()
     if request.method == "POST" and "student_button" in request.POST:
+        form_data["submission_token"] = request.POST.get("submission_token") or ""
         name_student = (request.POST.get("name") or "").strip()
         surname_student = (request.POST.get("surname") or "").strip()
         father_name_student = (request.POST.get("father_name") or "").strip()
@@ -436,50 +404,73 @@ def student(request):
         timetable_student = (request.POST.get("timetable") or "").strip()
         message_student = (request.POST.get("message") or "").strip()
         terms_conditions_student = (request.POST.get("terms_conditions") or "").strip()
-        cardholder_name_student = (request.POST.get("cardholder_name") or "").strip()
-        card_number_student = (request.POST.get("card_number") or "").strip()
-        card_expiry_student = (request.POST.get("card_expiry") or "").strip()
-        card_cvv_student = (request.POST.get("card_cvv") or "").strip()
+
+        form_data.update(
+            {
+                "name": name_student,
+                "father_name": father_name_student,
+                "surname": surname_student,
+                "birthday": birthday_student,
+                "email": email_student,
+                "phone": phone_student,
+                "card_id_number": card_id_number_student,
+                "university_degree": university_degree_student,
+                "training": training_student,
+                "timetable": timetable_student,
+                "message": message_student,
+                "terms_conditions": terms_conditions_student,
+            }
+        )
 
         errors = []
+        if not re.fullmatch(r"[0-9a-f]{32}", form_data["submission_token"]):
+            errors.append("Kërkesa nuk është e vlefshme. Ju lutem provoni përsëri.")
 
         name_error = _validate_required_text(name_student, "Emri", max_length=50)
         if name_error:
             errors.append(name_error)
+            field_errors["name"] = name_error
 
         surname_error = _validate_required_text(surname_student, "Mbiemri", max_length=50)
         if surname_error:
             errors.append(surname_error)
+            field_errors["surname"] = surname_error
 
         father_name_error = _validate_required_text(
             father_name_student, "Emri i babait", max_length=100
         )
         if father_name_error:
             errors.append(father_name_error)
+            field_errors["father_name"] = father_name_error
 
         birthday_error = _validate_birthday(birthday_student)
         if birthday_error:
             errors.append(birthday_error)
+            field_errors["birthday"] = birthday_error
 
         email_error = _validate_email_address(email_student, "Email")
         if email_error:
             errors.append(email_error)
+            field_errors["email"] = email_error
 
         phone_error = _validate_phone(phone_student)
         if phone_error:
             errors.append(phone_error)
+            field_errors["phone"] = phone_error
 
         card_id_error = _validate_card_id_number(card_id_number_student)
         if card_id_error:
             errors.append(card_id_error)
+            field_errors["card_id_number"] = card_id_error
 
         degree_error = _validate_allowed_choice(
             university_degree_student,
-            {"bachelor", "master", "doctorate", "other"},
+            {value for value, _ in Student.UniversityDegreeChoices.choices},
             "Diploma universitare",
         )
         if degree_error:
             errors.append(degree_error)
+            field_errors["university_degree"] = degree_error
 
         timetable_error = _validate_allowed_choice(
             timetable_student,
@@ -488,87 +479,62 @@ def student(request):
         )
         if timetable_error:
             errors.append(timetable_error)
+            field_errors["timetable"] = timetable_error
 
-        selected_training = Training.objects.filter(pk=training_student).first()
-        if not selected_training and training_student:
-            selected_training = Training.objects.filter(training_name=training_student).first()
+        selected_training = None
+        if training_student:
+            selected_training = Training.objects.filter(pk=training_student).first()
+            if not selected_training:
+                selected_training = Training.objects.filter(training_name=training_student).first()
         if not selected_training:
-            errors.append("Trajnimi i zgjedhur nuk është i vlefshëm.")
+            training_error = "Trajnimi i zgjedhur nuk është i vlefshëm."
+            errors.append(training_error)
+            field_errors["training"] = training_error
 
         message_error = _validate_required_text(message_student, "Mesazhi", max_length=300)
         if message_error:
             errors.append(message_error)
+            field_errors["message"] = message_error
 
         if terms_conditions_student != "accepted":
-            errors.append("Duhet të pranoni termat dhe kushtet.")
-
-        cardholder_error = _validate_required_text(
-            cardholder_name_student,
-            "Emri në kartë",
-            min_length=3,
-            max_length=100,
-        )
-        if cardholder_error:
-            errors.append(cardholder_error)
-
-        card_number_error = _validate_card_number(card_number_student)
-        if card_number_error:
-            errors.append(card_number_error)
-
-        card_expiry_error = _validate_card_expiry(card_expiry_student)
-        if card_expiry_error:
-            errors.append(card_expiry_error)
-
-        card_cvv_error = _validate_card_cvv(card_cvv_student)
-        if card_cvv_error:
-            errors.append(card_cvv_error)
+            terms_error = "Duhet të pranoni termat dhe kushtet."
+            errors.append(terms_error)
+            field_errors["terms_conditions"] = terms_error
 
         if not errors:
-            payment_ok, payment_error = _authorize_card_payment(
-                cardholder_name_student,
-                card_number_student,
-                card_expiry_student,
-                card_cvv_student,
-                email_student,
-                selected_training,
-            )
-
-            if not payment_ok:
-                _add_errors(request, [payment_error], "student")
-                context = {
-                    "cat_trainings": cat_trainings,
-                    "trainings": trainings,
-                }
-                return render(request, "apliko/student.html", context)
-
             birthday_date = datetime.datetime.strptime(birthday_student, "%Y-%m-%d").date()
-            student_application = Student.objects.create(
-                student_name=name_student,
-                student_surname=surname_student,
-                student_father_name=father_name_student,
-                student_birthday=birthday_date,
-                student_email=email_student,
-                student_phone=phone_student,
-                student_card_id_number=card_id_number_student.upper(),
-                student_university_degree=university_degree_student,
-                student_training=selected_training,
-                student_timetable=timetable_student,
-                student_terms_accepted=True,
-                student_message=message_student,
+            student_application, created = Student.objects.get_or_create(
+                submission_token=form_data["submission_token"],
+                defaults={
+                    "student_name": name_student,
+                    "student_surname": surname_student,
+                    "student_father_name": father_name_student,
+                    "student_birthday": birthday_date,
+                    "student_email": email_student,
+                    "student_phone": phone_student,
+                    "student_card_id_number": card_id_number_student.upper(),
+                    "student_university_degree": university_degree_student,
+                    "student_training": selected_training,
+                    "student_timetable": timetable_student,
+                    "student_terms_accepted": True,
+                    "student_message": message_student,
+                },
             )
 
-            email_sent = _send_student_procedure_email(
-                {
-                    "nameStudent": name_student,
-                    "surnameStudent": surname_student,
-                    "emailStudent": email_student,
-                    "phoneStudent": phone_student,
-                    "trainingStudent": getattr(selected_training, "training_name", ""),
-                    "timetableStudent": timetable_student,
-                    "messageStudent": message_student,
-                    "applicationDate": timezone.localtime(student_application.submit_at),
-                }
-            )
+            email_sent = True
+            if created:
+                email_sent = _send_student_procedure_email(
+                    {
+                        "nameStudent": name_student,
+                        "surnameStudent": surname_student,
+                        "emailStudent": email_student,
+                        "phoneStudent": phone_student,
+                        "trainingStudent": getattr(selected_training, "training_name", ""),
+                        "timetableStudent": timetable_student,
+                        "messageStudent": message_student,
+                        "applicationDate": student_application.submit_at,
+                    }
+                )
 
             messages.add_message(
                 request,
@@ -583,20 +549,15 @@ def student(request):
                     "Aplikimi u regjistrua, por email-i i konfirmimit nuk u dërgua.",
                     extra_tags="student",
                 )
-            return render(
-                request,
-                "apliko/student.html",
-                {
-                    "cat_trainings": cat_trainings,
-                    "trainings": trainings,
-                    "show_student_success_modal": True,
-                },
-            )
-        _add_errors(request, errors, "student")
+            request.session["show_student_success_modal"] = True
+            return redirect("student")
     context = {
         "cat_trainings": cat_trainings,
         "trainings": trainings,
-        "show_student_success_modal": False,
+        "show_student_success_modal": request.session.pop("show_student_success_modal", False),
+        "form_data": form_data,
+        "field_errors": field_errors,
+        "university_degree_choices": Student.UniversityDegreeChoices.choices,
     }
     return render(request, "apliko/student.html", context)
 
@@ -606,6 +567,7 @@ def student(request):
 def contact(request):
     cat_trainings = Category_training.objects.all()
     form_data = {
+        "submission_token": uuid.uuid4().hex,
         "name": "",
         "surname": "",
         "email": "",
@@ -637,6 +599,7 @@ def contact(request):
                 )
 
     if request.method == "POST" and "subscribe_button" not in request.POST:
+        form_data["submission_token"] = request.POST.get("submission_token") or ""
         form_data["name"] = (request.POST.get("name") or "").strip()
         form_data["surname"] = (request.POST.get("surname") or "").strip()
         form_data["email"] = (request.POST.get("email") or "").strip()
@@ -645,6 +608,9 @@ def contact(request):
         form_data["message"] = (request.POST.get("message") or "").strip()
 
         errors = []
+
+        if not re.fullmatch(r"[0-9a-f]{32}", form_data["submission_token"]):
+            errors.append("Kërkesa nuk është e vlefshme. Ju lutem provoni përsëri.")
 
         name_error = _validate_required_text(form_data["name"], "Emri", max_length=50)
         if name_error:
@@ -687,13 +653,16 @@ def contact(request):
             errors.append(message_error)
 
         if not errors:
-            Contact.objects.create(
-                contact_name=form_data["name"],
-                contact_surname=form_data["surname"],
-                contact_email=form_data["email"],
-                contact_phone=form_data["phone"],
-                contact_subject=form_data["subject"],
-                contact_message=form_data["message"],
+            Contact.objects.get_or_create(
+                submission_token=form_data["submission_token"],
+                defaults={
+                    "contact_name": form_data["name"],
+                    "contact_surname": form_data["surname"],
+                    "contact_email": form_data["email"],
+                    "contact_phone": form_data["phone"],
+                    "contact_subject": form_data["subject"],
+                    "contact_message": form_data["message"],
+                },
             )
             messages.add_message(
                 request,
@@ -701,20 +670,8 @@ def contact(request):
                 "Mesazhi juaj u dërgua me sukses.",
                 extra_tags="contact",
             )
-            context = {
-                "cat_trainings": cat_trainings,
-                "form_data": {
-                    "name": "",
-                    "surname": "",
-                    "email": "",
-                    "phone": "",
-                    "subject": "",
-                    "message": "",
-                },
-                "field_errors": {},
-                "show_contact_success_modal": True,
-            }
-            return render(request, "apliko/contact.html", context)
+            request.session["show_contact_success_modal"] = True
+            return redirect("contact")
 
         _add_errors(request, errors, "contact")
 
@@ -722,6 +679,6 @@ def contact(request):
         "cat_trainings": cat_trainings,
         "form_data": form_data,
         "field_errors": field_errors,
-        "show_contact_success_modal": False,
+        "show_contact_success_modal": request.session.pop("show_contact_success_modal", False),
     }
     return render(request, "apliko/contact.html", context)

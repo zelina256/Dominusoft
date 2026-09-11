@@ -547,7 +547,9 @@
 .inner-grid--5 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
-
+.inner-grid--6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+}
 .inner-grid--5 > :nth-child(n + 4) {
     grid-column: span 1;
 }
@@ -1467,7 +1469,11 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 18px;
 }
-
+.student_first__row{
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
 .inner-field label,
 .inner-field legend {
     display: block;
@@ -1493,6 +1499,24 @@
 .inner-field textarea {
     min-height: 145px;
     resize: vertical;
+}
+
+#studentApplicationForm .form-select.is-invalid {
+    padding-right: 14px;
+    border-color: #dc3545;
+    background-image: none;
+}
+
+#studentApplicationForm .form-check-input {
+    display: inline-block;
+    width: 1em;
+    min-height: 1em;
+    padding: 0;
+}
+
+#studentApplicationForm .form-check-input.is-invalid {
+    border-color: #dc3545;
+    background-image: none;
 }
 
 .inner-field input[type="file"] {
@@ -1651,12 +1675,13 @@
 .contact-card__list a {
     color: var(--inner-cyan-dark);
     font-weight: 700;
+    text-decoration: none;
 }
 
-.contact-card__list a:hover,
+/* .contact-card__list a:hover,
 .contact-card__list a:focus-visible {
     text-decoration: underline;
-}
+} */
     .student-success-modal .modal-content {
         border-radius: 18px;
         border: 1px solid rgba(26, 103, 206, 0.12);
@@ -1690,7 +1715,244 @@
     height: 240px;
     border: 0;
 }
+/* =========================================
+   CONTACT SUCCESS MODAL
+========================================= */
 
+.contact-success-modal .modal-dialog {
+    max-width: 520px;
+    padding: 18px;
+}
+
+.contact-success-modal .modal-content {
+    position: relative;
+    overflow: hidden;
+
+    border: 1px solid rgba(49, 52, 75, 0.1);
+    border-radius: 24px;
+
+    background:
+        radial-gradient(
+            circle at 50% 0%,
+            rgba(62, 196, 237, 0.10),
+            transparent 36%
+        ),
+        #ffffff;
+
+    box-shadow:
+        0 30px 80px rgba(34, 37, 58, 0.20),
+        0 8px 24px rgba(34, 37, 58, 0.08);
+}
+
+
+/* Close button */
+
+.contact-success-modal__close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+
+    z-index: 3;
+
+    width: 34px;
+    height: 34px;
+    padding: 9px;
+
+    border-radius: 50%;
+
+    opacity: 0.55;
+
+    transition:
+        opacity 180ms ease,
+        background-color 180ms ease,
+        transform 180ms ease;
+}
+
+.contact-success-modal__close:hover {
+    opacity: 1;
+    background-color: rgba(49, 52, 75, 0.06);
+    transform: rotate(4deg);
+}
+
+
+/* Main content */
+
+.contact-success-modal__body {
+    padding: 46px 44px 38px;
+
+    text-align: center;
+}
+
+
+/* Success icon */
+
+.contact-success-modal__icon {
+    display: flex;
+
+    width: 74px;
+    height: 74px;
+
+    margin: 0 auto 22px;
+
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid rgba(62, 196, 237, 0.30);
+    border-radius: 50%;
+
+    color: var(--inner-navy-deep);
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(62, 196, 237, 0.30),
+            rgba(62, 196, 237, 0.10)
+        );
+
+    box-shadow:
+        0 0 0 10px rgba(62, 196, 237, 0.06),
+        0 12px 30px rgba(62, 196, 237, 0.14);
+
+    font-size: 1.8rem;
+}
+
+
+/* Small label */
+
+.contact-success-modal__eyebrow {
+    margin: 0 0 8px;
+
+    color: var(--inner-cyan-dark);
+
+    font-size: 0.76rem;
+    font-weight: 800;
+
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+
+/* Heading */
+
+.contact-success-modal__title {
+    margin: 0;
+
+    color: var(--inner-navy-deep);
+
+    font-size: clamp(1.45rem, 3vw, 1.8rem);
+    font-weight: 800;
+
+    letter-spacing: -0.025em;
+    line-height: 1.25;
+}
+
+
+/* Main message */
+
+.contact-success-modal__message {
+    max-width: 420px;
+
+    margin: 15px auto 0;
+
+    color: var(--inner-muted);
+
+    font-size: 0.98rem;
+    line-height: 1.75;
+}
+
+
+/* Optional Django message */
+
+.contact-success-modal__server-message {
+    margin: 14px auto 0;
+
+    color: var(--inner-navy);
+
+    font-size: 0.9rem;
+    font-weight: 650;
+}
+
+
+/* CTA */
+
+.contact-success-modal__button {
+    min-width: 160px;
+
+    margin-top: 26px;
+
+    border: 0;
+
+    cursor: pointer;
+}
+
+
+/* Small reassurance */
+
+.contact-success-modal__hint {
+    margin: 16px 0 0;
+
+    color: #8a94a3;
+
+    font-size: 0.78rem;
+    line-height: 1.5;
+}
+
+
+/* Backdrop */
+
+.modal-backdrop.show {
+    opacity: 0.58;
+}
+
+
+/* Animation */
+
+.contact-success-modal.fade .modal-dialog {
+    transform:
+        translateY(14px)
+        scale(0.98);
+
+    transition:
+        transform 220ms ease,
+        opacity 220ms ease;
+}
+
+.contact-success-modal.show .modal-dialog {
+    transform:
+        translateY(0)
+        scale(1);
+}
+
+
+/* Mobile */
+
+@media (max-width: 576px) {
+
+    .contact-success-modal .modal-dialog {
+        margin: 12px;
+        padding: 0;
+    }
+
+    .contact-success-modal__body {
+        padding: 42px 24px 30px;
+    }
+
+    .contact-success-modal__icon {
+        width: 66px;
+        height: 66px;
+
+        font-size: 1.55rem;
+    }
+
+    .contact-success-modal__title {
+        font-size: 1.4rem;
+    }
+
+    .contact-success-modal__button {
+        width: 100%;
+    }
+
+}
 .legal-content {
     width: min(1000px, 100%);
     margin-inline: auto;
@@ -2025,7 +2287,7 @@
 }
 
 .home-hero__proof {
-    margin-top: clamp(3.25rem, 7vw, 6rem);
+    margin-top: clamp(3.25rem, 5vw, 6rem);
     padding-top: 1.5rem;
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));

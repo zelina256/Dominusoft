@@ -11,35 +11,6 @@
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
 <link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
-<style>
-    .business-success-modal .modal-content {
-        border-radius: 18px;
-        border: 1px solid rgba(26, 103, 206, 0.12);
-        box-shadow: 0 24px 60px rgba(13, 28, 45, 0.18);
-        overflow: hidden;
-    }
-    .business-success-modal .modal-header {
-        background: linear-gradient(135deg, rgba(19, 150, 88, 0.08), rgba(13, 92, 184, 0.06));
-        padding: 1.25rem 1.5rem 0.75rem;
-    }
-    .business-success-modal .modal-title {
-        color: #173b67;
-        font-size: 1.2rem;
-    }
-    .business-success-modal .modal-body {
-        padding: 2rem 1.5rem 1.25rem;
-    }
-    .business-success-modal .modal-footer {
-        padding: 0 1.5rem 1.5rem;
-    }
-    .business-success-modal .btn-primary {
-        background: linear-gradient(135deg, #0d6efd, #1d4ed8);
-        border: none;
-        border-radius: 12px;
-        padding: 0.7rem 1.5rem;
-        font-weight: 600;
-    }
-</style>
 {% endblock %}
 {% block body_class %}inner-page{% endblock %}
 
@@ -56,55 +27,112 @@
         </div>
     </section>
 
-    <section class="inner-section inner-section--white" id="message_business">
-        <div class="inner-container form-layout">
-            <div class="form-card">
+    <section class="inner-section inner-section--white"  aria-labelledby="biznes-information-title">
+        <div class="inner-container">
+            <div class="row g-4 align-items-stretch">
+   
+        <div class="col-lg-7">
+             <div class="contact-card h-100" id="message_biznes">
+                <div class="contact-card-header mb-4">
+   <p class="inner-eyebrow">Dërgoni një kërkesë</p>
                 <h2>Na tregoni për projektin</h2>
+                </div>
+           
+    
                 <p class="form-card__intro">Sa më i qartë konteksti, aq më mirë mund të përgatitemi për bisedën e parë.</p>
                 <form id="business-form" class="inner-form" method="post" action="#message_business">
                     {% csrf_token %}
+                    <input type="hidden" name="submission_token" value="{{ form_data.submission_token }}">
                     <div class="inner-form__row">
-                        <div class="inner-field"><label for="business-name">Emri i kompanisë</label><input id="business-name" name="name" type="text" autocomplete="organization" required></div>
-                        <div class="inner-field"><label for="business-delegate">Personi i kontaktit</label><input id="business-delegate" name="delegate" type="text" autocomplete="name" required></div>
+                        <div class="inner-field"><label for="business-name">Emri i kompanisë <span class="text-danger">*</span></label><input id="business-name" name="name" type="text" value="{{ form_data.name }}" autocomplete="organization" class="{% if field_errors.name %}is-invalid{% endif %}">{% if field_errors.name %}<div class="invalid-feedback d-block">{{ field_errors.name }}</div>{% endif %}</div>
+                        <div class="inner-field"><label for="business-delegate">Personi i kontaktit <span class="text-danger">*</span></label><input id="business-delegate" name="delegate" type="text" value="{{ form_data.delegate }}" autocomplete="name" class="{% if field_errors.delegate %}is-invalid{% endif %}">{% if field_errors.delegate %}<div class="invalid-feedback d-block">{{ field_errors.delegate }}</div>{% endif %}</div>
                     </div>
                     <div class="inner-form__row">
-                        <div class="inner-field"><label for="business-email">Email i punës</label><input id="business-email" name="email" type="email" autocomplete="email" required></div>
-                        <div class="inner-field"><label for="business-phone">Numri i telefonit</label><input id="business-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required></div>
+                        <div class="inner-field"><label for="business-email">Email i punës <span class="text-danger">*</span></label><input id="business-email" name="email" type="email" value="{{ form_data.email }}" autocomplete="email" class="{% if field_errors.email %}is-invalid{% endif %}">{% if field_errors.email %}<div class="invalid-feedback d-block">{{ field_errors.email }}</div>{% endif %}</div>
+                        <div class="inner-field"><label for="business-phone">Numri i telefonit <span class="text-danger">*</span></label><input id="business-phone" name="phone" type="tel" value="{{ form_data.phone }}" inputmode="tel" autocomplete="tel" class="{% if field_errors.phone %}is-invalid{% endif %}">{% if field_errors.phone %}<div class="invalid-feedback d-block">{{ field_errors.phone }}</div>{% endif %}</div>
                     </div>
                     <div class="inner-field">
-                        <label for="business-service">Shërbimi që ju intereson</label>
-                        <select id="business-service" name="service" required><option value="">Zgjidh shërbimin</option>{% for service in services %}<option value="{{ service.services_name }}"{% if request.GET.service == service.services_name %} selected{% endif %}>{{ service.services_name }}</option>{% endfor %}</select>
+                        <label for="business-service">Shërbimi që ju intereson <span class="text-danger">*</span></label>
+                        <select id="business-service" name="service" class="{% if field_errors.service %}is-invalid{% endif %}"><option value="">Zgjidh shërbimin</option>{% for service in services %}<option value="{{ service.services_name }}"{% if form_data.service == service.services_name %} selected{% endif %}>{{ service.services_name }}</option>{% endfor %}</select>{% if field_errors.service %}<div class="invalid-feedback d-block">{{ field_errors.service }}</div>{% endif %}
                     </div>
-                    <div class="inner-field"><label for="business-message">Përshkrimi i kërkesës</label><textarea id="business-message" name="message" placeholder="Objektivi, sfida aktuale dhe rezultati që prisni…" required></textarea></div>
+                    <div class="inner-field"><label for="business-message">Përshkrimi i kërkesës <span class="text-danger">*</span></label><textarea id="business-message" name="message" placeholder="Objektivi, sfida aktuale dhe rezultati që prisni…" class="{% if field_errors.message %}is-invalid{% endif %}">{{ form_data.message }}</textarea>{% if field_errors.message %}<div class="invalid-feedback d-block">{{ field_errors.message }}</div>{% endif %}</div>
                     <p class="inner-form__notice">Të dhënat përdoren vetëm për të trajtuar kërkesën dhe për t’ju kontaktuar.</p>
                     <input type="hidden" id="g-recaptcha-response" name="g-recaptcha-response">
                     <div><button type="submit" name="business_button" class="inner-button inner-button--primary">Kërko konsultë <i class="fas fa-arrow-right" aria-hidden="true"></i></button></div>
                 </form>
             </div>
-            <aside class="contact-card">
-                <div class="contact-card__body"><p class="inner-eyebrow">Kontakt i drejtpërdrejtë</p><h2>Preferoni të flasim?</h2><ul class="contact-card__list"><li><a href="tel:+355673005050"><i class="fas fa-phone-alt" aria-hidden="true"></i>+355 67 300 5050</a></li><li><a href="mailto:info@dominusoft.al"><i class="far fa-envelope" aria-hidden="true"></i>info@dominusoft.al</a></li><li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Rr. “Reshit Çollaku”, Tiranë</li></ul></div>
-                <iframe title="Vendndodhja e Dominusoft në Tiranë" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!1i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
-            </aside>
+          
+              </div>
+                         <div class="col-lg-5">
+                   <div class="contact-card contact-card__body">
+            <div class="contact-card-header mb-4">
+              <p class="inner-eyebrow">Informacioni i kontaktit</p>
+              <h2 id="contact-information-title">Preferoni të flasim?</h2>
+              <p>
+                Na vizitoni në zyrat tona në Tiranë, na telefononi ose na
+                shkruani për çdo pyetje rreth shërbimeve tona.
+              </p>
+            </div>
+
+            <ul class="contact-card__list">
+              <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span><strong>Adresa</strong>Rruga “Reshit Çollaku”, Tiranë, Shqipëri</span></li>
+              <li><i class="fas fa-phone-alt" aria-hidden="true"></i><span><strong>Telefoni</strong><a href="tel:+355673005050">+355 67 300 5050</a></span></li>
+              <li><i class="fab fa-whatsapp" aria-hidden="true"></i><span><strong>WhatsApp</strong><a href="https://wa.me/355673005050" target="_blank" rel="noopener noreferrer">+355 67 300 5050</a></span></li>
+              <li><i class="far fa-envelope" aria-hidden="true"></i><span><strong>Email</strong><a href="mailto:info@dominusoft.com">info@dominusoft.com</a></span></li>
+              <li><i class="far fa-clock" aria-hidden="true"></i><span><strong>Orari i zyrës</strong>E hënë – E premte<br>10:00 – 19:00</span></li>
+            </ul>
+          </div>
         </div>
+            <!-- </div>
+          
+            <aside class="contact-card">
+                <div class="contact-card__body">
+                    <p class="inner-eyebrow">Kontakt i drejtpërdrejtë</p>
+                    <h2>Preferoni të flasim?</h2>
+                    <ul class="contact-card__list">
+                        <li><a href="tel:+355673005050"><i class="fas fa-phone-alt" aria-hidden="true"></i>+355 67 300 5050</a></li>
+                        <li><a href="mailto:info@dominusoft.al"><i class="far fa-envelope" aria-hidden="true"></i>info@dominusoft.al</a></li>
+                        <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i>Rr. “Reshit Çollaku”, Tiranë</li>
+                    </ul>
+                </div>
+        
+            </aside>
+        </div> -->
     </section>
+      <section class="inner-section inner-section--compact" aria-labelledby="location-title">
+    <div class="inner-container">
+      <div class="inner-heading text-center">
+        <p class="inner-eyebrow">Na gjeni</p>
+        <h2 id="location-title">Na gjeni në Tiranë</h2>
+        <p>
+          Vizitoni zyrat e Dominusoft në Rrugën “Reshit Çollaku” ose
+          përdorni hartën për të planifikuar rrugën tuaj.
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
+          title="Vendndodhja e zyrave të Dominusoft në Tiranë" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" style="display: block; width: 100%; min-height: 340px; border: 0;"></iframe>
+      </div>
+    </div>
+  </section>
+
     {% if show_business_success_modal %}
-    <div class="modal fade business-success-modal" id="businessSuccessModal" tabindex="-1" aria-labelledby="businessSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal fade contact-success-modal" id="businessSuccessModal" tabindex="-1" aria-labelledby="businessSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="businessSuccessModalLabel">Aplikimi u dërgua</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
-                </div>
-                <div class="modal-body text-center py-4">
-                    <div class="mb-3 text-success"><i class="fas fa-check-circle fa-3x" aria-hidden="true"></i></div>
+                <button type="button" class="btn-close contact-success-modal__close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+                <div class="contact-success-modal__body">
+                    <div class="contact-success-modal__icon" aria-hidden="true"><i class="fas fa-check"></i></div>
+                    <h2 class="contact-success-modal__title" id="businessSuccessModalLabel">Kërkesa u dërgua me sukses!</h2>
+                    <p class="contact-success-modal__message">Faleminderit për interesimin tuaj. Ekipi ynë do ta shqyrtojë kërkesën dhe do t'ju kontaktojë sa më shpejt.</p>
                     {% for message in messages %}
                         {% if 'business' in message.tags and message.level_tag == 'success' %}
-                            <p class="mb-0 fw-semibold">{{ message }}</p>
+                            <p class="contact-success-modal__server-message">{{ message }}</p>
                         {% endif %}
                     {% endfor %}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Mbyll</button>
                 </div>
             </div>
         </div>
@@ -119,7 +147,12 @@
         const successModalEl = document.getElementById('businessSuccessModal');
         if (successModalEl && typeof bootstrap !== 'undefined') {
             const successModal = new bootstrap.Modal(successModalEl, { backdrop: 'static', keyboard: true });
-            setTimeout(function () { successModal.show(); }, 250);
+            setTimeout(function () {
+                successModal.show();
+                setTimeout(function () {
+                    successModal.hide();
+                }, 10000);
+            }, 250);
         }
     });
 </script>

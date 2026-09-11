@@ -109,14 +109,14 @@ def subscribe(request):
             extra_tags="subscribe",
         )
     else:
-        if Subscribe.objects.filter(subscribe_email__iexact=email).exists():
+        _, created = Subscribe.objects.get_or_create(subscribe_email=email)
+        if not created:
             messages.warning(
                 request,
                 "Kjo adresë është abonuar më parë. Faleminderit!",
                 extra_tags="subscribe",
             )
         else:
-            Subscribe.objects.create(subscribe_email=email)
             messages.success(
                 request,
                 "U abonuat me sukses. Mirë se erdhët!",

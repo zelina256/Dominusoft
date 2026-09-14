@@ -71,7 +71,7 @@
             </div>
             <div class="inner-grid inner-grid--3">
                 {% for highlight in cat_training.highlights.all %}
-                <article class="inner-card">
+                <article class="inner-card training-highlight-card">
                     <div class="inner-card__body">
                         <h3>{{ highlight.title }}</h3>
                         <p>{{ highlight.description }}</p>
@@ -83,36 +83,50 @@
     </section>
     {% endif %}
 
-    {% if cat_training.certification_items.all or cat_training.category_learning_title or cat_training.category_learning_description %}
-    <section class="inner-section inner-section--muted" aria-labelledby="certification-heading">
-        <div class="inner-container">
-            <div class="inner-heading inner-heading--left">
-                <p class="inner-eyebrow">Certifikim</p>
-                <h2 id="certification-heading">Çfarë merrni pas përfundimit të programit?</h2>
-            </div>
-            <div class="inner-grid inner-grid--2">
-                {% if cat_training.certification_items.all %}
-                <div>
-                    <ul class="inner-check-list">{% for item in cat_training.certification_items.all %}<li>{{ item.text }}</li>{% endfor %}</ul>
-                </div>
-                {% endif %}
-                {% if cat_training.category_learning_title or cat_training.category_learning_description %}
-                <div>
-                    <div class="inner-card">
-                        <div class="inner-card__body">
-                            <h3>Çfarë do të mësoni?</h3>
-                            <p>{{ cat_training.category_learning_description }}</p>
-                        </div>
-                    </div>
-                </div>
-                {% endif %}
-            </div>
-        </div>
-    </section>
-    {% endif %}
+{% if cat_training.certification_items.all or cat_training.category_learning_title or cat_training.category_learning_description %}
+<section class="inner-section inner-section--white training-certification"
+         aria-labelledby="certification-heading">
 
+    <div class="inner-container certification-layout">
+
+        <div class="certification-intro">
+            <p class="inner-eyebrow">Certifikim</p>
+
+            <h2 id="certification-heading">
+                Çfarë merrni pas përfundimit të programit?
+            </h2>
+
+            {% if cat_training.category_learning_description %}
+            <p class="certification-intro__text">
+                {{ cat_training.category_learning_description }}
+            </p>
+            {% endif %}
+        </div>
+
+        {% if cat_training.certification_items.all %}
+        <div class="certification-list">
+            {% for item in cat_training.certification_items.all %}
+            <div class="certification-item">
+
+                <div class="certification-check" aria-hidden="true">
+                    ✓
+                </div>
+
+                <div class="certification-item__content">
+                    <p>{{ item.text }}</p>
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+    </div>
+
+</section>
+{% endif %}
     {% if cat_training.faqs.all %}
-    <section class="inner-section inner-section--white" aria-labelledby="faq-heading">
+    <section class="inner-section inner-section--muted" aria-labelledby="faq-heading">
         <div class="inner-container">
             <div class="inner-heading inner-heading--left">
                 <p class="inner-eyebrow">Pyetje të shpeshta</p>

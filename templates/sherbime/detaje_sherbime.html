@@ -72,6 +72,7 @@
         </div>
     </section>
 
+{% comment %}
     <section id="permbledhje" class="inner-section inner-section--summary" aria-labelledby="service-summary-title">
         <div class="inner-container">
             <div class="summary-header">
@@ -107,26 +108,54 @@
             </div>
         </div>
     </section>
-
+{% endcomment %}
     {% if benefits %}
         <section class="inner-section" aria-labelledby="benefits-title">
             <div class="inner-container">
                 <div class="inner-heading">
-                    <p class="inner-eyebrow">Përfitimet</p>
+            
                     <h2 id="benefits-title">Përfitimet kryesore</h2>
                 </div>
+    <div class="summary-layout">
+    <div class="summary-content">
+        <div class="summary-copy">
+            {% if detail and detail.summary_additional %}
+                <p>{{ detail.summary_additional }}</p>
+            {% elif detail and detail.summary %}
+                <p>{{ detail.summary }}</p>
+            {% else %}
+                <p>
+                    Në çdo biznes, një identitet unik dhe një qasje e saktë mund
+                    të krijojë një diferencë të dukshme. Ne i ofrojmë zgjidhje
+                    profesionale në branding, dizajn grafik dhe komunikim që
+                    ndihmojnë biznesin të rritet me siguri dhe konsistencë.
+                </p>
+            {% endif %}
+        </div>
 
-                <div class="inner-grid inner-grid--3">
-                    {% for benefit in benefits %}
-                        <article class="inner-card">
-                            <div class="inner-card__body">
-                                <div class="inner-card__badge">0{{ forloop.counter }}</div>
-                                <h3>{{ benefit.title }}</h3>
-                                <p>{{ benefit.description }}</p>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
+        <div class="summary-benefits">
+            <p class="summary-feature__eyebrow">PËRFITIME</p>
+
+            <ul class="fact-list summary-fact-list">
+                {% for benefit in benefits %}
+                    <li>
+                        <i class="fas fa-check-circle" aria-hidden="true"></i>
+                        <span>{{ benefit.title }}</span>
+                    </li>
+                {% empty %}
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Efikasitet më i lartë</span>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <span>Siguri e avancuar</span>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
             </div>
         </section>
     {% endif %}
@@ -178,7 +207,7 @@
             </div>
         </section>
     {% endif %}
-
+{% comment %}
     {% if related_services %}
         <section class="inner-section inner-section--white" aria-labelledby="related-title">
             <div class="inner-container">
@@ -201,6 +230,7 @@
             </div>
         </section>
     {% endif %}
+    {% endcomment %}
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

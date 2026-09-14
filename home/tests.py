@@ -99,6 +99,16 @@ class HomepageTests(TemporaryMediaTestCase):
         self.assertContains(response, 'id="services-title"')
 
 
+class SitemapTests(TestCase):
+    def test_sitemap_includes_all_public_static_pages(self):
+        response = self.client.get("/sitemap.xml")
+
+        self.assertEqual(response.status_code, 200)
+        for url_name in ("rrethnesh", "contact", "policy", "terms"):
+            self.assertContains(response, reverse(url_name))
+        self.assertNotContains(response, "career")
+
+
 class SearchTests(TemporaryMediaTestCase):
     def setUp(self):
         super().setUp()

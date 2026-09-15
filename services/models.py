@@ -6,8 +6,6 @@ class Services(models.Model):
     services_id = models.AutoField(primary_key=True)
     services_name = models.CharField(max_length=100, null=True, blank=True)
     services_description = models.TextField(max_length=1000, null=True, blank=True)
-    services_image = models.ImageField(upload_to='static/images/services', null=True, blank=True)
-    services_alt = models.CharField(max_length=100, null=True, blank=True)
     services_meta_keyword = models.CharField(max_length=250, null=True, blank=True)
     services_meta_description = models.CharField(max_length=250, null=True, blank=True)
     services_title = models.CharField(max_length=250, null=True, blank=True)
@@ -130,43 +128,3 @@ class ServicePackageItem(models.Model):
 
     def __str__(self):
         return self.text
-
-
-class ServiceFaq(models.Model):
-    service = models.ForeignKey(
-        Services,
-        related_name='faqs',
-        on_delete=models.CASCADE
-    )
-    question = models.CharField(max_length=250)
-    answer = models.TextField(max_length=1000)
-    is_open = models.BooleanField(default=False)
-    order = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        ordering = ['order', 'id']
-
-    def __str__(self):
-        return f'{self.service} - {self.question}'
-
-
-class RelatedService(models.Model):
-    service = models.ForeignKey(
-        Services,
-        related_name='related_services',
-        on_delete=models.CASCADE
-    )
-    related = models.ForeignKey(
-        Services,
-        related_name='related_to',
-        on_delete=models.CASCADE
-    )
-    title = models.CharField(max_length=120, blank=True, null=True)
-    order = models.PositiveIntegerField(default=0)
-
-    class Meta:
-        ordering = ['order', 'id']
-        unique_together = ('service', 'related')
-
-    def __str__(self):
-        return f'{self.service} -> {self.related}'

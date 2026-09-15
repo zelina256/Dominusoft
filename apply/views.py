@@ -205,11 +205,15 @@ def _authorize_card_payment(
 
 
 def _send_student_procedure_email(student_data):
-    student_email = student_data.get("email")
-    if not student_email:
+    recipient = getattr(
+        settings,
+        "STUDENT_NOTIFICATION_EMAIL",
+        getattr(settings, "DEFAULT_FROM_EMAIL", "info@dominusoft.al"),
+    )
+    if not recipient:
         return False
 
-    subject = "Konfirmim aplikimi dhe pagese - Dominusoft"
+    subject = "Aplikim i ri për trajnim - Dominusoft"
     from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "no-reply@dominusoft.com")
 
     html_body = render_to_string("apliko/email/email_kursant.html", student_data)
@@ -219,7 +223,7 @@ def _send_student_procedure_email(student_data):
         subject=subject,
         body=text_body,
         from_email=from_email,
-        to=[student_email],
+        to=[recipient],
     )
     email.attach_alternative(html_body, "text/html")
 
@@ -228,6 +232,58 @@ def _send_student_procedure_email(student_data):
         return True
     except Exception:
         logger.exception("Failed to send student procedure email")
+        return False
+
+
+def _send_business_notification_email(business_data):
+    recipient = getattr(
+        settings,
+        "BUSINESS_NOTIFICATION_EMAIL",
+        getattr(settings, "DEFAULT_FROM_EMAIL", "info@dominusoft.al"),
+    )
+    if not recipient:
+        return False
+
+    html_body = render_to_string("apliko/email/email_business.html", business_data)
+    email = EmailMultiAlternatives(
+        subject="Aplikim i ri nga biznesi - Dominusoft",
+        body=strip_tags(html_body),
+        from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "no-reply@dominusoft.com"),
+        to=[recipient],
+    )
+    email.attach_alternative(html_body, "text/html")
+
+    try:
+        email.send(fail_silently=False)
+        return True
+    except Exception:
+        logger.exception("Failed to send business notification email")
+        return False
+
+
+def _send_contact_notification_email(contact_data):
+    recipient = getattr(
+        settings,
+        "CONTACT_NOTIFICATION_EMAIL",
+        getattr(settings, "DEFAULT_FROM_EMAIL", "info@dominusoft.al"),
+    )
+    if not recipient:
+        return False
+
+    html_body = render_to_string("apliko/email/email_contact.html", contact_data)
+    email = EmailMultiAlternatives(
+        subject="Mesazh i ri kontakti - Dominusoft",
+        body=strip_tags(html_body),
+        from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "no-reply@dominusoft.com"),
+        to=[recipient],
+    )
+    email.attach_alternative(html_body, "text/html")
+
+    try:
+        email.send(fail_silently=False)
+        return True
+    except Exception:
+        logger.exception("Failed to send contact notification email")
         return False
 
 
@@ -296,7 +352,7 @@ def business(request):
             errors.append(message_error)
 
         if not errors:
-            Business.objects.get_or_create(
+            _, created = Business.objects.get_or_create(
                 submission_token=form_data["submission_token"],
                 defaults={
                     "business_name": form_data["name"],
@@ -307,6 +363,17 @@ def business(request):
                     "business_message": form_data["message"],
                 },
             )
+            if created:
+                _send_business_notification_email(
+                    {
+                        "nameBusiness": form_data["name"],
+                        "delegateBusiness": form_data["delegate"],
+                        "emailBusiness": form_data["email"],
+                        "phoneBusiness": form_data["phone"],
+                        "serviceBusiness": selected_service,
+                        "messageBusiness": form_data["message"],
+                    }
+                )
             messages.add_message(
                 request,
                 messages.SUCCESS,
@@ -443,10 +510,11 @@ def student(request):
             errors.append(father_name_error)
             field_errors["father_name"] = father_name_error
 
-        birthday_error = _validate_birthday(birthday_student)
-        if birthday_error:
-            errors.append(birthday_error)
-            field_errors["birthday"] = birthday_error
+        if birthday_student:
+            birthday_error = _validate_birthday(birthday_student)
+            if birthday_error:
+                errors.append(birthday_error)
+                field_errors["birthday"] = birthday_error
 
         email_error = _validate_email_address(email_student, "Email")
         if email_error:
@@ -458,10 +526,11 @@ def student(request):
             errors.append(phone_error)
             field_errors["phone"] = phone_error
 
-        card_id_error = _validate_card_id_number(card_id_number_student)
-        if card_id_error:
-            errors.append(card_id_error)
-            field_errors["card_id_number"] = card_id_error
+        if card_id_number_student:
+            card_id_error = _validate_card_id_number(card_id_number_student)
+            if card_id_error:
+                errors.append(card_id_error)
+                field_errors["card_id_number"] = card_id_error
 
         degree_error = _validate_allowed_choice(
             university_degree_student,
@@ -491,7 +560,9 @@ def student(request):
             errors.append(training_error)
             field_errors["training"] = training_error
 
-        message_error = _validate_required_text(message_student, "Mesazhi", max_length=300)
+        message_error = None
+        if len(message_student) > 300:
+            message_error = "Mesazhi duhet të ketë maksimumi 300 karaktere."
         if message_error:
             errors.append(message_error)
             field_errors["message"] = message_error
@@ -502,7 +573,11 @@ def student(request):
             field_errors["terms_conditions"] = terms_error
 
         if not errors:
-            birthday_date = datetime.datetime.strptime(birthday_student, "%Y-%m-%d").date()
+            birthday_date = (
+                datetime.datetime.strptime(birthday_student, "%Y-%m-%d").date()
+                if birthday_student
+                else None
+            )
             student_application, created = Student.objects.get_or_create(
                 submission_token=form_data["submission_token"],
                 defaults={
@@ -512,7 +587,7 @@ def student(request):
                     "student_birthday": birthday_date,
                     "student_email": email_student,
                     "student_phone": phone_student,
-                    "student_card_id_number": card_id_number_student.upper(),
+                    "student_card_id_number": card_id_number_student.upper() or None,
                     "student_university_degree": university_degree_student,
                     "student_training": selected_training,
                     "student_timetable": timetable_student,
@@ -642,18 +717,15 @@ def contact(request):
             field_errors["subject"] = subject_error
             errors.append(subject_error)
 
-        message_error = _validate_required_text(
-            form_data["message"],
-            "Mesazhi",
-            min_length=10,
-            max_length=1000,
-        )
+        message_error = None
+        if len(form_data["message"]) > 1000:
+            message_error = "Mesazhi duhet të ketë maksimumi 1000 karaktere."
         if message_error:
             field_errors["message"] = message_error
             errors.append(message_error)
 
         if not errors:
-            Contact.objects.get_or_create(
+            _, created = Contact.objects.get_or_create(
                 submission_token=form_data["submission_token"],
                 defaults={
                     "contact_name": form_data["name"],
@@ -664,6 +736,17 @@ def contact(request):
                     "contact_message": form_data["message"],
                 },
             )
+            if created:
+                _send_contact_notification_email(
+                    {
+                        "nameContact": form_data["name"],
+                        "surnameContact": form_data["surname"],
+                        "emailContact": form_data["email"],
+                        "phoneContact": form_data["phone"],
+                        "subjectContact": form_data["subject"],
+                        "messageContact": form_data["message"],
+                    }
+                )
             messages.add_message(
                 request,
                 messages.SUCCESS,

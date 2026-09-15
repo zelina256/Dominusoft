@@ -188,49 +188,16 @@
         </section>
     {% endif %}
 
-    {% if faqs %}
         <section class="inner-section" aria-labelledby="faq-title">
             <div class="inner-container">
                 <div class="inner-heading">
-                    <p class="inner-eyebrow">FAQ</p>
-                    <h2 id="faq-title">Pyetje të shpeshta</h2>
+                    <p class="inner-eyebrow">Projekte</p>
+                    <h2 id="faq-title">Projekte</h2>
                 </div>
 
-                <div class="faq-list">
-                    {% for faq in faqs %}
-                        <details {% if faq.is_open %}open{% endif %}>
-                            <summary>{{ faq.question }}</summary>
-                            <p>{{ faq.answer }}</p>
-                        </details>
-                    {% endfor %}
-                </div>
+    
             </div>
         </section>
-    {% endif %}
-{% comment %}
-    {% if related_services %}
-        <section class="inner-section inner-section--white" aria-labelledby="related-title">
-            <div class="inner-container">
-                <div class="inner-heading">
-                    <p class="inner-eyebrow">Shërbime</p>
-                    <h2 id="related-title">Shërbime të ngjashme</h2>
-                </div>
-
-                <div class="inner-grid inner-grid--5">
-                    {% for relation in related_services %}
-                        <article class="inner-card">
-                            <div class="inner-card__body">
-                                <div class="inner-card__badge">0{{ forloop.counter }}</div>
-                                <h3>{{ relation.related.services_title|default:relation.related.services_name }}</h3>
-                                <a class="category-card__link" href="{% url 'tech_services' relation.related.slug %}">Shiko më shumë <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
-                            </div>
-                        </article>
-                    {% endfor %}
-                </div>
-            </div>
-        </section>
-    {% endif %}
-    {% endcomment %}
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

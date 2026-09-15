@@ -161,14 +161,14 @@ Kontakt | Dominusoft - Kurse Profesionale & Zgjidhje B2B
               </div>
 
               <div class="inner-field">
-                <label for="message">Mesazhi <span class="text-danger">*</span></label>
-                <textarea id="message" rows="6" name="message" placeholder="Na tregoni më shumë rreth kërkesës suaj..." class="{% if field_errors.message %}is-invalid{% endif %}">{{ form_data.message|default:'' }}</textarea>
+                <label for="message">Mesazhi</label>
+                <textarea id="message" rows="6" name="message" placeholder="Na tregoni më shumë rreth kërkesës suaj, nëse dëshironi..." class="{% if field_errors.message %}is-invalid{% endif %}">{{ form_data.message|default:'' }}</textarea>
                 {% if field_errors.message %}
                   <div class="invalid-feedback d-block">{{ field_errors.message }}</div>
                 {% endif %}
               </div>
 
-              <p class="small">
+              <p class="inner-form__notice">
                 Të dhënat tuaja do të përdoren vetëm për t'ju kontaktuar në lidhje me kërkesën e dërguar.
               </p>
 

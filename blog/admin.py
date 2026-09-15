@@ -9,11 +9,7 @@ from .models import Article, Category_Article
 @admin.register(Category_Article)
 class CategoryArticleAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "category_title",
-        "category_slug",
-        "category_meta_keywords",
-        "category_meta_descriptions",
     )
     search_fields = ("category_title", "category_slug", "category_meta_keywords")
     prepopulated_fields = {"category_slug": ("category_title",)}
@@ -22,14 +18,12 @@ class CategoryArticleAdmin(admin.ModelAdmin):
 @admin.register(Article)
 class ArticleAdmin(admin.ModelAdmin):
     list_display = (
-        "id",
         "article_title",
-        "article_slug",
-        "article_status",
+        "article_created_at",
         "article_publish_at",
+        "article_status",
         "article_category",
         "article_created_at",
-        "read_time_display",
     )
     search_fields = ("article_title", "article_slug", "article_meta_keywords")
     list_filter = ("article_category", "article_status", "article_publish_at")

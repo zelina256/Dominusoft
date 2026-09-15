@@ -106,15 +106,13 @@
 
                     <div class="inner-form__row">
                         <div class="inner-field">
-                                    <label for="birthday" class="form-label">Ditëlindja <span
-                                            class="text-danger">*</span></label>
-                                    <input type="date" class="form-control {% if field_errors.birthday %}is-invalid{% endif %}" id="birthday" name="birthday" value="{{ form_data.birthday|default:'' }}" required>
+                                <label for="birthday" class="form-label">Ditëlindja</label>
+                                <input type="date" class="form-control {% if field_errors.birthday %}is-invalid{% endif %}" id="birthday" name="birthday" value="{{ form_data.birthday|default:'' }}">
                                     {% if field_errors.birthday %}<div class="invalid-feedback d-block">{{ field_errors.birthday }}</div>{% endif %}
                         </div>
                         <div class="inner-field">
-                                    <label for="card_id_number" class="form-label">Numri i Kartës së Identitetit <span
-                                            class="text-danger">*</span></label>
-                                    <input type="text" class="form-control {% if field_errors.card_id_number %}is-invalid{% endif %}" id="card_id_number" name="card_id_number" value="{{ form_data.card_id_number|default:'' }}" placeholder="P.sh. A12345678B" required>
+                                <label for="card_id_number" class="form-label">Numri i Kartës së Identitetit</label>
+                                <input type="text" class="form-control {% if field_errors.card_id_number %}is-invalid{% endif %}" id="card_id_number" name="card_id_number" value="{{ form_data.card_id_number|default:'' }}" placeholder="P.sh. A12345678B">
                                     {% if field_errors.card_id_number %}<div class="invalid-feedback d-block">{{ field_errors.card_id_number }}</div>{% endif %}
                         </div>
                  
@@ -175,9 +173,8 @@
                     </div>
 
                     <div class="inner-field">
-                                    <label for="message" class="form-label">Mesazhi Juaj <span
-                                            class="text-danger">*</span></label>
-                                    <textarea class="form-control {% if field_errors.message %}is-invalid{% endif %}" placeholder="Shkruani mesazhin tuaj" name="message" id="message" rows="5" required>{{ form_data.message|default:'' }}</textarea>
+                                <label for="message" class="form-label">Mesazhi Juaj</label>
+                                <textarea class="form-control {% if field_errors.message %}is-invalid{% endif %}" placeholder="Shkruani mesazhin tuaj, nëse dëshironi" name="message" id="message" rows="5">{{ form_data.message|default:'' }}</textarea>
                                     {% if field_errors.message %}<div class="invalid-feedback d-block">{{ field_errors.message }}</div>{% endif %}
                     </div>
 
@@ -201,7 +198,7 @@
                                     </div>
                     </div>
 
-                    <p class="small">Të dhënat tuaja do të përdoren vetëm për procesin e aplikimit dhe komunikimin për kursin e zgjedhur.</p>
+                    <p class="inner-form__notice">Të dhënat tuaja do të përdoren vetëm për procesin e aplikimit dhe komunikimin për kursin e zgjedhur.</p>
 
                     <div>
                         <button type="submit" name="student_button" class="inner-button inner-button--primary">Dërgo aplikimin</button>

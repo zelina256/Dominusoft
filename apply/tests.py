@@ -25,6 +25,23 @@ class ContactViewTests(TestCase):
 		self.assertRedirects(response, reverse("contact"))
 		self.assertEqual(Contact.objects.count(), 1)
 
+	def test_contact_submission_allows_an_empty_message(self):
+		data = {
+			"submission_token": "d" * 32,
+			"name": "Arben",
+			"surname": "Hoxha",
+			"email": "arben@example.com",
+			"phone": "+355 67 300 5050",
+			"subject": "Kurs profesional",
+			"message": "",
+		}
+
+		response = self.client.post(reverse("contact"), data)
+
+		self.assertRedirects(response, reverse("contact"))
+		contact = Contact.objects.get(submission_token=data["submission_token"])
+		self.assertEqual(contact.contact_message, "")
+
 	def test_repeated_submission_creates_one_business_request(self):
 		service = Services.objects.create(services_name="Website")
 		data = {
@@ -70,3 +87,30 @@ class ContactViewTests(TestCase):
 		response = self.client.post(reverse("student"), data)
 		self.assertRedirects(response, reverse("student"))
 		self.assertEqual(Student.objects.count(), 1)
+
+	def test_student_submission_allows_empty_optional_fields(self):
+		training = Training.objects.create(training_name="Web Development")
+		data = {
+			"submission_token": "e" * 32,
+			"name": "Arben",
+			"father_name": "Ilir",
+			"surname": "Hoxha",
+			"birthday": "",
+			"email": "arben@example.com",
+			"phone": "+355 67 300 5050",
+			"card_id_number": "",
+			"university_degree": "bachelor",
+			"training": str(training.pk),
+			"timetable": "morning",
+			"message": "",
+			"terms_conditions": "accepted",
+			"student_button": "",
+		}
+
+		response = self.client.post(reverse("student"), data)
+
+		self.assertRedirects(response, reverse("student"))
+		student = Student.objects.get(submission_token=data["submission_token"])
+		self.assertIsNone(student.student_birthday)
+		self.assertIsNone(student.student_card_id_number)
+		self.assertEqual(student.student_message, "")

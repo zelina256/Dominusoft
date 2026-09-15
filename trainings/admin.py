@@ -6,7 +6,17 @@ from django.forms import TextInput, inlineformset_factory, modelformset_factory
 from django.shortcuts import redirect
 from django.template.response import TemplateResponse
 
-from .models import Career, Category_training, Curricula, Lesson, Project, Training
+from .models import (
+    Career,
+    CategoryCertificationItem,
+    CategoryFaq,
+    CategoryHighlight,
+    Category_training,
+    Curricula,
+    Lesson,
+    Project,
+    Training,
+)
 
 # Formset that edits the Curricula (main topics) linked to a single Training.
 # Curricula <-> Training is Many-to-Many, so the queryset is scoped to the
@@ -38,10 +48,14 @@ class LessonInline(admin.TabularInline):
 
 @admin.register(Curricula)
 class CurriculaAdmin(admin.ModelAdmin):
-    list_display = ["curricula_name"]
+    list_display = ["curricula_name", "training_list"]
     search_fields = ["curricula_name"]
     filter_horizontal = ["curricula_train"]
     inlines = [LessonInline]
+
+    @admin.display(description="Trainings")
+    def training_list(self, obj):
+        return ", ".join(str(training) for training in obj.curricula_train.all())
 
 
 @admin.register(Lesson)
@@ -53,13 +67,19 @@ class LessonAdmin(admin.ModelAdmin):
 
 @admin.register(Category_training)
 class CategoryTrainingAdmin(admin.ModelAdmin):
-    list_display = ["cat_training_name"]
+    list_display = [
+        "cat_training_name",
+    ]
     prepopulated_fields = {"cat_slug": ("cat_training_name",)}
 
 
 @admin.register(Training)
 class TrainingAdmin(admin.ModelAdmin):
-    list_display = ["training_name", "training_category"]
+    list_display = [
+        "training_name",
+        "training_category",
+        "training_price_lek",
+    ]
     list_filter = ["training_category"]
     search_fields = ["training_name"]
     prepopulated_fields = {"training_slug": ("training_name",)}
@@ -190,5 +210,42 @@ class TrainingAdmin(admin.ModelAdmin):
         )
 
 
-admin.site.register(Project)
-admin.site.register(Career)
+@admin.register(CategoryHighlight)
+class CategoryHighlightAdmin(admin.ModelAdmin):
+    list_display = ["id", "category", "title", "description", "order"]
+    list_filter = ["category"]
+    search_fields = ["title", "category__cat_training_name"]
+
+
+@admin.register(CategoryCertificationItem)
+class CategoryCertificationItemAdmin(admin.ModelAdmin):
+    list_display = ["id", "category", "text", "order"]
+    list_filter = ["category"]
+    search_fields = ["text", "category__cat_training_name"]
+
+
+@admin.register(CategoryFaq)
+class CategoryFaqAdmin(admin.ModelAdmin):
+    list_display = ["id", "category", "question", "answer", "order", "is_open"]
+    list_filter = ["category", "is_open"]
+    search_fields = ["question", "category__cat_training_name"]
+
+
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin):
+    list_display = ["project_id", "project_name", "training_list"]
+    search_fields = ["project_name"]
+
+    @admin.display(description="Trainings")
+    def training_list(self, obj):
+        return ", ".join(str(training) for training in obj.project_training.all())
+
+
+@admin.register(Career)
+class CareerAdmin(admin.ModelAdmin):
+    list_display = ["career_id", "career_opportunity", "training_list"]
+    search_fields = ["career_opportunity"]
+
+    @admin.display(description="Trainings")
+    def training_list(self, obj):
+        return ", ".join(str(training) for training in obj.career_training.all())

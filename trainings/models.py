@@ -105,8 +105,6 @@ class Training(models.Model):
     training_competence = CKEditor5Field(
         "Text", config_name="extends", null=True, blank=True
     )
-    training_image = models.ImageField(upload_to="static/images/training", null=True)
-    training_image_alt = models.CharField(max_length=50, null=True)
     training_icon = models.CharField(
         max_length=100,
         null=True,
@@ -174,25 +172,6 @@ class Training(models.Model):
 
     def __str__(self):
         return f"{self.training_name}"
-
-
-class TrainingFaq(models.Model):
-    training = models.ForeignKey(
-        Training,
-        on_delete=models.CASCADE,
-        related_name="faqs",
-    )
-    question = models.CharField(max_length=300)
-    answer = models.TextField(max_length=1000)
-    order = models.PositiveIntegerField(default=0)
-    is_open = models.BooleanField(default=False)
-
-    class Meta:
-        ordering = ["order", "id"]
-
-    def __str__(self):
-        return self.question
-
 
 # Projektet qe mund te ndertohen gjate trajnimeve
 class Project(models.Model):

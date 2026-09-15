@@ -11,7 +11,7 @@ def services(request):
     services = (
         Services.objects
         .select_related("detail")
-        .prefetch_related("highlights", "benefits", "packages__items", "faqs", "related_services__related")
+        .prefetch_related("highlights", "benefits", "packages__items")
         .all()
         .order_by("-pk")
     )
@@ -25,8 +25,6 @@ def tech_services(request, slug):
             "highlights",
             "benefits",
             "packages__items",
-            "faqs",
-            "related_services__related",
         ),
         slug=slug,
     )
@@ -43,7 +41,7 @@ def tech_services(request, slug):
         "highlights": service.highlights.all(),
         "benefits": service.benefits.all(),
         "packages": service.packages.all(),
-        "faqs": service.faqs.all(),
-        "related_services": service.related_services.select_related("related").all(),
+        "faqs": [],
+        "related_services": [],
     }
     return render(request, "sherbime/detaje_sherbime.html", context)

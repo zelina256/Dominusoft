@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="sq">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mesazh i ri kontakti</title>
+</head>
+
+<body style="margin: 0; padding: 24px; background-color: #f4f6f8; color: #1f2933; font-family: Arial, sans-serif; line-height: 1.5;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border: 1px solid #d9e2ec;">
+                    <tr>
+                        <td style="padding: 28px 32px; background-color: #0b5a75; color: #ffffff;">
+                            <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Mesazh i ri kontakti</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 28px 32px;">
+                            <p style="margin: 0 0 24px;">Një vizitor ka dërguar një mesazh për Dominusoft përmes formularit të kontaktit.</p>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+                                <tr>
+                                    <td style="padding: 10px 0; width: 180px; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Emri</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ nameContact }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Mbiemri</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ surnameContact }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Email</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="mailto:{{ emailContact }}" style="color: #0b5a75;">{{ emailContact }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Telefon</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="tel:{{ phoneContact }}" style="color: #0b5a75;">{{ phoneContact }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Subjekti</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ subjectContact }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; vertical-align: top; font-weight: 700;">Mesazhi</td>
+                                    <td style="padding: 10px 0; white-space: pre-line;">{{ messageContact }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 32px; background-color: #f4f6f8; color: #52606d; font-size: 13px;">Ky njoftim u dërgua automatikisht nga formulari i kontaktit në faqen e Dominusoft.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>

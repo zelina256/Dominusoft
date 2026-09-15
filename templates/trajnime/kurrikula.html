@@ -112,25 +112,6 @@
         {% endif %}
     </div>
 
-    {% if training.faqs.all %}
-    <section class="inner-section inner-section--white" aria-labelledby="training-faq-title">
-        <div class="inner-container">
-            <div class="inner-heading">
-                <p class="inner-eyebrow">FAQ</p>
-                <h2 id="training-faq-title">Pyetje të shpeshta rreth <br> {{ training.training_name }}</h2>
-            </div>
-            <div class="faq-list">
-                {% for faq in training.faqs.all %}
-                <details{% if faq.is_open %} open{% endif %}>
-                    <summary>{{ faq.question }}</summary>
-                    <p>{{ faq.answer }}</p>
-                </details>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-    {% endif %}
-
 
 
     {% if same_training %}

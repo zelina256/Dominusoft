@@ -1,24 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sq">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kontakt</title>
+    <title>Aplikim i ri nga biznesi</title>
 </head>
 
-<body>
-    <h1>Një Biznesi ju ka kontaktuar nëpërmjet website-it!</h1>
-    <p>Të dhënat janë:</p>
-    <ul>
-        <li>{{nameBusiness}}</li>
-        <li>{{delegateBusiness}}</li>
-        <li>{{emailBusiness}}</li>
-        <li>{{phoneBusiness}}</li>
-        <li>{{serviceBusiness}}</li>
-        <li>{{messageBusiness}}</li>
-    </ul>
+<body style="margin: 0; padding: 24px; background-color: #f4f6f8; color: #1f2933; font-family: Arial, sans-serif; line-height: 1.5;">
+    <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
+        <tr>
+            <td align="center">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border: 1px solid #d9e2ec;">
+                    <tr>
+                        <td style="padding: 28px 32px; background-color: #0b5a75; color: #ffffff;">
+                            <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Aplikim i ri nga biznesi</h1>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 28px 32px;">
+                            <p style="margin: 0 0 24px;">Një biznes ka dërguar një kërkesë për shërbimet e Dominusoft përmes faqes së internetit.</p>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+                                <tr>
+                                    <td style="padding: 10px 0; width: 180px; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Emri i biznesit</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ nameBusiness }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Përfaqësuesi</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ delegateBusiness }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Email</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="mailto:{{ emailBusiness }}" style="color: #0b5a75;">{{ emailBusiness }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Telefon</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="tel:{{ phoneBusiness }}" style="color: #0b5a75;">{{ phoneBusiness }}</a></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Shërbimi i kërkuar</td>
+                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ serviceBusiness }}</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding: 10px 0; vertical-align: top; font-weight: 700;">Mesazhi</td>
+                                    <td style="padding: 10px 0; white-space: pre-line;">{{ messageBusiness }}</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 16px 32px; background-color: #f4f6f8; color: #52606d; font-size: 13px;">Ky njoftim u dërgua automatikisht nga formulari i biznesit në faqen e Dominusoft.</td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
 </body>
 
 </html>

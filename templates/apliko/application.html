@@ -1,0 +1,177 @@
+{% extends 'index.html' %}
+{% load static %}
+
+{% block title %}Apliko | Dominusoft{% endblock %}
+{% block meta %}<meta name="description" content="Aplikoni për kurs profesional ose kërkoni bashkëpunim biznesi me Dominusoft.">{% endblock %}
+{% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block body_class %}inner-page{% endblock %}
+
+{% block content %}
+{% include 'navbar.html' %}
+<main id="main-content" class="inner-main">
+
+  <section class="inner-hero" aria-labelledby="contact-page-title">
+    <div class="inner-container inner-hero__layout">
+      <div class="inner-hero__content">
+        <p class="inner-eyebrow">Kontakt</p>
+        <h1 id="contact-page-title">Kontaktoni Dominusoft</h1>
+        <p class="inner-hero__lead">
+          Keni pyetje rreth kurseve profesionale, internship-eve,
+          zhvillimit të një website-i apo një bashkëpunimi me biznesin tuaj?
+          Kontaktoni ekipin e Dominusoft dhe merrni informacionin që ju
+          nevojitet për të hedhur hapin e radhës.
+        </p>
+      </div>
+
+      <aside class="inner-hero__panel" aria-label="Pikat kryesore për kontaktim">
+        <h2>Le të flasim</h2>
+        <ul class="fact-list">
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Konsultim fillestar pa angazhim</span></li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Ndihmë për trajnime, projekte dhe biznes</span></li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Shpërblyese, të qarta dhe profesionale</span></li>
+        </ul>
+      </aside>
+    </div>
+  </section>
+
+
+    <section class="inner-section inner-section--white" id="application-form" aria-labelledby="application-form-title">
+        <div class="inner-container">
+            <div class="row g-4 align-items-stretch">
+                <div class="col-lg-5">
+                    <aside class="contact-card contact-card__body" aria-labelledby="contact-information-title">
+                        <div class="contact-card-header mb-4">
+                            <!-- <p class="inner-eyebrow">Informacioni i kontaktit</p> -->
+                            <h2 id="contact-information-title">Informacioni i kontaktit</h2>
+                            <p>Na vizitoni në zyrat tona në Tiranë, na telefononi ose na shkruani për çdo pyetje rreth trajnimeve dhe shërbimeve tona.</p>
+                        </div>
+                        <ul class="contact-card__list">
+                            <li><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span><strong>Adresa</strong>Rruga “Reshit Çollaku”, Tiranë, Shqipëri</span></li>
+                            <li><i class="fas fa-phone-alt" aria-hidden="true"></i><span><strong>Telefoni</strong><a href="tel:+355673005050">+355 67 300 5050</a></span></li>
+                            <li><i class="fab fa-whatsapp" aria-hidden="true"></i><span><strong>WhatsApp</strong><a href="https://wa.me/355673005050" target="_blank" rel="noopener noreferrer">+355 67 300 5050</a></span></li>
+                            <li><i class="far fa-envelope" aria-hidden="true"></i><span><strong>Email</strong><a href="mailto:info@dominusoft.al">info@dominusoft.al</a></span></li>
+                            <li><i class="far fa-clock" aria-hidden="true"></i><span><strong>Orari i zyrës</strong>E hënë - E premte<br>10:00 - 19:00</span></li>
+                        </ul>
+                    </aside>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="contact-card h-100">
+                        <div class="contact-card-header mb-4">
+                            <!-- <p class="inner-eyebrow">Dërgoni një kërkesë</p> -->
+                            <h2 id="application-form-title">Dërgoni një kërkesë</h2>
+                            <p>Zgjidhni llojin e kërkesës dhe plotësoni të dhënat tuaja. Ekipi ynë do t'ju kontaktojë sa më shpejt.</p>
+                            <div class="application-toggle" role="tablist" aria-label="Lloji i aplikimit">
+                                <button class="application-toggle__button" type="button" role="tab" id="student-tab" aria-controls="student-panel" aria-selected="false" data-application-tab="student">Aplikim për kurs</button>
+                                <button class="application-toggle__button" type="button" role="tab" id="business-tab" aria-controls="business-panel" aria-selected="false" data-application-tab="business">Bashkëpunim biznesi</button>
+                            </div>
+                        </div>
+
+                        <div class="application-panel" id="student-panel" role="tabpanel" aria-labelledby="student-tab"{% if active_application_form != 'student' %} hidden{% endif %}>
+                            <form class="inner-form" method="post" action="#application-form" novalidate>
+                                {% csrf_token %}<input type="hidden" name="submission_token" value="{{ student_form_data.submission_token }}"><div class="application-honeypot" aria-hidden="true"><label for="student-website">Website</label><input id="student-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                                <div class="inner-form__row student_first__row">
+                                    <div class="inner-field"><label for="student-name">Emri <span class="text-danger">*</span></label><input id="student-name" name="name" value="{{ student_form_data.name }}" placeholder="Shkruani emrin tuaj" required class="{% if student_field_errors.name %}is-invalid{% endif %}">{% if student_field_errors.name %}<div class="invalid-feedback d-block">{{ student_field_errors.name }}</div>{% endif %}</div>
+                                     <div class="inner-field"><label for="student-father-name">Emri i babait <span class="text-danger">*</span></label><input id="student-father-name" name="father_name" value="{{ student_form_data.father_name }}" required placeholder="Shkruani emrin e babait" class="{% if student_field_errors.father_name %}is-invalid{% endif %}">{% if student_field_errors.father_name %}<div class="invalid-feedback d-block">{{ student_field_errors.father_name }}</div>{% endif %}</div>
+                                    <div class="inner-field"><label for="student-surname">Mbiemri <span class="text-danger">*</span></label><input id="student-surname" name="surname" value="{{ student_form_data.surname }}" placeholder="Shkruani mbiemrin tuaj" required class="{% if student_field_errors.surname %}is-invalid{% endif %}">{% if student_field_errors.surname %}<div class="invalid-feedback d-block">{{ student_field_errors.surname }}</div>{% endif %}</div>
+                                </div>
+                                <div class="inner-form__row">
+                                    <div class="inner-field"><label for="student-birthday">Ditëlindja</label><input id="student-birthday" name="birthday" type="date" value="{{ student_form_data.birthday }}" class="{% if student_field_errors.birthday %}is-invalid{% endif %}">{% if student_field_errors.birthday %}<div class="invalid-feedback d-block">{{ student_field_errors.birthday }}</div>{% endif %}</div>
+                                <div class="inner-field"><label for="student-card-id">Nr. i kartës së identitetit</label><input id="student-card-id" name="card_id_number" value="{{ student_form_data.card_id_number }}" class="{% if student_field_errors.card_id_number %}is-invalid{% endif %}">{% if student_field_errors.card_id_number %}<div class="invalid-feedback d-block">{{ student_field_errors.card_id_number }}</div>{% endif %}</div>
+                                </div>
+                                <div class="inner-form__row">
+                                    <div class="inner-field"><label for="student-email">Adresa e email-it <span class="text-danger">*</span></label><input id="student-email" name="email" type="email" value="{{ student_form_data.email }}" placeholder="shembull@email.com" required class="{% if student_field_errors.email %}is-invalid{% endif %}">{% if student_field_errors.email %}<div class="invalid-feedback d-block">{{ student_field_errors.email }}</div>{% endif %}</div>
+                                    <div class="inner-field"><label for="student-phone">Numri i telefonit <span class="text-danger">*</span></label><input id="student-phone" name="phone" type="tel" value="{{ student_form_data.phone }}" placeholder="+355..." required class="{% if student_field_errors.phone %}is-invalid{% endif %}">{% if student_field_errors.phone %}<div class="invalid-feedback d-block">{{ student_field_errors.phone }}</div>{% endif %}</div>
+                                </div>
+                                <div class="inner-form__row">
+                                    <div class="inner-field"><label for="student-degree">Niveli arsimor <span class="text-danger">*</span></label><select id="student-degree" name="university_degree" required class="{% if student_field_errors.university_degree %}is-invalid{% endif %}"><option value="">Zgjidh nivelin</option>{% for value, label in university_degree_choices %}<option value="{{ value }}"{% if student_form_data.university_degree == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% if student_field_errors.university_degree %}<div class="invalid-feedback d-block">{{ student_field_errors.university_degree }}</div>{% endif %}</div>
+                                    <div class="inner-field"><label for="student-training">Kursi <span class="text-danger">*</span></label><select id="student-training" name="training" required class="{% if student_field_errors.training %}is-invalid{% endif %}"><option value="">Zgjidh kursin</option>{% for training in trainings %}<option value="{{ training.training_id }}"{% if student_form_data.training == training.training_id|stringformat:'s' %} selected{% endif %}>{{ training.training_name }}</option>{% endfor %}</select>{% if student_field_errors.training %}<div class="invalid-feedback d-block">{{ student_field_errors.training }}</div>{% endif %}</div>
+                                </div>
+                                <div class="inner-form__row">
+                                    <div class="inner-field"><label for="student-timetable">Orari i preferuar <span class="text-danger">*</span></label><select id="student-timetable" name="timetable" required class="{% if student_field_errors.timetable %}is-invalid{% endif %}"><option value="">Zgjidh orarin</option><option value="morning"{% if student_form_data.timetable == 'morning' %} selected{% endif %}>11:00 - 13:00</option><option value="afternoon"{% if student_form_data.timetable == 'afternoon' %} selected{% endif %}>17:00 - 19:00</option><option value="evening"{% if student_form_data.timetable == 'evening' %} selected{% endif %}>19:00 - 21:00</option></select>{% if student_field_errors.timetable %}<div class="invalid-feedback d-block">{{ student_field_errors.timetable }}</div>{% endif %}</div>
+                                    
+                                </div>
+                                <div class="inner-field"><label for="student-message">Mesazhi juaj</label><textarea id="student-message" name="message" placeholder="Na tregoni më shumë, nëse dëshironi...">{{ student_form_data.message }}</textarea></div>
+                                <div class="form-check"><input class="form-check-input" type="checkbox" value="accepted" id="student-terms" name="terms_conditions" required{% if student_form_data.terms_conditions == 'accepted' %} checked{% endif %}><label class="form-check-label" for="student-terms">Pranoj termat dhe kushtet e aplikimit.</label>{% if student_field_errors.terms_conditions %}<div class="invalid-feedback d-block">{{ student_field_errors.terms_conditions }}</div>{% endif %}</div>
+                                <p class="inner-form__notice">Të dhënat tuaja do të përdoren vetëm për procesin e aplikimit dhe komunikimin për kursin e zgjedhur.</p>
+                                <div><button type="submit" name="student_button" class="inner-button inner-button--primary">Dërgo aplikimin</button></div>
+                            </form>
+                        </div>
+
+                        <div class="application-panel" id="business-panel" role="tabpanel" aria-labelledby="business-tab"{% if active_application_form != 'business' %} hidden{% endif %}>
+                            <form class="inner-form" method="post" action="#application-form" novalidate>
+                                {% csrf_token %}<input type="hidden" name="submission_token" value="{{ business_form_data.submission_token }}"><div class="application-honeypot" aria-hidden="true"><label for="business-website">Website</label><input id="business-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                                <div class="inner-form__row">
+                                    <div class="inner-field"><label for="business-name">Emri i kompanisë <span class="text-danger">*</span></label><input id="business-name" name="name" value="{{ business_form_data.name }}" placeholder="Emri i kompanisë" required class="{% if business_field_errors.name %}is-invalid{% endif %}">{% if business_field_errors.name %}<div class="invalid-feedback d-block">{{ business_field_errors.name }}</div>{% endif %}</div>
+                                    <div class="inner-field"><label for="business-delegate">Personi i kontaktit <span class="text-danger">*</span></label><input id="business-delegate" name="delegate" value="{{ business_form_data.delegate }}" placeholder="Emri dhe mbiemri" required class="{% if business_field_errors.delegate %}is-invalid{% endif %}">{% if business_field_errors.delegate %}<div class="invalid-feedback d-block">{{ business_field_errors.delegate }}</div>{% endif %}</div>
+                                </div>
+                                <div class="inner-form__row">
+                                    <div class="inner-field"><label for="business-email">Email i punës <span class="text-danger">*</span></label><input id="business-email" name="email" type="email" value="{{ business_form_data.email }}" placeholder="shembull@email.com" required class="{% if business_field_errors.email %}is-invalid{% endif %}">{% if business_field_errors.email %}<div class="invalid-feedback d-block">{{ business_field_errors.email }}</div>{% endif %}</div>
+                                    <div class="inner-field"><label for="business-phone">Numri i telefonit <span class="text-danger">*</span></label><input id="business-phone" name="phone" type="tel" value="{{ business_form_data.phone }}" placeholder="+355..." required class="{% if business_field_errors.phone %}is-invalid{% endif %}">{% if business_field_errors.phone %}<div class="invalid-feedback d-block">{{ business_field_errors.phone }}</div>{% endif %}</div>
+                                </div>
+                                <div class="inner-field"><label for="business-service">Shërbimi që ju intereson <span class="text-danger">*</span></label><select id="business-service" name="service" required class="{% if business_field_errors.service %}is-invalid{% endif %}"><option value="">Zgjidh shërbimin</option>{% for service in services %}<option value="{{ service.services_name }}"{% if business_form_data.service == service.services_name %} selected{% endif %}>{{ service.services_name }}</option>{% endfor %}</select>{% if business_field_errors.service %}<div class="invalid-feedback d-block">{{ business_field_errors.service }}</div>{% endif %}</div>
+                                <div class="inner-field"><label for="business-message">Përshkrimi i kërkesës <span class="text-danger">*</span></label><textarea id="business-message" name="message" placeholder="Objektivi, sfida aktuale dhe rezultati që prisni..." required>{{ business_form_data.message }}</textarea>{% if business_field_errors.message %}<div class="invalid-feedback d-block">{{ business_field_errors.message }}</div>{% endif %}</div>
+                                <p class="inner-form__notice">Të dhënat përdoren vetëm për të trajtuar kërkesën dhe për t'ju kontaktuar.</p>
+                                <div><button type="submit" name="business_button" class="inner-button inner-button--primary">Kërko konsultë</button></div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+{% if show_student_success_modal %}
+<div class="modal fade contact-success-modal" id="studentSuccessModal" tabindex="-1" aria-labelledby="studentSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close contact-success-modal__close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+            <div class="contact-success-modal__body">
+                <div class="contact-success-modal__icon" aria-hidden="true"><i class="fas fa-check"></i></div>
+                <h2 class="contact-success-modal__title" id="studentSuccessModalLabel">Aplikimi u dërgua me sukses!</h2>
+                <p class="contact-success-modal__message">Faleminderit për aplikimin. Ekipi ynë do t'ju kontaktojë së shpejti me informacionin për hapat e mëtejshëm.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if show_business_success_modal %}
+<div class="modal fade contact-success-modal" id="businessSuccessModal" tabindex="-1" aria-labelledby="businessSuccessModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <button type="button" class="btn-close contact-success-modal__close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+            <div class="contact-success-modal__body">
+                <div class="contact-success-modal__icon" aria-hidden="true"><i class="fas fa-check"></i></div>
+                <h2 class="contact-success-modal__title" id="businessSuccessModalLabel">Kërkesa u dërgua me sukses!</h2>
+                <p class="contact-success-modal__message">Faleminderit për interesimin tuaj. Ekipi ynë do ta shqyrtojë kërkesën dhe do t'ju kontaktojë sa më shpejt.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block page_scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('[data-application-tab]');
+    const panels = document.querySelectorAll('.application-panel');
+    function selectApplicationForm(selected) {
+        tabs.forEach(function (item) { item.setAttribute('aria-selected', String(item.dataset.applicationTab === selected)); });
+        panels.forEach(function (panel) { panel.hidden = panel.id !== selected + '-panel'; });
+    }
+    const activePanel = document.querySelector('.application-panel:not([hidden])');
+    selectApplicationForm(activePanel ? activePanel.id.replace('-panel', '') : 'student');
+    tabs.forEach(function (tab) {
+        tab.addEventListener('click', function () { selectApplicationForm(tab.dataset.applicationTab); });
+    });
+
+    const successModalElement = document.querySelector('.contact-success-modal');
+    if (successModalElement && typeof bootstrap !== 'undefined') {
+        new bootstrap.Modal(successModalElement, { backdrop: 'static', keyboard: true }).show();
+    }
+});
+</script>
+{% endblock %}

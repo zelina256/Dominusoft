@@ -26,6 +26,10 @@ def _add_errors(request, errors, tag):
         messages.add_message(request, messages.ERROR, error, extra_tags=tag)
 
 
+def _is_honeypot_submission(request):
+    return bool((request.POST.get("website") or "").strip())
+
+
 def _validate_email_address(email, label):
     if not email:
         return f"{label} është i detyrueshëm."
@@ -288,7 +292,7 @@ def _send_contact_notification_email(contact_data):
 
 
 # Form Biznes
-def business(request):
+def business(request, template_name="apliko/biznes.html"):
     cat_trainings = Category_training.objects.all()
     services = Services.objects.all()
     form_data = {
@@ -303,6 +307,9 @@ def business(request):
     field_errors = {}
 
     if request.method == "POST" and "business_button" in request.POST:
+        if _is_honeypot_submission(request):
+            return redirect("application")
+
         form_data["submission_token"] = request.POST.get("submission_token") or ""
         form_data["name"] = (request.POST.get("name") or "").strip()
         form_data["delegate"] = (request.POST.get("delegate") or "").strip()
@@ -381,7 +388,7 @@ def business(request):
                 extra_tags="business",
             )
             request.session["show_business_success_modal"] = True
-            return redirect("business")
+            return redirect("application" if template_name == "apliko/application.html" else "business")
         _add_errors(request, errors, "business")
 
     # Subscribe
@@ -412,11 +419,23 @@ def business(request):
         "field_errors": field_errors,
         "show_business_success_modal": request.session.pop("show_business_success_modal", False),
     }
-    return render(request, "apliko/biznes.html", context)
+    if template_name == "apliko/application.html":
+        context.update(
+            {
+                "active_application_form": "business",
+                "business_form_data": form_data,
+                "business_field_errors": field_errors,
+                "student_form_data": _student_form_data(),
+                "student_field_errors": {},
+                "trainings": Training.objects.all(),
+                "university_degree_choices": Student.UniversityDegreeChoices.choices,
+            }
+        )
+    return render(request, template_name, context)
 
 # Form Kursant
-def student(request):
-    form_data = {
+def _student_form_data():
+    return {
         "submission_token": uuid.uuid4().hex,
         "name": "",
         "father_name": "",
@@ -431,6 +450,10 @@ def student(request):
         "message": "",
         "terms_conditions": "",
     }
+
+
+def student(request, template_name="apliko/student.html"):
+    form_data = _student_form_data()
     field_errors = {}
 
     # Subscribe
@@ -458,6 +481,9 @@ def student(request):
     cat_trainings = Category_training.objects.all()
     trainings = Training.objects.all()
     if request.method == "POST" and "student_button" in request.POST:
+        if _is_honeypot_submission(request):
+            return redirect("application")
+
         form_data["submission_token"] = request.POST.get("submission_token") or ""
         name_student = (request.POST.get("name") or "").strip()
         surname_student = (request.POST.get("surname") or "").strip()
@@ -625,7 +651,7 @@ def student(request):
                     extra_tags="student",
                 )
             request.session["show_student_success_modal"] = True
-            return redirect("student")
+            return redirect("application" if template_name == "apliko/application.html" else "student")
     context = {
         "cat_trainings": cat_trainings,
         "trainings": trainings,
@@ -634,7 +660,74 @@ def student(request):
         "field_errors": field_errors,
         "university_degree_choices": Student.UniversityDegreeChoices.choices,
     }
-    return render(request, "apliko/student.html", context)
+    if template_name == "apliko/application.html":
+        context.update(
+            {
+                "active_application_form": "student",
+                "student_form_data": form_data,
+                "student_field_errors": field_errors,
+                "business_form_data": {
+                    "submission_token": uuid.uuid4().hex,
+                    "name": "",
+                    "delegate": "",
+                    "email": "",
+                    "phone": "",
+                    "service": "",
+                    "message": "",
+                },
+                "business_field_errors": {},
+                "services": Services.objects.all(),
+            }
+        )
+    return render(request, template_name, context)
+
+
+def application(request):
+    if request.method == "POST" and "student_button" in request.POST:
+        return student(request, "apliko/application.html")
+    if request.method == "POST" and "business_button" in request.POST:
+        return business(request, "apliko/application.html")
+
+    requested_form = request.GET.get("form")
+    active_application_form = requested_form if requested_form in {"student", "business"} else "student"
+
+    return render(
+        request,
+        "apliko/application.html",
+        {
+            "cat_trainings": Category_training.objects.all(),
+            "trainings": Training.objects.all(),
+            "services": Services.objects.all(),
+            "university_degree_choices": Student.UniversityDegreeChoices.choices,
+            "active_application_form": active_application_form,
+            "show_student_success_modal": request.session.pop(
+                "show_student_success_modal", False
+            ),
+            "show_business_success_modal": request.session.pop(
+                "show_business_success_modal", False
+            ),
+            "student_form_data": _student_form_data(),
+            "student_field_errors": {},
+            "business_form_data": {
+                "submission_token": uuid.uuid4().hex,
+                "name": "",
+                "delegate": "",
+                "email": "",
+                "phone": "",
+                "service": "",
+                "message": "",
+            },
+            "business_field_errors": {},
+        },
+    )
+
+
+def legacy_student(request):
+    return redirect("application")
+
+
+def legacy_business(request):
+    return redirect("application")
 
 
 

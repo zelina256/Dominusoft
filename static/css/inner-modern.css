@@ -47,6 +47,43 @@
     padding-block: clamp(42px, 6vw, 72px);
 }
 
+.application-toggle {
+    display: inline-flex;
+    gap: 15px;
+    justify-content: center;
+    padding: 4px;
+    border: 1px solid var(--inner-line);
+    border-radius: 8px;
+    background: var(--inner-soft);
+}
+
+.application-toggle__button {
+    border: 0;
+    border-radius: 5px;
+    padding: 10px 16px;
+    background: transparent;
+    color: var(--inner-muted);
+    font-weight: 700;
+}
+
+.application-toggle__button[aria-selected="true"] {
+    background: var(--inner-navy);
+    color: #fff;
+}
+
+.application-panel[hidden] {
+    display: none;
+}
+
+.application-honeypot {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+}
+
 .inner-hero {
     position: relative;
     isolation: isolate;

@@ -30,7 +30,7 @@
                 <p class="inner-hero__lead">Dominusoft është një institucion i licencuar i fokusuar në trajnime profesionale me qasje praktike, te njohura kombetrisht dhe nderkombetarisht, mentorim real dhe rezultate të vërteta në tregun e punës.</p>
                 <div class="inner-hero__actions">
                     <a class="inner-button inner-button--primary" href="#programet">Shiko programet</a>
-                    <a class="inner-button inner-button--ghost" href="{% url 'student' %}">Regjistrohu në trajnime</a>
+                    <a class="inner-button inner-button--ghost" href="{% url 'application' %}?form=student">Regjistrohu në trajnime</a>
                 </div>
             </div>
             <aside class="inner-hero__panel" aria-label="Përfitimet e trajnimeve">
@@ -72,7 +72,7 @@
             <div class="inner-empty">
                 <h2>Programet po përditësohen</h2>
                 <p>Kontaktoni ekipin tonë për informacion mbi regjistrimet e ardhshme.</p>
-                <a class="inner-button inner-button--primary" href="{% url 'student' %}">Na kontaktoni</a>
+                    <a class="inner-button inner-button--primary" href="{% url 'application' %}?form=student">Na kontaktoni</a>
             </div>
             {% endif %}
         </div>
@@ -129,7 +129,7 @@
                 <h2 id="final-cta-title">Gati për hapin tjetër në karrierë?</h2>
             </div>
             <div class="home-final-cta__actions">
-                <a class="home-button home-button--primary" href="{% url 'student' %}">Regjistrohu në Kurs</a>
+                <a class="home-button home-button--primary" href="{% url 'application' %}?form=student">Regjistrohu në Kurs</a>
             </div>
         </div>
     </section>

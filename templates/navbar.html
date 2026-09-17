@@ -62,6 +62,11 @@
                             {% if request.resolver_match.url_name == 'contact' %}aria-current="page"{% endif %}
                             href="{% url 'contact' %}">Kontakt</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="site-nav__link{% if request.resolver_match.url_name == 'application' %} is-active{% endif %}"
+                            {% if request.resolver_match.url_name == 'application' %}aria-current="page"{% endif %}
+                            href="{% url 'application' %}">Apliko</a>
+                    </li>
                 </ul>
 
                 <form class="site-search" method="get" action="{% url 'searchvenues' %}" role="search">

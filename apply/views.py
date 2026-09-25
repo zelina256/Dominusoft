@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
+from django.core.cache import cache
 from django.utils import timezone
 from django.conf import settings
 from django.core.mail import EmailMultiAlternatives
@@ -12,7 +13,7 @@ import json
 import logging
 import re
 import uuid
-from urllib import error, request as urllib_request
+from urllib import error, parse, request as urllib_request
 from services.models import Services
 from trainings.models import *
 from apply.models import *
@@ -28,6 +29,70 @@ def _add_errors(request, errors, tag):
 
 def _is_honeypot_submission(request):
     return bool((request.POST.get("website") or "").strip())
+
+
+def _get_client_ip(request):
+    forwarded_for = request.META.get("HTTP_X_FORWARDED_FOR", "")
+    if forwarded_for:
+        return forwarded_for.split(",")[0].strip()
+    return request.META.get("REMOTE_ADDR", "")
+
+
+def _is_rate_limited(request, form_name):
+    if not getattr(settings, "FORM_SUBMISSION_LIMIT", 0):
+        return False
+
+    cache_key = "application-form:%s:%s" % (form_name, _get_client_ip(request))
+    current_count = cache.get(cache_key, 0)
+    if current_count >= settings.FORM_SUBMISSION_LIMIT:
+        return True
+
+    cache.set(
+        cache_key,
+        current_count + 1,
+        timeout=getattr(settings, "FORM_SUBMISSION_WINDOW_SECONDS", 3600),
+    )
+    return False
+
+
+def _verify_recaptcha(request, action):
+    if not getattr(settings, "RECAPTCHA_ENABLED", False):
+        return True
+
+    token = request.POST.get("g-recaptcha-response", "")
+    if not token:
+        return False
+
+    payload = parse.urlencode(
+        {
+            "secret": settings.GOOGLE_RECAPTCHA_SECRET_KEY,
+            "response": token,
+            "remoteip": _get_client_ip(request),
+        }
+    ).encode("utf-8")
+    verification_request = urllib_request.Request(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data=payload,
+    )
+
+    try:
+        with urllib_request.urlopen(verification_request, timeout=5) as response:
+            verification_result = json.loads(response.read().decode("utf-8"))
+    except (error.URLError, ValueError, OSError):
+        logger.warning("reCAPTCHA verification failed", exc_info=True)
+        return False
+
+    return (
+        verification_result.get("success") is True
+        and verification_result.get("action") == action
+        and verification_result.get("score", 0) >= 0.5
+    )
+
+
+def _has_spam_protection_failure(request, form_name, recaptcha_action):
+    if not _verify_recaptcha(request, recaptcha_action):
+        return True
+    return _is_rate_limited(request, form_name)
 
 
 def _validate_email_address(email, label):
@@ -62,30 +127,8 @@ def _validate_required_text(value, label, min_length=1, max_length=None):
     return None
 
 
-def _validate_birthday(birthday_value):
-    if not birthday_value:
-        return "Ditëlindja është e detyrueshme."
-
-    try:
-        birthday = datetime.datetime.strptime(birthday_value, "%Y-%m-%d").date()
-    except ValueError:
-        return "Ditëlindja nuk është në format të vlefshëm."
-
-    today = timezone.now().date()
-    if birthday > today:
-        return "Ditëlindja nuk mund të jetë në të ardhmen."
-    if birthday.year < 1900:
-        return "Ditëlindja nuk është e vlefshme."
-    return None
 
 
-def _validate_card_id_number(card_id_number):
-    if not card_id_number:
-        return "Numri i kartës së identitetit është i detyrueshëm."
-    clean_value = card_id_number.strip().upper()
-    if not re.match(r"^[A-Z0-9]{5,20}$", clean_value):
-        return "Numri i kartës së identitetit nuk është i vlefshëm."
-    return None
 
 
 def _validate_allowed_choice(value, allowed_values, label):
@@ -109,103 +152,7 @@ def _luhn_check(number_digits):
     return checksum % 10 == 0
 
 
-def _validate_card_number(card_number_value):
-    card_digits = re.sub(r"\D", "", card_number_value or "")
-    if not card_digits:
-        return "Numri i kartës është i detyrueshëm."
-    if len(card_digits) < 13 or len(card_digits) > 19:
-        return "Numri i kartës duhet të ketë nga 13 deri në 19 shifra."
-    if not _luhn_check(card_digits):
-        return "Numri i kartës nuk është i vlefshëm."
-    return None
 
-
-def _validate_card_expiry(expiry_value):
-    if not expiry_value:
-        return "Skadenca e kartës është e detyrueshme."
-
-    match = re.match(r"^(0[1-9]|1[0-2])/(\d{2})$", expiry_value.strip())
-    if not match:
-        return "Skadenca duhet të jetë në formatin MM/YY."
-
-    month = int(match.group(1))
-    year = 2000 + int(match.group(2))
-    today = timezone.now().date()
-
-    if year < today.year:
-        return "Karta ka skaduar."
-    if year == today.year and month < today.month:
-        return "Karta ka skaduar."
-    return None
-
-
-def _validate_card_cvv(cvv_value):
-    cvv_digits = re.sub(r"\D", "", cvv_value or "")
-    if not cvv_digits:
-        return "CVV është i detyrueshëm."
-    if len(cvv_digits) not in (3, 4):
-        return "CVV duhet të ketë 3 ose 4 shifra."
-    return None
-
-
-def _authorize_card_payment(
-    cardholder_name,
-    card_number,
-    card_expiry,
-    card_cvv,
-    student_email,
-    training,
-):
-    gateway_url = str(getattr(settings, "BANK_PAYMENT_API_URL", "")).strip()
-    if not gateway_url:
-        return False, "Pagesa nuk mund të kryhet aktualisht. Ju lutem kontaktoni stafin tonë."
-
-    card_digits = re.sub(r"\D", "", card_number or "")
-    payload = {
-        "cardholder_name": cardholder_name,
-        "card_number": card_digits,
-        "card_expiry": card_expiry,
-        "card_cvv": card_cvv,
-        "currency": "ALL",
-        "reference": f"student-{timezone.now().strftime('%Y%m%d%H%M%S')}",
-        "customer_email": student_email,
-        "training_id": getattr(training, "pk", None),
-        "training_name": getattr(training, "training_name", ""),
-    }
-
-    headers = {"Content-Type": "application/json"}
-    api_key = str(getattr(settings, "BANK_PAYMENT_API_KEY", "")).strip()
-    if api_key:
-        headers["Authorization"] = f"Bearer {api_key}"
-
-    request_body = json.dumps(payload).encode("utf-8")
-    bank_request = urllib_request.Request(
-        gateway_url,
-        data=request_body,
-        headers=headers,
-        method="POST",
-    )
-
-    try:
-        with urllib_request.urlopen(bank_request, timeout=15) as response:
-            raw_response = response.read().decode("utf-8")
-            response_data = json.loads(raw_response) if raw_response else {}
-    except error.HTTPError as http_error:
-        try:
-            error_data = json.loads(http_error.read().decode("utf-8"))
-            message = error_data.get("message")
-        except (json.JSONDecodeError, UnicodeDecodeError):
-            message = None
-        return False, message or "Pagesa u refuzua nga banka."
-    except (error.URLError, TimeoutError, json.JSONDecodeError, UnicodeDecodeError):
-        return False, "Nuk u arrit lidhja me bankën. Provoni përsëri pas pak."
-
-    approved = bool(response_data.get("approved"))
-    status = str(response_data.get("status", "")).lower()
-    if approved or status in {"approved", "success", "succeeded"}:
-        return True, None
-
-    return False, response_data.get("message") or "Pagesa nuk u aprovua nga banka."
 
 
 def _send_student_procedure_email(student_data):
@@ -265,31 +212,6 @@ def _send_business_notification_email(business_data):
         return False
 
 
-def _send_contact_notification_email(contact_data):
-    recipient = getattr(
-        settings,
-        "CONTACT_NOTIFICATION_EMAIL",
-        getattr(settings, "DEFAULT_FROM_EMAIL", "info@dominusoft.al"),
-    )
-    if not recipient:
-        return False
-
-    html_body = render_to_string("apliko/email/email_contact.html", contact_data)
-    email = EmailMultiAlternatives(
-        subject="Mesazh i ri kontakti - Dominusoft",
-        body=strip_tags(html_body),
-        from_email=getattr(settings, "DEFAULT_FROM_EMAIL", "no-reply@dominusoft.com"),
-        to=[recipient],
-    )
-    email.attach_alternative(html_body, "text/html")
-
-    try:
-        email.send(fail_silently=False)
-        return True
-    except Exception:
-        logger.exception("Failed to send contact notification email")
-        return False
-
 
 # Form Biznes
 def business(request, template_name="apliko/biznes.html"):
@@ -309,6 +231,14 @@ def business(request, template_name="apliko/biznes.html"):
     if request.method == "POST" and "business_button" in request.POST:
         if _is_honeypot_submission(request):
             return redirect("application")
+        if _has_spam_protection_failure(request, "business", "business_inquiry"):
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "Kërkesa nuk mund të verifikohet. Ju lutem provoni përsëri.",
+                extra_tags="business",
+            )
+            return redirect("application" if template_name == "apliko/application.html" else "business")
 
         form_data["submission_token"] = request.POST.get("submission_token") or ""
         form_data["name"] = (request.POST.get("name") or "").strip()
@@ -418,6 +348,7 @@ def business(request, template_name="apliko/biznes.html"):
         "form_data": form_data,
         "field_errors": field_errors,
         "show_business_success_modal": request.session.pop("show_business_success_modal", False),
+        "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
     }
     if template_name == "apliko/application.html":
         context.update(
@@ -428,7 +359,7 @@ def business(request, template_name="apliko/biznes.html"):
                 "student_form_data": _student_form_data(),
                 "student_field_errors": {},
                 "trainings": Training.objects.all(),
-                "university_degree_choices": Student.UniversityDegreeChoices.choices,
+                "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
             }
         )
     return render(request, template_name, context)
@@ -483,33 +414,31 @@ def student(request, template_name="apliko/student.html"):
     if request.method == "POST" and "student_button" in request.POST:
         if _is_honeypot_submission(request):
             return redirect("application")
+        if _has_spam_protection_failure(request, "student", "student_application"):
+            messages.add_message(
+                request,
+                messages.ERROR,
+                "Kërkesa nuk mund të verifikohet. Ju lutem provoni përsëri.",
+                extra_tags="student",
+            )
+            return redirect("application" if template_name == "apliko/application.html" else "student")
 
         form_data["submission_token"] = request.POST.get("submission_token") or ""
         name_student = (request.POST.get("name") or "").strip()
         surname_student = (request.POST.get("surname") or "").strip()
-        father_name_student = (request.POST.get("father_name") or "").strip()
-        birthday_student = (request.POST.get("birthday") or "").strip()
         email_student = (request.POST.get("email") or "").strip()
         phone_student = (request.POST.get("phone") or "").strip()
-        card_id_number_student = (request.POST.get("card_id_number") or "").strip()
-        university_degree_student = (request.POST.get("university_degree") or "").strip()
         training_student = (request.POST.get("training") or "").strip()
-        timetable_student = (request.POST.get("timetable") or "").strip()
         message_student = (request.POST.get("message") or "").strip()
         terms_conditions_student = (request.POST.get("terms_conditions") or "").strip()
 
         form_data.update(
             {
                 "name": name_student,
-                "father_name": father_name_student,
                 "surname": surname_student,
-                "birthday": birthday_student,
                 "email": email_student,
                 "phone": phone_student,
-                "card_id_number": card_id_number_student,
-                "university_degree": university_degree_student,
                 "training": training_student,
-                "timetable": timetable_student,
                 "message": message_student,
                 "terms_conditions": terms_conditions_student,
             }
@@ -529,18 +458,6 @@ def student(request, template_name="apliko/student.html"):
             errors.append(surname_error)
             field_errors["surname"] = surname_error
 
-        father_name_error = _validate_required_text(
-            father_name_student, "Emri i babait", max_length=100
-        )
-        if father_name_error:
-            errors.append(father_name_error)
-            field_errors["father_name"] = father_name_error
-
-        if birthday_student:
-            birthday_error = _validate_birthday(birthday_student)
-            if birthday_error:
-                errors.append(birthday_error)
-                field_errors["birthday"] = birthday_error
 
         email_error = _validate_email_address(email_student, "Email")
         if email_error:
@@ -551,30 +468,6 @@ def student(request, template_name="apliko/student.html"):
         if phone_error:
             errors.append(phone_error)
             field_errors["phone"] = phone_error
-
-        if card_id_number_student:
-            card_id_error = _validate_card_id_number(card_id_number_student)
-            if card_id_error:
-                errors.append(card_id_error)
-                field_errors["card_id_number"] = card_id_error
-
-        degree_error = _validate_allowed_choice(
-            university_degree_student,
-            {value for value, _ in Student.UniversityDegreeChoices.choices},
-            "Diploma universitare",
-        )
-        if degree_error:
-            errors.append(degree_error)
-            field_errors["university_degree"] = degree_error
-
-        timetable_error = _validate_allowed_choice(
-            timetable_student,
-            {"morning", "afternoon", "evening"},
-            "Orari i preferuar",
-        )
-        if timetable_error:
-            errors.append(timetable_error)
-            field_errors["timetable"] = timetable_error
 
         selected_training = None
         if training_student:
@@ -599,24 +492,14 @@ def student(request, template_name="apliko/student.html"):
             field_errors["terms_conditions"] = terms_error
 
         if not errors:
-            birthday_date = (
-                datetime.datetime.strptime(birthday_student, "%Y-%m-%d").date()
-                if birthday_student
-                else None
-            )
             student_application, created = Student.objects.get_or_create(
                 submission_token=form_data["submission_token"],
                 defaults={
                     "student_name": name_student,
                     "student_surname": surname_student,
-                    "student_father_name": father_name_student,
-                    "student_birthday": birthday_date,
                     "student_email": email_student,
                     "student_phone": phone_student,
-                    "student_card_id_number": card_id_number_student.upper() or None,
-                    "student_university_degree": university_degree_student,
                     "student_training": selected_training,
-                    "student_timetable": timetable_student,
                     "student_terms_accepted": True,
                     "student_message": message_student,
                 },
@@ -631,7 +514,6 @@ def student(request, template_name="apliko/student.html"):
                         "emailStudent": email_student,
                         "phoneStudent": phone_student,
                         "trainingStudent": getattr(selected_training, "training_name", ""),
-                        "timetableStudent": timetable_student,
                         "messageStudent": message_student,
                         "applicationDate": student_application.submit_at,
                     }
@@ -658,7 +540,7 @@ def student(request, template_name="apliko/student.html"):
         "show_student_success_modal": request.session.pop("show_student_success_modal", False),
         "form_data": form_data,
         "field_errors": field_errors,
-        "university_degree_choices": Student.UniversityDegreeChoices.choices,
+        "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
     }
     if template_name == "apliko/application.html":
         context.update(
@@ -690,6 +572,31 @@ def application(request):
 
     requested_form = request.GET.get("form")
     active_application_form = requested_form if requested_form in {"student", "business"} else "student"
+    requested_training = request.GET.get("training", "")
+    selected_training_id = ""
+    if requested_training and Training.objects.filter(pk=requested_training).exists():
+        selected_training_id = requested_training
+
+    requested_service = request.GET.get("service", "")
+    selected_service_name = ""
+    if requested_service:
+        selected_service = Services.objects.filter(pk=requested_service).only(
+            "services_name"
+        ).first()
+        if selected_service:
+            selected_service_name = selected_service.services_name
+
+    student_form_data = _student_form_data()
+    student_form_data["training"] = selected_training_id
+    business_form_data = {
+        "submission_token": uuid.uuid4().hex,
+        "name": "",
+        "delegate": "",
+        "email": "",
+        "phone": "",
+        "service": selected_service_name,
+        "message": "",
+    }
 
     return render(
         request,
@@ -698,7 +605,6 @@ def application(request):
             "cat_trainings": Category_training.objects.all(),
             "trainings": Training.objects.all(),
             "services": Services.objects.all(),
-            "university_degree_choices": Student.UniversityDegreeChoices.choices,
             "active_application_form": active_application_form,
             "show_student_success_modal": request.session.pop(
                 "show_student_success_modal", False
@@ -706,18 +612,11 @@ def application(request):
             "show_business_success_modal": request.session.pop(
                 "show_business_success_modal", False
             ),
-            "student_form_data": _student_form_data(),
+            "student_form_data": student_form_data,
             "student_field_errors": {},
-            "business_form_data": {
-                "submission_token": uuid.uuid4().hex,
-                "name": "",
-                "delegate": "",
-                "email": "",
-                "phone": "",
-                "service": "",
-                "message": "",
-            },
+            "business_form_data": business_form_data,
             "business_field_errors": {},
+            "recaptcha_site_key": settings.GOOGLE_RECAPTCHA_SITE_KEY,
         },
     )
 
@@ -728,133 +627,3 @@ def legacy_student(request):
 
 def legacy_business(request):
     return redirect("application")
-
-
-
-
-def contact(request):
-    cat_trainings = Category_training.objects.all()
-    form_data = {
-        "submission_token": uuid.uuid4().hex,
-        "name": "",
-        "surname": "",
-        "email": "",
-        "phone": "",
-        "subject": "",
-        "message": "",
-    }
-    field_errors = {}
-
-    if request.method == "POST" and "subscribe_button" in request.POST:
-        if request.POST.get("subscribe_email"):
-            email = request.POST.get("subscribe_email")
-            subscribe = Subscribe()
-            subscribe.subscribe_email = request.POST.get("subscribe_email")
-            if Subscribe.objects.filter(subscribe_email=email).exists():
-                messages.add_message(
-                    request,
-                    messages.WARNING,
-                    "Ju jeni bërë subscribe më parë në faqen tonë. Faleminderit !",
-                    extra_tags="subscribe",
-                )
-            else:
-                subscribe.save()
-                messages.add_message(
-                    request,
-                    messages.SUCCESS,
-                    "Ju tashmë jeni pjesë e jona!",
-                    extra_tags="subscribe",
-                )
-
-    if request.method == "POST" and "subscribe_button" not in request.POST:
-        form_data["submission_token"] = request.POST.get("submission_token") or ""
-        form_data["name"] = (request.POST.get("name") or "").strip()
-        form_data["surname"] = (request.POST.get("surname") or "").strip()
-        form_data["email"] = (request.POST.get("email") or "").strip()
-        form_data["phone"] = (request.POST.get("phone") or "").strip()
-        form_data["subject"] = (request.POST.get("subject") or "").strip()
-        form_data["message"] = (request.POST.get("message") or "").strip()
-
-        errors = []
-
-        if not re.fullmatch(r"[0-9a-f]{32}", form_data["submission_token"]):
-            errors.append("Kërkesa nuk është e vlefshme. Ju lutem provoni përsëri.")
-
-        name_error = _validate_required_text(form_data["name"], "Emri", max_length=50)
-        if name_error:
-            field_errors["name"] = name_error
-            errors.append(name_error)
-
-        surname_error = _validate_required_text(form_data["surname"], "Mbiemri", max_length=50)
-        if surname_error:
-            field_errors["surname"] = surname_error
-            errors.append(surname_error)
-
-        email_error = _validate_email_address(form_data["email"], "Email")
-        if email_error:
-            field_errors["email"] = email_error
-            errors.append(email_error)
-
-        phone_error = _validate_phone(form_data["phone"])
-        if phone_error:
-            field_errors["phone"] = phone_error
-            errors.append(phone_error)
-
-        subject_error = _validate_required_text(
-            form_data["subject"],
-            "Subjekti",
-            min_length=3,
-            max_length=200,
-        )
-        if subject_error:
-            field_errors["subject"] = subject_error
-            errors.append(subject_error)
-
-        message_error = None
-        if len(form_data["message"]) > 1000:
-            message_error = "Mesazhi duhet të ketë maksimumi 1000 karaktere."
-        if message_error:
-            field_errors["message"] = message_error
-            errors.append(message_error)
-
-        if not errors:
-            _, created = Contact.objects.get_or_create(
-                submission_token=form_data["submission_token"],
-                defaults={
-                    "contact_name": form_data["name"],
-                    "contact_surname": form_data["surname"],
-                    "contact_email": form_data["email"],
-                    "contact_phone": form_data["phone"],
-                    "contact_subject": form_data["subject"],
-                    "contact_message": form_data["message"],
-                },
-            )
-            if created:
-                _send_contact_notification_email(
-                    {
-                        "nameContact": form_data["name"],
-                        "surnameContact": form_data["surname"],
-                        "emailContact": form_data["email"],
-                        "phoneContact": form_data["phone"],
-                        "subjectContact": form_data["subject"],
-                        "messageContact": form_data["message"],
-                    }
-                )
-            messages.add_message(
-                request,
-                messages.SUCCESS,
-                "Mesazhi juaj u dërgua me sukses.",
-                extra_tags="contact",
-            )
-            request.session["show_contact_success_modal"] = True
-            return redirect("contact")
-
-        _add_errors(request, errors, "contact")
-
-    context = {
-        "cat_trainings": cat_trainings,
-        "form_data": form_data,
-        "field_errors": field_errors,
-        "show_contact_success_modal": request.session.pop("show_contact_success_modal", False),
-    }
-    return render(request, "apliko/contact.html", context)

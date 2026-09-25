@@ -4,22 +4,22 @@
 {% block title %}Apliko | Dominusoft{% endblock %}
 {% block meta %}<meta name="description" content="Aplikoni për kurs profesional ose kërkoni bashkëpunim biznesi me Dominusoft.">{% endblock %}
 {% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
+{% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
 {% block body_class %}inner-page{% endblock %}
 
 {% block content %}
 {% include 'navbar.html' %}
 <main id="main-content" class="inner-main">
 
-  <section class="inner-hero" aria-labelledby="contact-page-title">
+    <section class="inner-hero" aria-labelledby="application-page-title">
     <div class="inner-container inner-hero__layout">
       <div class="inner-hero__content">
-        <p class="inner-eyebrow">Kontakt</p>
-        <h1 id="contact-page-title">Kontaktoni Dominusoft</h1>
+                <p class="inner-eyebrow">Aplikim për kurs</p>
+                <h1 id="application-page-title">Apliko për kursin tënd</h1>
         <p class="inner-hero__lead">
-          Keni pyetje rreth kurseve profesionale, internship-eve,
-          zhvillimit të një website-i apo një bashkëpunimi me biznesin tuaj?
-          Kontaktoni ekipin e Dominusoft dhe merrni informacionin që ju
-          nevojitet për të hedhur hapin e radhës.
+                    Zgjidhni kursin që ju intereson dhe plotësoni të dhënat tuaja.
+                    Ekipi i Dominusoft do t'ju kontaktojë me informacionin për hapat e
+                    mëtejshëm.
         </p>
       </div>
 
@@ -69,30 +69,52 @@
 
                         <div class="application-panel" id="student-panel" role="tabpanel" aria-labelledby="student-tab"{% if active_application_form != 'student' %} hidden{% endif %}>
                             <form class="inner-form" method="post" action="#application-form" novalidate>
-                                {% csrf_token %}<input type="hidden" name="submission_token" value="{{ student_form_data.submission_token }}"><div class="application-honeypot" aria-hidden="true"><label for="student-website">Website</label><input id="student-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-                                <div class="inner-form__row student_first__row">
+                                {% csrf_token %}<input type="hidden" name="submission_token" value="{{ student_form_data.submission_token }}"><input type="hidden" name="g-recaptcha-response" value=""><div class="application-honeypot" aria-hidden="true"><label for="student-website">Website</label><input id="student-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                                <div class="inner-form__row ">
                                     <div class="inner-field"><label for="student-name">Emri <span class="text-danger">*</span></label><input id="student-name" name="name" value="{{ student_form_data.name }}" placeholder="Shkruani emrin tuaj" required class="{% if student_field_errors.name %}is-invalid{% endif %}">{% if student_field_errors.name %}<div class="invalid-feedback d-block">{{ student_field_errors.name }}</div>{% endif %}</div>
-                                     <div class="inner-field"><label for="student-father-name">Emri i babait <span class="text-danger">*</span></label><input id="student-father-name" name="father_name" value="{{ student_form_data.father_name }}" required placeholder="Shkruani emrin e babait" class="{% if student_field_errors.father_name %}is-invalid{% endif %}">{% if student_field_errors.father_name %}<div class="invalid-feedback d-block">{{ student_field_errors.father_name }}</div>{% endif %}</div>
                                     <div class="inner-field"><label for="student-surname">Mbiemri <span class="text-danger">*</span></label><input id="student-surname" name="surname" value="{{ student_form_data.surname }}" placeholder="Shkruani mbiemrin tuaj" required class="{% if student_field_errors.surname %}is-invalid{% endif %}">{% if student_field_errors.surname %}<div class="invalid-feedback d-block">{{ student_field_errors.surname }}</div>{% endif %}</div>
                                 </div>
-                                <div class="inner-form__row">
-                                    <div class="inner-field"><label for="student-birthday">Ditëlindja</label><input id="student-birthday" name="birthday" type="date" value="{{ student_form_data.birthday }}" class="{% if student_field_errors.birthday %}is-invalid{% endif %}">{% if student_field_errors.birthday %}<div class="invalid-feedback d-block">{{ student_field_errors.birthday }}</div>{% endif %}</div>
-                                <div class="inner-field"><label for="student-card-id">Nr. i kartës së identitetit</label><input id="student-card-id" name="card_id_number" value="{{ student_form_data.card_id_number }}" class="{% if student_field_errors.card_id_number %}is-invalid{% endif %}">{% if student_field_errors.card_id_number %}<div class="invalid-feedback d-block">{{ student_field_errors.card_id_number }}</div>{% endif %}</div>
-                                </div>
+
                                 <div class="inner-form__row">
                                     <div class="inner-field"><label for="student-email">Adresa e email-it <span class="text-danger">*</span></label><input id="student-email" name="email" type="email" value="{{ student_form_data.email }}" placeholder="shembull@email.com" required class="{% if student_field_errors.email %}is-invalid{% endif %}">{% if student_field_errors.email %}<div class="invalid-feedback d-block">{{ student_field_errors.email }}</div>{% endif %}</div>
                                     <div class="inner-field"><label for="student-phone">Numri i telefonit <span class="text-danger">*</span></label><input id="student-phone" name="phone" type="tel" value="{{ student_form_data.phone }}" placeholder="+355..." required class="{% if student_field_errors.phone %}is-invalid{% endif %}">{% if student_field_errors.phone %}<div class="invalid-feedback d-block">{{ student_field_errors.phone }}</div>{% endif %}</div>
                                 </div>
-                                <div class="inner-form__row">
-                                    <div class="inner-field"><label for="student-degree">Niveli arsimor <span class="text-danger">*</span></label><select id="student-degree" name="university_degree" required class="{% if student_field_errors.university_degree %}is-invalid{% endif %}"><option value="">Zgjidh nivelin</option>{% for value, label in university_degree_choices %}<option value="{{ value }}"{% if student_form_data.university_degree == value %} selected{% endif %}>{{ label }}</option>{% endfor %}</select>{% if student_field_errors.university_degree %}<div class="invalid-feedback d-block">{{ student_field_errors.university_degree }}</div>{% endif %}</div>
-                                    <div class="inner-field"><label for="student-training">Kursi <span class="text-danger">*</span></label><select id="student-training" name="training" required class="{% if student_field_errors.training %}is-invalid{% endif %}"><option value="">Zgjidh kursin</option>{% for training in trainings %}<option value="{{ training.training_id }}"{% if student_form_data.training == training.training_id|stringformat:'s' %} selected{% endif %}>{{ training.training_name }}</option>{% endfor %}</select>{% if student_field_errors.training %}<div class="invalid-feedback d-block">{{ student_field_errors.training }}</div>{% endif %}</div>
-                                </div>
-                                <div class="inner-form__row">
-                                    <div class="inner-field"><label for="student-timetable">Orari i preferuar <span class="text-danger">*</span></label><select id="student-timetable" name="timetable" required class="{% if student_field_errors.timetable %}is-invalid{% endif %}"><option value="">Zgjidh orarin</option><option value="morning"{% if student_form_data.timetable == 'morning' %} selected{% endif %}>11:00 - 13:00</option><option value="afternoon"{% if student_form_data.timetable == 'afternoon' %} selected{% endif %}>17:00 - 19:00</option><option value="evening"{% if student_form_data.timetable == 'evening' %} selected{% endif %}>19:00 - 21:00</option></select>{% if student_field_errors.timetable %}<div class="invalid-feedback d-block">{{ student_field_errors.timetable }}</div>{% endif %}</div>
-                                    
-                                </div>
-                                <div class="inner-field"><label for="student-message">Mesazhi juaj</label><textarea id="student-message" name="message" placeholder="Na tregoni më shumë, nëse dëshironi...">{{ student_form_data.message }}</textarea></div>
-                                <div class="form-check"><input class="form-check-input" type="checkbox" value="accepted" id="student-terms" name="terms_conditions" required{% if student_form_data.terms_conditions == 'accepted' %} checked{% endif %}><label class="form-check-label" for="student-terms">Pranoj termat dhe kushtet e aplikimit.</label>{% if student_field_errors.terms_conditions %}<div class="invalid-feedback d-block">{{ student_field_errors.terms_conditions }}</div>{% endif %}</div>
+                     <div class="inner-field">
+                                    <label for="Trajnimi" class="form-label">Zgjidh Kursin <span
+                                            class="text-danger">*</span></label>
+                                    <select class="form-select {% if student_field_errors.training %}is-invalid{% endif %}" id="Trajnimi" name="training" required>
+                                        <option value="" {% if not student_form_data.training %}selected{% endif %}>Zgjidh Kursin</option>
+                                        {% for training in trainings %}
+                                        <option value="{{ training.training_id }}" {% if student_form_data.training == training.training_id|stringformat:'s' %}selected{% endif %}>{{ training.training_name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                    {% if student_field_errors.training %}<div class="invalid-feedback d-block">{{ student_field_errors.training }}</div>{% endif %}
+                        </div>
+                                <div class="inner-field">
+                                <label for="student-message" class="form-label">Mesazhi Juaj</label>
+                                <textarea class="form-control {% if student_field_errors.message %}is-invalid{% endif %}" placeholder="Shkruani mesazhin tuaj, nëse dëshironi" name="message" id="student-message" rows="5">{{ student_form_data.message|default:'' }}</textarea>
+                                    {% if student_field_errors.message %}<div class="invalid-feedback d-block">{{ student_field_errors.message }}</div>{% endif %}
+                    </div>
+                                 <div class="inner-field">
+                                    <div class="form-check mt-1">
+                                          <input class="form-check-input {% if student_field_errors.terms_conditions %}is-invalid{% endif %}" type="checkbox" value="accepted" id="terms" name="terms_conditions" required {% if student_form_data.terms_conditions == 'accepted' %}checked{% endif %}>
+                                        <label class="form-check-label" for="terms">
+                                            Pranoj termat dhe kushtet e aplikimit dhe përpunimin e të dhënave personale.
+                                        </label>
+                                        <div class="form-text mt-2"><span class="text-danger">*</span> Përpara dërgimit të aplikimit, duhet të lexoni dhe pranoni termat dhe kushtet:
+                                            <br>
+                                            <span id="openTermsModal"
+                                                class="terms-open-btn mb-3 text-decoration-underline fw-bolder"
+                                                data-bs-toggle="modal" data-bs-target="#termsModal">
+                                                Lexoni termat dhe kushtet
+                                            </span>
+                                        </div>
+
+                                      
+                                        {% if student_field_errors.terms_conditions %}<div class="invalid-feedback d-block">{{ student_field_errors.terms_conditions }}</div>{% endif %}
+                                    </div>
+                    </div>
+
                                 <p class="inner-form__notice">Të dhënat tuaja do të përdoren vetëm për procesin e aplikimit dhe komunikimin për kursin e zgjedhur.</p>
                                 <div><button type="submit" name="student_button" class="inner-button inner-button--primary">Dërgo aplikimin</button></div>
                             </form>
@@ -100,7 +122,7 @@
 
                         <div class="application-panel" id="business-panel" role="tabpanel" aria-labelledby="business-tab"{% if active_application_form != 'business' %} hidden{% endif %}>
                             <form class="inner-form" method="post" action="#application-form" novalidate>
-                                {% csrf_token %}<input type="hidden" name="submission_token" value="{{ business_form_data.submission_token }}"><div class="application-honeypot" aria-hidden="true"><label for="business-website">Website</label><input id="business-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+                                {% csrf_token %}<input type="hidden" name="submission_token" value="{{ business_form_data.submission_token }}"><input type="hidden" name="g-recaptcha-response" value=""><div class="application-honeypot" aria-hidden="true"><label for="business-website">Website</label><input id="business-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
                                 <div class="inner-form__row">
                                     <div class="inner-field"><label for="business-name">Emri i kompanisë <span class="text-danger">*</span></label><input id="business-name" name="name" value="{{ business_form_data.name }}" placeholder="Emri i kompanisë" required class="{% if business_field_errors.name %}is-invalid{% endif %}">{% if business_field_errors.name %}<div class="invalid-feedback d-block">{{ business_field_errors.name }}</div>{% endif %}</div>
                                     <div class="inner-field"><label for="business-delegate">Personi i kontaktit <span class="text-danger">*</span></label><input id="business-delegate" name="delegate" value="{{ business_form_data.delegate }}" placeholder="Emri dhe mbiemri" required class="{% if business_field_errors.delegate %}is-invalid{% endif %}">{% if business_field_errors.delegate %}<div class="invalid-feedback d-block">{{ business_field_errors.delegate }}</div>{% endif %}</div>
@@ -120,6 +142,78 @@
             </div>
         </div>
     </section>
+     <div class="modal fade terms-modal" id="termsModal" tabindex="-1" aria-labelledby="termsModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="termsModalLabel">Termat dhe Kushtet e Aplikimit</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Mbyll"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Duke aplikuar në këtë formular, ju pranoni këto kushte:</p>
+                         <h3>Kushte të përgjithshme</h3>
+            <ul>
+                <li>
+                    Studenti pranon të ruajë elektronikisht të dhënat e tij të regjistrimit,
+                    bie dakord që do të njoftohet nga Dominusoft rreth trajnimeve, aktiviteteve dhe shërbimeve
+                    të tjera të qëndrës në mënyrë elektronike, ose me telefon.
+                </li>
+                <li>Është e ndaluar regjistrimi/incizimi i seancave mësimore, ndalohet kopjimi pa lejen tonë.</li>
+                <li>Trajnimet mund të ndiqen si në format fizik, ashtu edhe online. Formati online ofrohet për të
+                    garantuar fleksibilitet maksimal për pjesëmarrësit, duke ruajtur të njëjtat standarde dhe cilësi
+                    mësimore
+                    si në klasë.
+                </li>
+                <li class="fw-bold mt-3">Certifikimi realizohet pas përfundimit të projektit final, sipas afateve të komunikuara nga stafi
+                    përgjegjës.</li>
+                <li class="fw-bold">E rëndësishme: Dominusoft Education operon si subjekt i licencuar nga Ministria e Ekonomisë dhe
+                    Inovacionit,
+                    për ofrimin e trajnimeve dhe kurseve profesionale. Në përputhje me kuadrin ligjor në fuqi, pajisja
+                    me
+                    certifikate kryhet pas përfundimit të projektit final dhe duhet të realizohen brenda këtyre afateve:
+                    <ul>
+                        <li>4 muajve nga data e nisjes së trajnimit, për programet me kohëzgjatje 32-34 orë</li>
+                        <li>5 muajve nga data e nisjes së trajnimit, për programet me kohëzgjatje 38-46 orë</li>
+                    </ul>
+                </li>
+                <li class="fw-bold mb-3">Pas përfundimit të këtyre afateve, në rast mosrealizimit të projektit final, 
+                    ju humbet e drejta për
+                    pasqyrim
+                    në portalin e-Albania, si dhe mundësia për pajisjen me certifikatë të njohur nga Ministria e
+                    Ekonomisë dhe Inovacionit. <br>
+                </li>
+                <li>Në momentin e regjistrimit (kryerja e pagesës së kursit) studenti fiton të drejtën e aksesit në
+                    portalin e kursantit, të cilin ka të drejtë ta aksesoje deri në përfundim të trajnimit, ku
+                    kredencialet (usename &amp password) i dërgohen me email.</li>
+                <li>Tarifat e vlefshme
+                    janë ato me të cilat njiheni në momentin e interesimit në kanalet tona të komunikimit. 
+                </li>
+                <li>Në rast se pagesa e trajnimit nuk bëhet në kohë, studenti humbet të drejtën e frekuentimit të
+                    trajnimit.</li>
+                <li>Komisionet e transfertave të pagesës së trajnimit, është tarifë që paguhet nga kursanti. Pagesa që
+                    duhet të paguani
+                    për Dominusoft, është ajo zyrtare në varësi të programit që do të ndiqni. 
+                </li>
+
+                <li class="mt-3">Në rast se studenti nuk mund të ndjekë trajnimin për të cilin është regjistruar, vlejnë kushtet e
+                    ç’regjistrimit:
+                    <ul>
+                        <li>Në rast shkëputjeje të njëanëshme të trajnimit, pagesa nuk kthehet.</li>
+                        <li>Për të gjithë studentët të cilët kanë ndjekur të paktën 1 ose 2 seanca mësimore, në grupin
+                            në të cilin janë regjistruar,
+                            nuk do të kenë mundësi rindjekje të trajnimit fizikisht, por vetëm On-line, me klasat e
+                            grupit pasardhës.</li>
+                </li>
+            </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mbyll</button>
+                    <button type="button" class="btn btn-md" id="acceptTermsBtn">Pranoj Termat</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </main>
 
 {% if show_student_success_modal %}
@@ -172,6 +266,35 @@ document.addEventListener('DOMContentLoaded', function () {
     if (successModalElement && typeof bootstrap !== 'undefined') {
         new bootstrap.Modal(successModalElement, { backdrop: 'static', keyboard: true }).show();
     }
+
+    const acceptTermsButton = document.getElementById('acceptTermsBtn');
+    const termsCheckbox = document.getElementById('terms');
+    if (acceptTermsButton && termsCheckbox) {
+        acceptTermsButton.addEventListener('click', function () {
+            termsCheckbox.checked = true;
+            termsCheckbox.dispatchEvent(new Event('change', { bubbles: true }));
+        });
+    }
+
+    document.querySelectorAll('.application-panel form').forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            const recaptchaInput = form.querySelector('[name="g-recaptcha-response"]');
+            const action = form.querySelector('[name="student_button"]') ? 'student_application' : 'business_inquiry';
+            if (!recaptchaInput || recaptchaInput.value || typeof grecaptcha === 'undefined') {
+                return;
+            }
+
+            event.preventDefault();
+            grecaptcha.execute('{{ recaptcha_site_key|escapejs }}', { action: action }).then(function (token) {
+                recaptchaInput.value = token;
+                if (event.submitter) {
+                    event.submitter.click();
+                    return;
+                }
+                form.submit();
+            });
+        });
+    });
 });
 </script>
 {% endblock %}

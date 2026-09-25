@@ -1,203 +1,225 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}{{ detail.title|default:service.services_title|default:service.services_name }} | Dominusoft{% endblock %}
+{# The view supplies service, detail, highlights, benefits, packages, offerings, projects, canonical_url and og_image_url. #}
+{% block title %}{% if detail.meta_title %}{{ detail.meta_title }}{% else %}{{ service.services_title|default:service.services_name }} | Dominusoft{% endif %}{% endblock %}
 {% block meta %}
-<meta name="description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}" />
-<meta name="keywords" content="{{ service.services_meta_keyword }}" />
+    <meta name="description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
+    {% if service.services_meta_keyword %}<meta name="keywords" content="{{ service.services_meta_keyword }}">{% endif %}
 {% endblock %}
-{% block canonical %}<link rel="canonical" href="{{ detail.canonical_url|default:'https://dominusoft.al' }}">{% endblock %}
+{% block canonical %}<link rel="canonical" href="{{ canonical_url }}">{% endblock %}
 {% block social_meta %}
-<meta property="og:type" content="website">
-<meta property="og:locale" content="sq_AL">
-<meta property="og:site_name" content="Dominusoft">
-<meta property="og:title" content="{{ detail.title|default:service.services_title|default:service.services_name }} | Dominusoft">
-<meta property="og:description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
-<meta property="og:url" content="{{ detail.canonical_url|default:'https://dominusoft.al' }}">
-<meta property="og:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Dominusoft — {{ detail.title|default:service.services_title|default:service.services_name }}">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="{{ detail.title|default:service.services_title|default:service.services_name }} | Dominusoft">
-<meta name="twitter:description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
-<meta name="twitter:image" content="https://dominusoft.al/static/images/og-dominusoft-home.png">
-<meta name="twitter:image:alt" content="Dominusoft — {{ detail.title|default:service.services_title|default:service.services_name }}">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="sq_AL">
+    <meta property="og:site_name" content="Dominusoft">
+    <meta property="og:title" content="{% if detail.meta_title %}{{ detail.meta_title }}{% else %}{{ service.services_title|default:service.services_name }} | Dominusoft{% endif %}">
+    <meta property="og:description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
+    <meta property="og:url" content="{{ canonical_url }}">
+    {% if og_image_url %}
+        <meta property="og:image" content="{{ og_image_url }}">
+        <meta property="og:image:alt" content="Dominusoft — {{ detail.title|default:service.services_name }}">
+    {% endif %}
+    <meta name="twitter:card" content="{% if og_image_url %}summary_large_image{% else %}summary{% endif %}">
+    <meta name="twitter:title" content="{% if detail.meta_title %}{{ detail.meta_title }}{% else %}{{ service.services_title|default:service.services_name }} | Dominusoft{% endif %}">
+    <meta name="twitter:description" content="{{ detail.meta_description|default:service.services_meta_description|default:service.services_description|truncatechars:160 }}">
+    {% if og_image_url %}<meta name="twitter:image" content="{{ og_image_url }}">{% endif %}
 {% endblock %}
 {% block legacy_styles %}{% endblock %}
 {% block page_styles %}
-<link rel="stylesheet" href="{% static 'css/site-shell.css' %}">
-<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
+    <link rel="stylesheet" href="{% static 'css/site-shell.css' %}">
+    <link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">
 {% endblock %}
 {% block body_class %}inner-page{% endblock %}
 
 {% block content %}
 {% include 'navbar.html' %}
-
 <main id="main-content" class="inner-main">
     <section class="inner-hero" aria-labelledby="service-detail-title">
         <div class="inner-container">
             <nav aria-label="Breadcrumb" class="inner-breadcrumb-wrap">
                 <ol class="inner-breadcrumb">
                     <li><a href="{% url 'home' %}">Kryefaqja</a></li>
-                    <li><a href="{% url 'services' %}">Sherbime</a></li>
-                    <li aria-current="page">{% if detail and detail.title %}{{ detail.title }}{% else %}{{ service.services_title|default:service.services_name }}{% endif %}</li>
+                    <li><a href="{% url 'services' %}">Shërbime</a></li>
+                    <li aria-current="page">{{ service.services_name|default:service.services_title }}</li>
                 </ol>
             </nav>
 
             <div class="inner-hero__layout">
                 <div class="inner-hero__content">
-                    <p class="inner-eyebrow">{% if detail and detail.eyebrow %}{{ detail.eyebrow }}{% else %}Sherbimi{% endif %}</p>
-                    <h1 id="service-detail-title">{% if detail and detail.title %}{{ detail.title }}{% else %}{{ service.services_title|default:service.services_name }}{% endif %}</h1>
-                    <p class="inner-hero__lead">{% if detail and detail.lead %}{{ detail.lead }}{% else %}{{ service.services_description }}{% endif %}</p>
+                    <p class="inner-eyebrow">{{ service.services_name|default:service.services_title|default:'Shërbimi' }}</p>
+                    <h1 id="service-detail-title">{{ detail.title|default:service.services_name }}</h1>
+                    {% comment %} Lead section 
+                    <p class="inner-hero__lead">{{ detail.lead|default:service.services_description }}</p>
+                    {% endcomment %}
+                    {% if detail.summary %}<div class="inner-hero__description mt-2">{{ detail.summary }}</div>{% endif %}
+                    {% if detail.summary_additional %}<div class="inner-hero__description mt-0">{{ detail.summary_additional}}</div>{% endif %}
                     <div class="inner-hero__actions">
-                        <a class="inner-button inner-button--primary" href="{% if detail and detail.cta_url %}{{ detail.cta_url }}{% else %}#rezervo{% endif %}">{% if detail and detail.cta_text %}{{ detail.cta_text }}{% else %}Rezervo konsultë{% endif %} <i class="fas fa-arrow-right" aria-hidden="true"></i></a>
+                        <a class="inner-button inner-button--primary" href="{% url 'application' %}?form=business&amp;service={{ service.services_id }}">
+                            {{ detail.cta_text|default:'Kërko një konsultë' }} <i class="fas fa-arrow-right" aria-hidden="true"></i>
+                        </a>
                         <a class="inner-button inner-button--ghost" href="#permbledhje">Shiko detajet</a>
                     </div>
                 </div>
 
+                {% if highlights %}
                 <aside class="inner-hero__panel" aria-label="Pikat kryesore të shërbimit">
-                    <h2>Çfarë përfshin</h2>
+                    <p class="inner-hero__panel-title">{{ detail.hero_panel_title|default:'Çfarë përfshin:' }}</p>
                     <ul class="fact-list">
+
                         {% for highlight in highlights %}
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ highlight.title }}</span></li>
-                        {% empty %}
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Analizë e biznesit dhe proceseve</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Zhvillim i përshtatur me nevojat tuaja</span></li>
-                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integrime, automatizime dhe mbështetje</span></li>
+                        <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ highlight.title }}</span></li>
                         {% endfor %}
                     </ul>
                 </aside>
+                {% endif %}
             </div>
         </div>
     </section>
 
-{% comment %}
-    <section id="permbledhje" class="inner-section inner-section--summary" aria-labelledby="service-summary-title">
+    {% if detail.why_section_title or detail.why_section_body or highlights %}
+    <section id="permbledhje" class="inner-section  inner-section--white" aria-labelledby="why-dominusoft-title">
         <div class="inner-container">
-            <div class="summary-header">
-                <p class="inner-eyebrow inner-eyebrow--dark">PËRMBDHJE</p>
-                <h2 id="service-summary-title" class="summary-title">{% if detail and detail.summary %}{{ detail.summary }}{% else %}Një zgjidhje e krijuar për performancë dhe rritje{% endif %}</h2>
+            <div class="inner-heading">
+                <p class="inner-eyebrow">{{ service.services_name|default:service.services_title }}</p>
+                <h2 id="why-dominusoft-title">{{ detail.why_section_title|default:'Pse Dominusoft?' }}</h2>
             </div>
-
-            <div class="summary-layout">
-                <aside class="summary-aside">
-                    {% if detail and detail.summary_additional %}
-                        <p>{{ detail.summary_additional }}</p>
-                    {% elif detail and detail.summary %}
-                        <p>{{ detail.summary }}</p>
-                    {% else %}
-                        <p>Në çdo biznes, një identitet unik dhe një qasje e saktë mund të krijojë një diferencë të dukshme. Ne i ofrojmë zgjidhje profesionale në branding, dizajn grafik dhe komunikim që ndihmojnë biznesin të rritet me siguri dhe konsistencë.</p>
-                    {% endif %}
-                </aside>
-
-                <div class="summary-feature">
-                    <div class="summary-feature__inner">
-                        <p class="summary-feature__eyebrow">PËRFITIME</p>
-                        <ul class="fact-list summary-fact-list">
-                            {% for benefit in benefits %}
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ benefit.title }}</span></li>
-                            {% empty %}
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Ndërtoni identitet unik të biznesit tuaj me zgjidhje profesionale në branding, dizajn grafik dhe komunikim.</span></li>
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Rritni vizibilitetin online dhe siguroni një përvojë të qartë dhe të besueshme për klientët.</span></li>
-                                <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Integroni strategjinë, dizajnin dhe zhvillimin në një model të vetëm me rezultate të matshme.</span></li>
-                            {% endfor %}
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-{% endcomment %}
-    {% if benefits %}
-        <section class="inner-section" aria-labelledby="benefits-title">
-            <div class="inner-container">
-                <div class="inner-heading">
-            
-                    <h2 id="benefits-title">Përfitimet kryesore</h2>
-                </div>
-    <div class="summary-layout">
-    <div class="summary-content">
-        <div class="summary-copy">
-            {% if detail and detail.summary_additional %}
-                <p>{{ detail.summary_additional }}</p>
-            {% elif detail and detail.summary %}
-                <p>{{ detail.summary }}</p>
-            {% else %}
-                <p>
-                    Në çdo biznes, një identitet unik dhe një qasje e saktë mund
-                    të krijojë një diferencë të dukshme. Ne i ofrojmë zgjidhje
-                    profesionale në branding, dizajn grafik dhe komunikim që
-                    ndihmojnë biznesin të rritet me siguri dhe konsistencë.
-                </p>
-            {% endif %}
-        </div>
-
-        <div class="summary-benefits">
-            <p class="summary-feature__eyebrow">PËRFITIME</p>
-
-            <ul class="fact-list summary-fact-list">
-                {% for benefit in benefits %}
-                    <li>
-                        <i class="fas fa-check-circle" aria-hidden="true"></i>
-                        <span>{{ benefit.title }}</span>
-                    </li>
-                {% empty %}
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Efikasitet më i lartë</span>
-                    </li>
-                    <li>
-                        <i class="fas fa-check-circle"></i>
-                        <span>Siguri e avancuar</span>
-                    </li>
-                {% endfor %}
-            </ul>
-        </div>
-    </div>
-</div>
-            </div>
-        </section>
-    {% endif %}
-
-    {% if packages %}
-        <section class="inner-section inner-section--white" aria-labelledby="packages-title">
-            <div class="inner-container">
-                <div class="inner-heading">
-                    <p class="inner-eyebrow">Paketat</p>
-                    <h2 id="packages-title">Paketat e shërbimeve</h2>
-                </div>
-
-                <div class="inner-grid inner-grid--3">
-                    {% for package in packages %}
+            <!-- <div class="service-detail__split"> -->
+                <div class="row g-4">
+                      {% if highlights %}
+                        {% for highlight in highlights %}
+                             <div class="col-md-6 col-lg-4">
                         <article class="inner-card">
                             <div class="inner-card__body">
-                                <div class="inner-card__badge">0{{ forloop.counter }}</div>
-                                <h3 class="mb-3">{{ package.name }}</h3>
-                                {% if package.price %}<p class="inner-card__price">{{ package.price }}</p>{% endif %}
-                                <ul class="fact-list fact-list--stacked">
-                                    {% for item in package.items.all %}
-                                        <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ item.text }}</span></li>
-                                    {% endfor %}
-                                </ul>
+                                <div class="service-icon">
+                                   <i class="fas fa-check-circle" aria-hidden="true"></i>
+                                </div>
+                                <h3 class="fs-4">{{ highlight.title }}</h3>
+                                <p>
+                                    {{ highlight.description }}
+                                </p>
                             </div>
                         </article>
-                    {% endfor %}
-                </div>
+                    </div>
+                        {% endfor %}
+                              {% endif %}
+                <!-- </div> -->
             </div>
-        </section>
+        </div>
+    </section>
     {% endif %}
 
-        <section class="inner-section" aria-labelledby="faq-title">
-            <div class="inner-container">
-                <div class="inner-heading">
-                    <p class="inner-eyebrow">Projekte</p>
-                    <h2 id="faq-title">Projekte</h2>
+    {% if benefits %}
+    <section class="inner-section" aria-labelledby="benefits-title">
+        <div class="inner-container">
+            <div class="inner-heading">
+                 <p class="inner-eyebrow">Pse të zgjidhni këtë shërbim?</p>
+                <h2 id="benefits-title">{{ detail.benefits_section_title|default:'Përfitimet kryesore' }}</h2>
+
+                {% if detail.benefits_intro %}
+                <p>
+                    {{ detail.benefits_intro|linebreaks }}
+                </p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+    {% if packages %}
+    <section class="inner-section inner-section--white" aria-labelledby="packages-title">
+        <div class="inner-container">
+            <div class="inner-heading">
+                <p class="inner-eyebrow">Paketat</p>
+                <h2 id="packages-title">{{ detail.packages_section_title|default:'Paketat e shërbimit' }}</h2>
+            </div>
+            <div class="inner-grid inner-grid--3">
+                {% for package in packages %}
+                <article class="inner-card{% if package.is_featured %} inner-card--featured{% endif %}">
+                    <div class="inner-card__body">
+                        <div class="inner-card__badge">{{ forloop.counter|stringformat:'02d' }}</div>
+                        <h3 class="my-3">{{ package.name }}</h3>
+                        {% with items=package.items.all %}
+                        {% if items %}
+                        <ul class="fact-list fact-list--stacked">
+                            {% for item in items %}
+                            <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>{{ item.text }}</span></li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endwith %}
+                        <a class="inner-button inner-button--secondary" href="{% url 'application' %}?form=business&amp;service={{ service.services_id }}">Kërko ofertë</a>
+                    </div>
+                </article>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    {% endif %}
+{% if projects %}
+<section class="inner-section  inner-section--compressed" aria-labelledby="projects-title">
+    <div class="inner-container">
+              <div class="inner-heading">
+                <p class="inner-eyebrow">Portfolio</p>
+                <h2 id="why-dominusoft-title">Projekt të përzgjedhura</h2>
+            </div>
+
+        <div class="row g-4">
+            {% for project in projects %}
+            <article class="col-md-4 col-12 ">
+<div class="service-project-card">
+
+
+                <div class="service-project-card__media">
+                    {% if project.image %}
+                    <img src="{{ project.image.url }}" alt="" loading="lazy">
+                    {% endif %}
                 </div>
 
-    
+
+                <div class="service-project-card__body">
+                    <h3>{{ project.title }}</h3>
+                    {% if project.url %}
+                    <a class="service-project-card__link"
+                       href="{{ project.url }}"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Shiko projektin {{ project.title }} (hapet në dritare të re)">↗</a>
+                    {% endif %}
+                </div>
+                </div>
+            </article>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+     <section
+            class="home-final-cta"
+            aria-labelledby="final-cta-title"
+       
+        >
+            <div class="site-container home-final-cta__inner">
+                <div>
+                     <p class="home-eyebrow">
+                        Nëse kërkoni një partner gjithçka fillon me një
+                        bisedë.
+                    </p>
+                    <h2 id="final-cta-title">
+                        Le të ndërtojmë diçka me vlerë së bashku
+                    </h2>
+                </div>
+                <div class="home-final-cta__actions">
+                    <a
+                        class="home-button home-button--primary"
+                        href="{% url 'application' %}?form=business#application-form"
+                        data-click-counter="rreth_final_cta"
+                    >
+                        Rezervo konsultë <span aria-hidden="true">→</span>
+            
+                    </a>
+                </div>
             </div>
         </section>
+{% endif %}
+
 </main>
 {% endblock content %}
 {% block legacy_scripts %}{% endblock %}

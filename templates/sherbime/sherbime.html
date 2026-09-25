@@ -75,11 +75,11 @@ Dominusoft kombinon teknologjinë, software-in, marketingun digjital, SEO-n dhe 
                     {% with detail=service.detail %}
                         <article class="inner-card">
                             <div class="inner-card__body">
-                                <div class="service-icon"><i class="fas fa-laptop-code" aria-hidden="true"></i></div>
+                                <div class="service-icon"><i class="{{ service.services_icon|default:'fas fa-laptop-code' }}" aria-hidden="true"></i></div>
                                 {% if detail and detail.title %}
-                                    <h3>{{ detail.services_name }}</h3>
+                                    <h3>{{ service.services_name|default:service.services_title }}</h3>
                                 {% else %}
-                                    <h3>{{ service.services_name }}</h3>
+                                    <h3>{{ service.services_name|default:service.services_title }}</h3>
                                 {% endif %}
                                 <p>
                                     {% if detail and detail.lead %}
@@ -142,7 +142,7 @@ Dominusoft kombinon teknologjinë, software-in, marketingun digjital, SEO-n dhe 
         </div>
     </section> -->
 
-    <section class="inner-section industries-section" aria-labelledby="industries-heading">
+    <section class="inner-section inner-section--white" aria-labelledby="industries-heading">
         <div class="inner-container">
             <div class="inner-heading">
                 <p class="inner-eyebrow">Industritë</p>

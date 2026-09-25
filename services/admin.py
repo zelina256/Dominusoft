@@ -6,6 +6,7 @@ from .models import (
     ServiceHighlight,
     ServicePackage,
     ServicePackageItem,
+    ServiceProject,
     Services,
 )
 
@@ -31,17 +32,23 @@ class ServicePackageInline(admin.StackedInline):
     inlines = [ServicePackageItemInline]
 
 
+class ServiceProjectInline(admin.StackedInline):
+    model = ServiceProject
+    extra = 1
+
+
 @admin.register(Services)
 class ServicesAdmin(admin.ModelAdmin):
     list_display = (
-        'services_name',
+        'services_name', 'services_icon',
     )
-    search_fields = ('services_name', 'services_title', 'slug')
+    search_fields = ('services_name', 'services_title', 'services_icon', 'slug')
     list_filter = ('services_name',)
     inlines = [
         ServiceHighlightInline,
         ServiceBenefitInline,
         ServicePackageInline,
+        ServiceProjectInline,
     ]
 
 
@@ -84,3 +91,11 @@ class ServicePackageItemAdmin(admin.ModelAdmin):
     list_display = ('package', 'text', 'order')
     list_filter = ('package',)
     search_fields = ('text', 'package__name')
+
+
+@admin.register(ServiceProject)
+class ServiceProjectAdmin(admin.ModelAdmin):
+    list_display = ('title', 'service', 'is_published', 'order')
+    list_filter = ('service', 'is_published')
+    search_fields = ('title', 'description', 'service__services_name')
+    ordering = ('service', 'order', 'id')

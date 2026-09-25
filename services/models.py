@@ -9,29 +9,27 @@ class Services(models.Model):
     services_meta_keyword = models.CharField(max_length=250, null=True, blank=True)
     services_meta_description = models.CharField(max_length=250, null=True, blank=True)
     services_title = models.CharField(max_length=250, null=True, blank=True)
+    services_icon = models.CharField(
+        max_length=80,
+        default='fas fa-laptop-code',
+        help_text="Font Awesome class, p.sh. 'fas fa-globe' ose 'fas fa-chart-line'.",
+    )
     slug = models.SlugField(max_length=150, unique=True, blank=True)
 
     def _generate_unique_slug(self, base_slug):
-        candidate = base_slug or f'service-{self.services_id or "new"}'
-        candidate = candidate[:150]
+        base = (base_slug or 'service')[:150]
+        candidate = base
         suffix = 1
-        queryset = Services.objects.filter(slug=candidate).exclude(pk=self.pk)
-
-        while queryset.exists():
-            suffix_text = f'-{suffix}'
-            candidate = f"{base_slug[:150 - len(suffix_text)]}{suffix_text}" if base_slug else f"service-{self.services_id or 'new'}-{suffix}"
-            queryset = Services.objects.filter(slug=candidate).exclude(pk=self.pk)
+        while type(self).objects.filter(slug=candidate).exclude(pk=self.pk).exists():
+            ending = f'-{suffix}'
+            candidate = f'{base[:150 - len(ending)]}{ending}'
             suffix += 1
-
         return candidate
 
     def save(self, *args, **kwargs):
-        if self.services_name:
-            base_slug = slugify(self.services_name)
-            if not self.slug or self.slug == slugify(self.services_name):
-                self.slug = self._generate_unique_slug(base_slug)
-        elif not self.slug:
-            self.slug = self._generate_unique_slug(f"service-{self.services_id or 'new'}")
+        # A published URL remains stable when the visible name changes.
+        if not self.slug:
+            self.slug = self._generate_unique_slug(slugify(self.services_name or '') or 'service')
         super().save(*args, **kwargs)
 
     def __str__(self):
@@ -39,16 +37,20 @@ class Services(models.Model):
 
 
 class ServiceDetail(models.Model):
-    service = models.OneToOneField(
-        Services,
-        on_delete=models.CASCADE,
-        related_name='detail'
-    )
-    eyebrow = models.CharField(max_length=80, default='Sherbimi')
-    title = models.CharField(max_length=200)
+    service = models.OneToOneField(Services, on_delete=models.CASCADE, related_name='detail')
+    eyebrow = models.CharField(max_length=80, default='Shërbimi')
+    title = models.CharField(max_length=200)  # H1: one per page
     lead = models.TextField(max_length=500)
     summary = models.TextField(max_length=1500)
     summary_additional = models.TextField(max_length=1500, blank=True, null=True)
+    hero_panel_title = models.CharField(max_length=120, blank=True, null=True)
+    why_section_title = models.CharField(max_length=200, blank=True, null=True)  # H2
+    why_section_subtitle = models.CharField(max_length=200, blank=True, null=True)  # H3
+    why_section_body = models.TextField(blank=True)
+    benefits_section_title = models.CharField(max_length=200, blank=True, null=True)  # H2
+    benefits_intro = models.TextField(blank=True)
+    packages_section_title = models.CharField(max_length=200, blank=True, null=True)  # H2
+    projects_section_title = models.CharField(max_length=200, blank=True, null=True)  # H2
     meta_title = models.CharField(max_length=200, blank=True, null=True)
     meta_description = models.TextField(max_length=250, blank=True, null=True)
     canonical_url = models.CharField(max_length=250, blank=True, null=True)
@@ -61,11 +63,7 @@ class ServiceDetail(models.Model):
 
 
 class ServiceHighlight(models.Model):
-    service = models.ForeignKey(
-        Services,
-        related_name='highlights',
-        on_delete=models.CASCADE
-    )
+    service = models.ForeignKey(Services, related_name='highlights', on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     description = models.TextField(max_length=500, blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
@@ -78,11 +76,7 @@ class ServiceHighlight(models.Model):
 
 
 class ServiceBenefit(models.Model):
-    service = models.ForeignKey(
-        Services,
-        related_name='benefits',
-        on_delete=models.CASCADE
-    )
+    service = models.ForeignKey(Services, related_name='benefits', on_delete=models.CASCADE)
     title = models.CharField(max_length=120)
     description = models.TextField(max_length=500)
     icon = models.CharField(max_length=50, default='fa-check-circle')
@@ -96,12 +90,8 @@ class ServiceBenefit(models.Model):
 
 
 class ServicePackage(models.Model):
-    service = models.ForeignKey(
-        Services,
-        related_name='packages',
-        on_delete=models.CASCADE
-    )
-    name = models.CharField(max_length=120)
+    service = models.ForeignKey(Services, related_name='packages', on_delete=models.CASCADE)
+    name = models.CharField(max_length=120)  # H3
     price = models.CharField(max_length=50, blank=True, null=True)
     description = models.TextField(max_length=800, blank=True, null=True)
     is_featured = models.BooleanField(default=False)
@@ -115,11 +105,7 @@ class ServicePackage(models.Model):
 
 
 class ServicePackageItem(models.Model):
-    package = models.ForeignKey(
-        ServicePackage,
-        related_name='items',
-        on_delete=models.CASCADE
-    )
+    package = models.ForeignKey(ServicePackage, related_name='items', on_delete=models.CASCADE)
     text = models.CharField(max_length=250)
     order = models.PositiveIntegerField(default=0)
 
@@ -128,3 +114,33 @@ class ServicePackageItem(models.Model):
 
     def __str__(self):
         return self.text
+
+
+class ServiceProject(models.Model):
+    service = models.ForeignKey(Services, related_name='projects', on_delete=models.CASCADE)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    url = models.URLField(blank=True)
+    image = models.ImageField(upload_to='service_projects/', blank=True)
+    order = models.PositiveIntegerField(default=0)
+    is_published = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.title
+
+
+class ServiceOffering(models.Model):
+    """Optional individual services, separate from priced/quoted packages."""
+    service = models.ForeignKey(Services, related_name='offerings', on_delete=models.CASCADE)
+    title = models.CharField(max_length=120)
+    description = models.TextField(max_length=500, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'id']
+
+    def __str__(self):
+        return self.title

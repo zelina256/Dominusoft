@@ -25,6 +25,8 @@ def tech_services(request, slug):
             "highlights",
             "benefits",
             "packages__items",
+            "offerings",
+            "projects",
         ),
         slug=slug,
     )
@@ -41,6 +43,8 @@ def tech_services(request, slug):
         "highlights": service.highlights.all(),
         "benefits": service.benefits.all(),
         "packages": service.packages.all(),
+        "offerings": service.offerings.all(),
+        "projects": service.projects.filter(is_published=True),
         "faqs": [],
         "related_services": [],
     }

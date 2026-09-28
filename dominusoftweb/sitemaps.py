@@ -3,7 +3,7 @@ from django.urls import reverse
 
 from blog.models import Article
 from trainings.models import Category_training, Training
-
+from services.models import Services
 
 class StaticViewSitemap(Sitemap):
     priority = 0.8
@@ -12,13 +12,14 @@ class StaticViewSitemap(Sitemap):
 
     def items(self):
         return [
-            "home",
-            "training_category",
-            "services",
-            "blog",
-            "student",
-            "business",
-            "career",
+        "home",
+        "rrethnesh",
+        "training_category",
+        "services",
+        "blog",
+        "application",
+        "policy",
+        "terms",
         ]
 
     def location(self, item):
@@ -60,12 +61,25 @@ class ArticleSitemap(Sitemap):
     protocol = "https"
 
     def items(self):
-        return Article.objects.exclude(article_slug__isnull=True).exclude(
-            article_slug=""
-        ).order_by("pk")
-
+        return (
+            Article.published_objects
+            .exclude(article_slug__isnull=True)
+            .exclude(article_slug="")
+            .only("id", "article_slug", "article_created_at")
+            .order_by("pk")
+        )
     def lastmod(self, item):
         return item.article_created_at
 
     def location(self, item):
         return reverse("article", args=[item.article_slug])
+
+class ServiceSitemap(Sitemap):
+    priority = 0.6
+    protocol = "https"
+
+    def items(self):
+        return Services.objects.exclude(slug="").only("id", "slug").order_by("pk")
+
+    def location(self, item):
+        return reverse("tech_services", args=[item.slug])

@@ -167,7 +167,11 @@ def _send_student_procedure_email(student_data):
     subject = "Aplikim i ri për trajnim - Dominusoft"
     from_email = getattr(settings, "DEFAULT_FROM_EMAIL", "no-reply@dominusoft.com")
 
-    html_body = render_to_string("apliko/email/email_kursant.html", student_data)
+    email_context = {
+        **student_data,
+        "email_css_url": f"https://{settings.DOMAIN}{settings.STATIC_URL.rstrip('/')}/css/email.css",
+    }
+    html_body = render_to_string("apliko/email/email_kursant.html", email_context)
     text_body = strip_tags(html_body)
 
     email = EmailMultiAlternatives(
@@ -195,7 +199,11 @@ def _send_business_notification_email(business_data):
     if not recipient:
         return False
 
-    html_body = render_to_string("apliko/email/email_business.html", business_data)
+    email_context = {
+        **business_data,
+        "email_css_url": f"https://{settings.DOMAIN}{settings.STATIC_URL.rstrip('/')}/css/email.css",
+    }
+    html_body = render_to_string("apliko/email/email_business.html", email_context)
     email = EmailMultiAlternatives(
         subject="Aplikim i ri nga biznesi - Dominusoft",
         body=strip_tags(html_body),

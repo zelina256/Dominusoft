@@ -1,8 +1,8 @@
 {% extends 'index.html' %}
 {% load static %}
 
-{% block title %}Apliko | Dominusoft{% endblock %}
-{% block meta %}<meta name="description" content="Aplikoni për kurs profesional ose kërkoni bashkëpunim biznesi me Dominusoft.">{% endblock %}
+{% block title %}Kontaktoni Dominusoft | Kurse dhe Shërbime Biznesi{% endblock %}
+{% block meta %}<meta name="description" content="Kontaktoni Dominusoft në Tiranë për kurse profesionale, praktika, zhvillim website-i dhe shërbime për biznesin. Aplikoni për kurs ose dërgoni kërkesën tuaj.">{% endblock %}
 {% block page_styles %}<link rel="stylesheet" href="{% static 'css/inner-modern.css' %}">{% endblock %}
 {% block scripts %}<script src="https://www.google.com/recaptcha/api.js?render={{ recaptcha_site_key }}"></script>{% endblock %}
 {% block body_class %}inner-page{% endblock %}
@@ -14,12 +14,13 @@
     <section class="inner-hero" aria-labelledby="application-page-title">
     <div class="inner-container inner-hero__layout">
       <div class="inner-hero__content">
-                <p class="inner-eyebrow">Aplikim për kurs</p>
-                <h1 id="application-page-title">Apliko për kursin tënd</h1>
+                <p class="inner-eyebrow">Kontakt</p>
+                <h1 id="application-page-title">Kontaktoni Dominusoft</h1>
         <p class="inner-hero__lead">
-                    Zgjidhni kursin që ju intereson dhe plotësoni të dhënat tuaja.
-                    Ekipi i Dominusoft do t'ju kontaktojë me informacionin për hapat e
-                    mëtejshëm.
+                Keni pyetje rreth kurseve profesionale, internship-eve,
+          zhvillimit të një website-i apo një bashkëpunimi me biznesin tuaj?
+          Kontaktoni ekipin e Dominusoft dhe merrni informacionin që ju
+          nevojitet për të hedhur hapin e radhës.
         </p>
       </div>
 
@@ -28,7 +29,7 @@
         <ul class="fact-list">
           <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Konsultim fillestar pa angazhim</span></li>
           <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Ndihmë për trajnime, projekte dhe biznes</span></li>
-          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Shpërblyese, të qarta dhe profesionale</span></li>
+          <li><i class="fas fa-check-circle" aria-hidden="true"></i><span>Zgjidhje të përshtatura për nevojat tuaja</span></li>
         </ul>
       </aside>
     </div>
@@ -209,11 +210,30 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Mbyll</button>
-                    <button type="button" class="btn btn-md" id="acceptTermsBtn">Pranoj Termat</button>
+                    <button type="button" class="btn btn-md" id="acceptTermsBtn" data-bs-dismiss="modal">Pranoj Termat</button>
                 </div>
             </div>
         </div>
     </div>
+      <section class="inner-section inner-section--compact" aria-labelledby="location-title">
+    <div class="inner-container">
+      <div class="inner-heading text-center">
+        <p class="inner-eyebrow">Na gjeni</p>
+        <h2 id="location-title">Na gjeni në Tiranë</h2>
+        <p>
+          Vizitoni zyrat e Dominusoft në Rrugën “Reshit Çollaku” ose
+          përdorni hartën për të planifikuar rrugën tuaj.
+        </p>
+      </div>
+
+      <div class="contact-card">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2996.257229575721!2d19.81169871542387!3d41.32501957926997!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1350313540c99c4b%3A0x7398d6f11582ba30!2sDominusoft!5e0!3m2!1sen!2s!4v1625682359933!5m2!1sen!2s"
+          title="Vendndodhja e zyrave të Dominusoft në Tiranë" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" style="display: block; width: 100%; min-height: 340px; border: 0;"></iframe>
+      </div>
+    </div>
+  </section>
 </main>
 
 {% if show_student_success_modal %}

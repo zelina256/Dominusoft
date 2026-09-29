@@ -6,51 +6,52 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aplikim i ri nga biznesi</title>
+    <link rel="stylesheet" href="{{ email_css_url }}">
 </head>
 
-<body style="margin: 0; padding: 24px; background-color: #f4f6f8; color: #1f2933; font-family: Arial, sans-serif; line-height: 1.5;">
+<body class="email-body">
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0">
         <tr>
             <td align="center">
-                <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" style="max-width: 600px; width: 100%; background-color: #ffffff; border: 1px solid #d9e2ec;">
+                <table role="presentation" width="600" cellspacing="0" cellpadding="0" border="0" class="email-container">
                     <tr>
-                        <td style="padding: 28px 32px; background-color: #0b5a75; color: #ffffff;">
-                            <h1 style="margin: 0; font-size: 24px; font-weight: 700;">Aplikim i ri nga biznesi</h1>
+                        <td class="email-header">
+                            <h1 class="email-title">Aplikim i ri nga biznesi</h1>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 28px 32px;">
-                            <p style="margin: 0 0 24px;">Një biznes ka dërguar një kërkesë për shërbimet e Dominusoft përmes faqes së internetit.</p>
-                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-collapse: collapse;">
+                        <td class="email-content">
+                            <p class="email-intro">Një biznes ka dërguar një kërkesë për shërbimet e Dominusoft përmes faqes së internetit.</p>
+                            <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" class="email-details">
                                 <tr>
-                                    <td style="padding: 10px 0; width: 180px; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Emri i biznesit</td>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ nameBusiness }}</td>
+                                    <td class="email-label">Emri i biznesit</td>
+                                    <td class="email-value">{{ nameBusiness }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Përfaqësuesi</td>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ delegateBusiness }}</td>
+                                    <td class="email-label">Përfaqësuesi</td>
+                                    <td class="email-value">{{ delegateBusiness }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Email</td>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="mailto:{{ emailBusiness }}" style="color: #0b5a75;">{{ emailBusiness }}</a></td>
+                                    <td class="email-label">Email</td>
+                                    <td class="email-value"><a href="mailto:{{ emailBusiness }}" class="email-link">{{ emailBusiness }}</a></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Telefon</td>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;"><a href="tel:{{ phoneBusiness }}" style="color: #0b5a75;">{{ phoneBusiness }}</a></td>
+                                    <td class="email-label">Telefon</td>
+                                    <td class="email-value"><a href="tel:{{ phoneBusiness }}" class="email-link">{{ phoneBusiness }}</a></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb; font-weight: 700;">Shërbimi i kërkuar</td>
-                                    <td style="padding: 10px 0; border-bottom: 1px solid #e5e7eb;">{{ serviceBusiness }}</td>
+                                    <td class="email-label">Shërbimi i kërkuar</td>
+                                    <td class="email-value">{{ serviceBusiness }}</td>
                                 </tr>
                                 <tr>
-                                    <td style="padding: 10px 0; vertical-align: top; font-weight: 700;">Mesazhi</td>
-                                    <td style="padding: 10px 0; white-space: pre-line;">{{ messageBusiness }}</td>
+                                    <td class="email-label email-label--top">Mesazhi</td>
+                                    <td class="email-value email-message">{{ messageBusiness }}</td>
                                 </tr>
                             </table>
                         </td>
                     </tr>
                     <tr>
-                        <td style="padding: 16px 32px; background-color: #f4f6f8; color: #52606d; font-size: 13px;">Ky njoftim u dërgua automatikisht nga formulari i biznesit në faqen e Dominusoft.</td>
+                        <td class="email-footer">Ky njoftim u dërgua automatikisht nga formulari i biznesit në faqen e Dominusoft.</td>
                     </tr>
                 </table>
             </td>

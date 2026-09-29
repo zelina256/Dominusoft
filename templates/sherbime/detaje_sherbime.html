@@ -113,7 +113,7 @@
         <div class="inner-container">
             <div class="inner-heading">
                  <p class="inner-eyebrow">Pse të zgjidhni këtë shërbim?</p>
-                <h2 id="benefits-title">{{ detail.benefits_section_title|default:'Përfitimet kryesore' }}</h2>
+                <h2 id="benefits-title">Përfitimet kryesore</h2>
 
                 {% if detail.benefits_intro %}
                 <p>
@@ -128,8 +128,8 @@
     <section class="inner-section inner-section--white" aria-labelledby="packages-title">
         <div class="inner-container">
             <div class="inner-heading">
-                <p class="inner-eyebrow">Paketat</p>
-                <h2 id="packages-title">{{ detail.packages_section_title|default:'Paketat e shërbimit' }}</h2>
+                <!-- <p class="inner-eyebrow">Paketat</p> -->
+                <h2 id="packages-title">Paketat e shërbimit</h2>
             </div>
             <div class="inner-grid inner-grid--3">
                 {% for package in packages %}
@@ -191,6 +191,7 @@
         </div>
     </div>
 </section>
+{% endif %}
      <section
             class="home-final-cta"
             aria-labelledby="final-cta-title"
@@ -218,7 +219,7 @@
                 </div>
             </div>
         </section>
-{% endif %}
+
 
 </main>
 {% endblock content %}
